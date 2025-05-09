@@ -1,5 +1,5 @@
-export const generate_dictionary_entry = `You are an expert linguist specializing in the German language. Your task is to create a detailed dictionary entry for a given German word. Here's the word you need to analyze:
-<german_word>{{german_word}}</german_word>
+export const generate_dictionary_entry = `You are an expert linguist specializing in the Spanish language. Your task is to create a detailed dictionary entry for a given Spanish word. Here's the word you need to analyze:
+<spanish_word>{{spanish_word}}</spanish_word>
 
 Before creating the entry, analyze the word and plan your approach. Break down the word inside <word_breakdown> tags:
 
@@ -42,7 +42,7 @@ Now, create the dictionary entry using the appropriate template based on your an
 Present only your final entry. Do not present the user with word_breakdown. Do not write to the user your thought process. Do not include tags in the output
 <examples>
 <example>
-<german_word>verfeinden</german_word>
+<spanish_word>verfeinden</spanish_word>
 <agent_output>😤 [[verfeinden]], [fɛɐ̯ˈfaɪ̯ndn̩] | [[verfeindete]], haben [[verfeindet]]
 
 ---
@@ -81,7 +81,7 @@ sie, [[verfeinden]], [[verfeindeten]], [[verfeinden]], [[verfeindeten]], [[verfe
 </example>
 
 <example>
-<german_word>tanztest</german_word>
+<spanish_word>tanztest</spanish_word>
 <agent_output>💃 [[tanzen]], [ˈtanʦn̩] | [[tanzte]], haben [[getanzt]]
 
 ---
@@ -116,7 +116,7 @@ sie, [[tanzen]], [[tanzten]], [[tanzen]], [[tanzten]], [[tanzen]]
 </example>
 
 <example>
-<german_word>Hoffnung</german_word>
+<spanish_word>Hoffnung</spanish_word>
 <agent_output>🕊️ 🔴 die [[Hoffnung]], [ˈhɔfnʊŋ]
 die [[Hoffnungen]]
 
@@ -146,7 +146,7 @@ D: der [[Hoffnung]], den [[Hoffnungen]]
 </example>
 
 <example>
-<german_word>Busch</german_word>
+<spanish_word>Busch</spanish_word>
 <agent_output>🌳 🔵 der [[Busch]]
 die [[B\\xFCsche]]
 
@@ -176,7 +176,7 @@ buschig, buschieren</agent_output>
 </example>
 
 <example>
-<german_word>klein</german_word>
+<spanish_word>klein</spanish_word>
 <agent_output>🐭 [[klein]], [\\u02C8kla\\u026A\\u032Fn] ≠ [[gro\\xDF]]
 
 ---
@@ -207,7 +207,7 @@ P: [[kleinen]], [[kleineren]], [[kleinsten]]
 [[Kleinheit]], [[kleinlich]], [[kleinmachen]]</agent_output>
 </example>
 <example>
-<german_word>anzurufen</german_word>
+<spanish_word>anzurufen</spanish_word>
 <agent_output>📞 [[anrufen]], [ˈanʦuˌʁuːfən] | [[rief an]], haben [[angerufen]]
 
 ---
@@ -241,7 +241,7 @@ sie, [[rufen an]], [[riefen an]], [[rufen an]], [[riefen an]], [[rufen an]]
 [[Anruf]], [[Anrufer]], [[Anruferin]], [[anrufbar]], [[Anrufbeantworter]]</agent_output>
 </example>
 <example>
-<german_word>ständigen</german_word>
+<spanish_word>ständigen</spanish_word>
 <agent_output>🕰️ [[ständig]], [ˈʃtɛndɪç] ≠ [[selten]]
 
 ---
@@ -273,7 +273,7 @@ P: [[ständigen]], [[ständigeren]], [[ständigsten]]
 </example>
 
 <example>
-<german_word>zweiteres</german_word>
+<spanish_word>zweiteres</spanish_word>
 <agent_output>2️⃣ [[zwei]], [t͡svaɪ̯]  
 
 ---
@@ -316,7 +316,7 @@ P: [[zweiten]], [[zweiteren]], [[zweitesten]]
 
 
 <example>
-<german_word>einzigsten</german_word>
+<spanish_word>einzigsten</spanish_word>
 <agent_output>1️⃣ [[eins]], [aɪ̯ns] | [[ein]], [aɪ̯n]  
 
 ---
@@ -362,7 +362,7 @@ P: [[einigen]], [[einigeren]], [[einzigsten]]
 </example>
 
 <example>
-<german_word>traurig</german_word>
+<spanish_word>traurig</spanish_word>
 <agent_output>😢 [[traurig]], [ˈtʁaʊ̯ʁɪç]
 nicht [[fröhlich]]
 
@@ -394,7 +394,7 @@ P: [[traurigen]], [[traurigeren]], [[traurigsten]]
 [[Trauer]], [[trauern]], [[Traurigkeit]], [[betrauern]], [[trauernd]]</agent_output>
 </example>
 <example>
-<german_word>obwohl</german_word>
+<spanish_word>obwohl</spanish_word>
 <agent_output>🔗 [[obwohl]], [ɔpˈvoːl]
 
 ---
@@ -416,7 +416,7 @@ although, even though, despite
 [[trotz]], [[obschon]], [[obzwar]], [[wiewohl]], [[obgleich]]</agent_output>
 </example>
 <example>
-<german_word>Rechercheergebnisse</german_word>
+<spanish_word>Rechercheergebnisse</spanish_word>
 <agent_output>📄 🟢 das [[Rechercheergbenis]], [reˈʃɛrʃəʔɛɐ̯ɡeːpnɪs]
 die [[Rechercheergbnisse]]
 
@@ -448,7 +448,7 @@ D: dem [[Rechercheergbnis]], den [[Rechercheergbnissen]]
 </examples>
 
 <example>
-<german_word>her</german_word>
+<spanish_word>her</spanish_word>
 <agent_output>⬆️ [[her]], [heːɐ̯]
 
 ---

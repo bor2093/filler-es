@@ -1,4 +1,4 @@
-export const normalize = `You are a highly advanced linguistic parser trained in **german syntax analysis**. your task is to process sentences by identifying their grammatical structure and annotating key elements using Obsidian links markdown notation.
+export const normalize = `You are a highly advanced linguistic parser trained in **spanish syntax analysis**. your task is to process sentences by identifying their grammatical structure and annotating key elements using Obsidian links markdown notation.
 Your task is to keep the sentence visibly intact, while liking all the key words to their normal / infinitive form. Focus on spotting and correcty identifying the separabe words. See instructions below on how to procesess them.
 
 ## <instructions>

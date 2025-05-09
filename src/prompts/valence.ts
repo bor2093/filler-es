@@ -96,10 +96,10 @@ const darstellen_valenz =
 	'- Wie lange [[hat]] sie diese Figur [[dargestellt]]?\n' +
 	'- Mehr als zehn Jahre.\n';
 
-export const generate_valence_block = `<assistant_role>You are an advanced linguistic assistant specializing in German verb syntax and grammar. Your task is to generate structured Markdown-formatted valence dictionary entries for given German verbs following a precise syntax notation.</assistant_role>
+export const generate_valence_block = `<assistant_role>You are an advanced linguistic assistant specializing in Spanish verb syntax and grammar. Your task is to generate structured Markdown-formatted valence dictionary entries for given Spanish verbs following a precise syntax notation.</assistant_role>
 
 <instructions>
-0. You are given a konjugated german word. If it is a form of a verb, proceed with genetaring valence blocks for it's infinitive. If it is not a form of a verb, reply with "${longDash}". 
+0. You are given a konjugated spanish word. If it is a form of a verb, proceed with genetaring valence blocks for it's infinitive. If it is not a form of a verb, reply with "${longDash}". 
 1. Determine Reflexivity  
    - If the verb is only reflexive, generate a block for its reflexive usage.  
    - If the verb can be used both reflexively and non-reflexively, generate two separate blocks.  
@@ -122,62 +122,62 @@ export const generate_valence_block = `<assistant_role>You are an advanced lingu
 
 <examples>
 <exapmle>
-<german_word>verfeinden</german_word>
+<spanish_word>verfeinden</spanish_word>
 <ideal_output>${verfeinden_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>rennen</german_word>
+<spanish_word>rennen</spanish_word>
 <ideal_output>${rennen_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>hoffe</german_word>
+<spanish_word>hoffe</spanish_word>
 <ideal_output>${hoffen_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>vorgestellt</german_word>
+<spanish_word>vorgestellt</spanish_word>
 <ideal_output>${vorstellen_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>aufgepasst</german_word>
+<spanish_word>aufgepasst</spanish_word>
 <ideal_output>${aufpassen_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>gewöhnen</german_word>
+<spanish_word>gewöhnen</spanish_word>
 <ideal_output>${gewöhnen_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>darstellen</german_word>
+<spanish_word>darstellen</spanish_word>
 <ideal_output>${darstellen_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>erführe</german_word>
+<spanish_word>erführe</spanish_word>
 <ideal_output>${erfahren_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>erfahren</german_word>
+<spanish_word>erfahren</spanish_word>
 <ideal_output>${erfahren_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>normale</german_word>
+<spanish_word>normale</spanish_word>
 <ideal_output>${longDash}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>Frau</german_word>
+<spanish_word>Frau</spanish_word>
 <ideal_output>${longDash}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>liebsten</german_word>
+<spanish_word>liebsten</spanish_word>
 <ideal_output>${longDash}</ideal_output>
 </exapmle>
 <examples>`;

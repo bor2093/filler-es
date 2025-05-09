@@ -1,7 +1,7 @@
 {
 	"name": "cbcr-text-eater-de",
 	"version": "0.0.1",
-	"description": "Go trough the german texts, building your own dictionary from your personal contexts",
+	"description": "Go trough the spanish texts, building your own dictionary from your personal contexts",
 	"main": "main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",

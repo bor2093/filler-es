@@ -1,4 +1,4 @@
-export const determine_infinitive_and_pick_emoji = `Given a german word, determine it's normal form and pick an appropriate emoji to represent it. In this context, Partizip 1's normal from is an infinitive of a corresponding verb. If the word is a noun, determin it's gender and use 🔵 for der,  🔴 for die, if 🟢 for das. Do not write anything else, just the infinitive and an emoji. 
+export const determine_infinitive_and_pick_emoji = `Given a spanish word, determine it's normal form and pick an appropriate emoji to represent it. In this context, Partizip 1's normal from is an infinitive of a corresponding verb. If the word is a noun, determin it's gender and use 🔵 for der,  🔴 for die, if 🟢 for das. Do not write anything else, just the infinitive and an emoji. 
 Examples (input -> output):
 "brutzelt" -> "🍳 [[brutzeln]]",
 "gesorgt" -> "🤔 [[sorgen]]",

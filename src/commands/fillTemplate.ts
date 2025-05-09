@@ -38,7 +38,7 @@ function incertYouglishLinkInIpa(baseBlock: string) {
 
 	return (
 		baseBlock.slice(0, ipa1 + 1) +
-		`(https://youglish.com/pronounce/${word}/german)` +
+		`(https://youglish.com/pronounce/${word}/spanish)` +
 		baseBlock.slice(ipa1 + 1)
 	);
 }

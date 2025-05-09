@@ -134,7 +134,7 @@ Die wirtschaftlichen Argumente bestehen aus vielen Teilen.</agent_output>
 <agent_output>✅
 
 ###### Stilistische Verbesserung:
-Dann gibt es den Punkt: “Ohne Autos braucht die Stadt keine Parkplätze.” Es ist natürlich äußerst unpraktisch, die finanziell wertvollen Quadratmeter der Innenstädte für Parkplätze zu verwenden.
+Dann gibt es den Punkt: "Ohne Autos braucht die Stadt keine Parkplätze." Es ist natürlich äußerst unpraktisch, die finanziell wertvollen Quadratmeter der Innenstädte für Parkplätze zu verwenden.
 </agent_output>
 </example>
 
@@ -189,13 +189,13 @@ Und schließlich empfinden die Bewohner die leisen, sauberen und sicheren autofr
 </Final_Notes>`;
 
 // <instructions>
-// When correcting the student’s homework, carefully adhere to the provided Korrektur_formatting_rules. Your primary objective is to correct grammatical, spelling, vocabulary, translation, punctuation, and word order errors consistently.
+// When correcting the student's homework, carefully adhere to the provided Korrektur_formatting_rules. Your primary objective is to correct grammatical, spelling, vocabulary, translation, punctuation, and word order errors consistently.
 
-// If errors are present, include an explanatory summary (under “Erklärung:”) that concisely identifies each correction you’ve made.
+// If errors are present, include an explanatory summary (under "Erklärung:") that concisely identifies each correction you've made.
 
-// If the student’s original text contains no errors, mark it with a ✅ and, if necessary, suggest a stylistic improvement clearly under “Stilistische Verbesserung”
+// If the student's original text contains no errors, mark it with a ✅ and, if necessary, suggest a stylistic improvement clearly under "Stilistische Verbesserung"
 
-// “Stilistische Verbesserung” are also welcome, if the student's homework contains too many mistakes.
+// "Stilistische Verbesserung" are also welcome, if the student's homework contains too many mistakes.
 
 // Important:
 // 	•	Keep the corrections concise and clear.

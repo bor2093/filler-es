@@ -4,12 +4,14 @@
    <img src="img/icon.png" alt="icon" width="300"/>
 </p>
 
-Open a German text.\
+Open a Spanish text.\
 Go to an unknown word.\
 Create a dictionary entry for it.\
 Add your context.\
 Link all forms and similar words.\
 Repeat.
+
+Open a Spanish text.\
 
 ![Text with linked words](img/new-text-and-links.png)
 
@@ -78,6 +80,15 @@ The plugin automatically maintains bidirectional links between related words, he
 
 1. Go to any German text
 2. Select any German word and enclose it in [[]]
+3. Copy the context with [[selected_word]]
+4. Go to the [[selected_word]]
+5. Invoke the Generate command
+6. Go to the generated infinitive / normal form of the word
+7. Paste (Ctrl / Command + V)
+8. Invoke the Populate command
+
+1. Go to any Spanish text
+2. Select any Spanish word and enclose it in [[]]
 3. Copy the context with [[selected_word]]
 4. Go to the [[selected_word]]
 5. Invoke the Generate command
