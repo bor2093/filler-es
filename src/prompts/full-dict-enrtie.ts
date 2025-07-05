@@ -5,11 +5,12 @@ Before creating the entry, analyze the word and plan your approach. Break down t
 
 1. Identify the part of speech of the word.
 2. If it's a verb:
-- Determine if it's trennbar (separable) or untrennbar (inseparable).
+- Determine if it's reflexive or non-reflexive.
 - Identify its tense forms (present, past, perfect).
-- Note any irregular conjugations. -Fill the list of cojugations (Präsens, Präteritum, Imperativ, Konjunktiv I, Konjunktiv II) 
+- Note any irregular conjugations.
+- Fill the list of conjugations (Presente, Pretérito, Imperativo, Subjuntivo Presente, Subjuntivo Imperfecto)
 3. For nouns:
-- Identify the gender (masculine, feminine, or neuter).
+- Identify the gender (masculine or feminine).
 - Determine the declension pattern.
 4. For adjectives:
 - Note the comparative and superlative forms.
@@ -21,19 +22,19 @@ It's OK for this section to be quite long.
 
 Now, create the dictionary entry using the appropriate template based on your analysis. Strictly adhere to the format provided in the examples, ensuring no additional text is included that isn't present in the templates. Use the following guidelines:
 
-1. For trennbar verbs:
+1. For reflexive verbs:
 - Start with an appropriate emoji
 - Include pronunciation, conjugations, synonyms, antonyms, English and Russian translations, morpheme breakdown, and a conjugation table
 
-2. For untrennbar verbs and verbs without prefixes:
-- Follow a similar format to trennbar verbs, adjusting the conjugation details as needed
+2. For non-reflexive verbs:
+- Follow a similar format to reflexive verbs, adjusting the conjugation details as needed
 
 3. For adjectives:
 - Start with an appropriate emoji
 - Include pronunciation, antonyms, synonyms, English and Russian translations, and unique possible forms
 
 4. For nouns:
-- Use 🔴 for feminine, 🟢 for neuter, and 🔵 for masculine nouns
+- Use 🔴 for feminine and 🔵 for masculine nouns
 - Include plural form, synonyms, English and Russian translations, morpheme breakdown, and unique possible forms
 
 5. For other parts of speech:
@@ -42,430 +43,265 @@ Now, create the dictionary entry using the appropriate template based on your an
 Present only your final entry. Do not present the user with word_breakdown. Do not write to the user your thought process. Do not include tags in the output
 <examples>
 <example>
-<spanish_word>verfeinden</spanish_word>
-<agent_output>😤 [[verfeinden]], [fɛɐ̯ˈfaɪ̯ndn̩] | [[verfeindete]], haben [[verfeindet]]
+<spanish_word>enemistar</spanish_word>
+<agent_output>😤 [[enemistar]], [enemiˈstaɾ] → [[enemisté]], haber [[enemistado]]
 
 ---
 
 
 ---
-= [[zerstreiten]], [[entzweien]]
-≈ Feindschaft  [[schließen]], [[verkrachen]], in Konflikt [[geraten]]
-≠ [[versöhnen]], [[vertragen]], [[anfreunden]]
+= [[enfrentar]], [[enemigar]]
+≈ [[conflicto]], [[pelear]]
+≠ [[reconciliar]], [[amigar]], [[hacer amigos]]
 
 ---
 to make enemies, to set at odds
 поссорить, сделать врагами
 
 ---
-[[ver]]|[[fein]]|[den]]
+[[enemist]]|[[ar]]
 
 ---
 
-Person, Präsens, Präteritum, Imperativ, Konjunktiv I,  Konjunktiv II 
-ich, [[verfeind]] / [[verfeinde]], [[verfeindete]], [[verfeinde]], [[verfeindete]], -
-du, [[verfeindest]], [[verfeindetest]], [[verfeindest]], [[verfeindetest]], [[verfeind]] / [[verfeinde]]
-er, [[verfeindet]], [[verfeindete]], [[verfeinde]], [[verfeindete]], -
-wir, [[verfeinden]], [[verfeindeten]], [[verfeinden]], [[verfeindeten]], [[verfeinden]]
-ihr, [[verfeindet]], [[verfeindetet]], [[verfeindet]], [[verfeindetet]], [[verfeindet]]
-sie, [[verfeinden]], [[verfeindeten]], [[verfeinden]], [[verfeindeten]], [[verfeinden]]
+Persona, Presente, Pretérito, Imperativo, Subjuntivo Presente, Subjuntivo Imperfecto
+yo, [[enemisto]], [[enemisté]], [[enemista]], [[enemiste]], [[enemistara]]
+tú, [[enemistas]], [[enemistaste]], [[enemista]], [[enemistes]], [[enemistaras]]
+él, [[enemista]], [[enemistó]], [[enemiste]], [[enemiste]], [[enemistara]]
+nosotros, [[enemistamos]], [[enemistamos]], [[enemistemos]], [[enemistemos]], [[enemistáramos]]
+vosotros, [[enemistáis]], [[enemistasteis]], [[enemistad]], [[enemistéis]], [[enemistarais]]
+ellos, [[enemistan]], [[enemistaron]], [[enemisten]], [[enemisten]], [[enemistaran]]
 
-*Zu + Inf*: zu [[verfeinden]], P1: [[verfeindend]], P2: [[verfeindet]]
-
-
----
-[[verfeinden]] - [[ver]] = [[feinden]] / to make enemies, to set at odds
+*Infinitivo*: [[enemistar]], *Participio*: [[enemistado]]
+Adjetivos: [[enemistante]], [[enemistador]], [[enemistadísimo]]
 
 ---
-[[Verfehndung]], [[Verfeindung]], [[Feind]], [[feindlich]], [[Feindschaft]]</agent_output>
+[[enemistar]] - [[enemist]] = [[ar]] / to make enemies, to set at odds
+
+---
+[[enemistad]], [[enemigo]], [[enemistarse]], [[enemistamiento]]
+</agent_output>
 </example>
 
 <example>
-<spanish_word>tanztest</spanish_word>
-<agent_output>💃 [[tanzen]], [ˈtanʦn̩] | [[tanzte]], haben [[getanzt]]
+<spanish_word>bailaste</spanish_word>
+<agent_output>💃 [[bailar]], [baiˈlaɾ] → [[bailé]], haber [[bailado]]
 
 ---
 
 ---
-= [[sich bewegen]], [[schwofen]], [[abhotten]]
-≈ [[wiegen]], [[sich drehen]], [[hüpfen]], [[ballettieren]]
-≠ [[sitzen]], [[stehen]], [[verharren]], [[ruhen]]
+= [[danzar]], [[mover]]
+≈ [[girar]], [[saltar]], [[moverse]]
+≠ [[sentar]], [[parar]], [[quedarse]], [[descansar]]
 
 ---
 to dance
 танцевать
 
 ---
-[[tanz]]|[[en]]
+[[bail]]|[[ar]]
 
 ---
-Person, Präsens, Präteritum, Imperativ, Konjunktiv I,  Konjunktiv II 
-ich, [[tanz]] / [[tanze]], [[tanzte]], [[tanze]], [[tanzte]], -
-du, [[tanzt]], [[tanztest]], [[tanzest]], [[tanztest]], [[tanz /]] [[tanze]]
-er, [[tanzt]], [[tanzte]], [[tanze]], [[tanzte]], -
-wir, [[tanzen]], [[tanzten]], [[tanzen]], [[tanzten]], [[tanzen]]
-ihr, [[tanzt]], [[tanztet]], [[tanzet]], [[tanztet]], [[tanzt]]
-sie, [[tanzen]], [[tanzten]], [[tanzen]], [[tanzten]], [[tanzen]]
+Persona, Presente, Pretérito, Imperativo, Subjuntivo Presente, Subjuntivo Imperfecto
+yo, [[bailo]], [[bailé]], [[baila]], [[baile]], [[bailara]]
+tú, [[bailas]], [[bailaste]], [[baila]], [[bailes]], [[bailaras]]
+él, [[baila]], [[bailó]], [[baile]], [[baile]], [[bailara]]
+nosotros, [[bailamos]], [[bailamos]], [[bailemos]], [[bailemos]], [[bailáramos]]
+vosotros, [[bailáis]], [[bailasteis]], [[bailad]], [[bailéis]], [[bailarais]]
+ellos, [[bailan]], [[bailaron]], [[bailen]], [[bailen]], [[bailaran]]
 
-*Zu + Inf*: zu [[tanzen]], *P1*: [[tanzend]], *P2*: [[getanzt]]
+*Infinitivo*: [[bailar]], *Participio*: [[bailado]]
+Adjetivos: [[bailador]], [[bailante]], [[bailadísimo]]
 
 ---
 
 ---
-[[Tanz]], [[Tänzer]], [[Tänzerin]], [[Tanzfläche]], [[tanzerisch]], [[Tanzkurs]]</agent_output>
+[[baile]], [[bailarín]], [[bailarina]], [[bailadero]]
+</agent_output>
 </example>
 
 <example>
-<spanish_word>Hoffnung</spanish_word>
-<agent_output>🕊️ 🔴 die [[Hoffnung]], [ˈhɔfnʊŋ]
-die [[Hoffnungen]]
+<spanish_word>esperanza</spanish_word>
+<agent_output>🕊️ 🔴 la [[esperanza]], [espeˈɾanθa]
+las [[esperanzas]]
 
 ---
 
 
 ---
-= [[Zuversicht]], [[Optimismus]]
-≈ [[Erwartung]], [[Vertrauen]], [[Glaube]], [[Wunsch]]
-≠ [[Verzweiflung]], [[Pessimismus]], [[Hoffnungslosigkeit]], [[Resignation]]
+= [[confianza]], [[optimismo]]
+≈ [[expectativa]], [[fe]], [[deseo]]
+≠ [[desesperación]], [[pesimismo]], [[desesperanza]]
 
 ---
 hope
 надежда
 
 ---
-[[Hoff]]|[[nung]]
+[[esperan]]|[[za]]
 
 ---
-N: die [[Hoffnung]], die [[Hoffnungen]]  
-A: die [[Hoffnung]], die [[Hoffnungen]]  
-G: der [[Hoffnung]], der [[Hoffnungen]]  
-D: der [[Hoffnung]], den [[Hoffnungen]]  
+N: la [[esperanza]], las [[esperanzas]]
+A: la [[esperanza]], las [[esperanzas]]
+G: de la [[esperanza]], de las [[esperanzas]]
+D: a la [[esperanza]], a las [[esperanzas]]
 
 ---
-[[hoffen]], [[hoffentlich]], [[hoffnungsvoll]], [[hoffnungslos]]</agent_output>
+[[esperar]], [[esperanzado]], [[esperanzador]], [[esperanzarse]]
+</agent_output>
 </example>
 
 <example>
-<spanish_word>Busch</spanish_word>
-<agent_output>🌳 🔵 der [[Busch]]
-die [[B\\xFCsche]]
+<spanish_word>arbusto</spanish_word>
+<agent_output>🌳 🔵 el [[arbusto]], [aɾˈbusto]
+los [[arbustos]]
 
 ---
 
 
 ---
-= [[Strauch]], [[Gesträuch]]
-≈ [[Gebüsch]], [[Hecke]], [[Gehölz]]
-≠ [[Baum]], [[Wiese]], [[Ackerland]], [[Ödland]]
+= [[mata]], [[matojo]]
+≈ [[planta]], [[vegetal]]
+≠ [[árbol]], [[hierba]]
 
 ---
 bush, shrub
 куст
 
 ---
-[[Busch]]
+[[arbusto]]
 
 ---
-N: der [[Busch]], die [[Büsche]]  
-A: den [[Busch]], die [[Büsche]]  
-G: des [[Busches]], der [[Büsche]]  
-D: dem [[Busch]], den [[Büschen]] 
+N: el [[arbusto]], los [[arbustos]]
+A: el [[arbusto]], los [[arbustos]]
+G: del [[arbusto]], de los [[arbustos]]
+D: al [[arbusto]], a los [[arbustos]]
 
 ---
-buschig, buschieren</agent_output>
+[[arbustivo]], [[arbustillo]]
+</agent_output>
 </example>
 
 <example>
-<spanish_word>klein</spanish_word>
-<agent_output>🐭 [[klein]], [\\u02C8kla\\u026A\\u032Fn] ≠ [[gro\\xDF]]
+<spanish_word>pequeño</spanish_word>
+<agent_output>🐭 [[pequeño]], [peˈkeɲo] ≠ [[grande]]
 
 ---
 
 
 ---
-= [[kompakt]], [[winzig]], [[gering]]
-≈ [[niedrig]], [[schmal]], [[zierlich]], [[zart]], [[begrenzt]]
-≠ [[groß]], [[riesig]], [[weit]], [[breit]]
+= [[chico]], [[diminuto]]
+≈ [[bajo]], [[estrecho]], [[delicado]]
+≠ [[grande]], [[enorme]], [[amplio]]
 
 ---
 small, little
 маленький
 
 ---
-[[klein]]
+[[pequeñ]]|[[o]]
 
 ---
-N: [[klein]], [[kleiner]], [[kleinster]]  
-A: [[kleinen]], [[kleineren]], [[kleinsten]]  
-G: [[kleiner]], [[kleinerer]], [[kleinster]]  
-D: [[kleinem]], [[kleinerem]], [[kleinstem]]  
-F: [[kleine]], [[kleinere]], [[kleinste]]  
-N: [[kleines]], [[kleineres]], [[kleinstes]]  
-P: [[kleinen]], [[kleineren]], [[kleinsten]]  
+N: [[pequeño]], [[más pequeño]], [[el más pequeño]]
+A: [[pequeño]], [[más pequeño]], [[el más pequeño]]
+G: [[pequeño]], [[más pequeño]], [[el más pequeño]]
+D: [[pequeño]], [[más pequeño]], [[el más pequeño]]
 
 ---
-[[Kleinheit]], [[kleinlich]], [[kleinmachen]]</agent_output>
-</example>
-<example>
-<spanish_word>anzurufen</spanish_word>
-<agent_output>📞 [[anrufen]], [ˈanʦuˌʁuːfən] | [[rief an]], haben [[angerufen]]
-
----
-
-
----
-= [[telefonieren]], [[kontaktieren]], [[anklingeln]]
-≈ [[sich melden]], [[Kontakt aufnehmen]], [[durchklingeln]]
-≠ [[ignorieren]], [[ablehnen]], [[auflegen]], [[beenden]]
-
----
-to call, to phone
-звонить 
-
----
-[[an]]|[[ru]]|[[fen]]
-
----
-ich, [[ruf an]] / [[rufe an]], [[rief an]], [[rufe an]], [[riefe an]], -
-du, [[rufst an]], [[riefst an]], [[rufest an]], [[riefest an]], [[ruf an]] / [[rufe an]]
-er, [[ruft an]], [[rief an]], [[rufe an]], [[riefe an]], -
-wir, [[rufen an]], [[riefen an]], [[rufen an]], [[riefen an]], [[rufen an]]
-ihr, [[ruft an]], [[rieft an]], [[rufet an]], [[riefet an]], [[ruft an]]
-sie, [[rufen an]], [[riefen an]], [[rufen an]], [[riefen an]], [[rufen an]]
-*Zu + Inf*: [[anzurufen]], P1: [[anrufend]], P2: [[angerufen]]
-
----
-[[anrufen]] - [[an]] = [[rufen]] / to call, to phone
-
----
-[[Anruf]], [[Anrufer]], [[Anruferin]], [[anrufbar]], [[Anrufbeantworter]]</agent_output>
-</example>
-<example>
-<spanish_word>ständigen</spanish_word>
-<agent_output>🕰️ [[ständig]], [ˈʃtɛndɪç] ≠ [[selten]]
-
----
-
-
----
-= [[fortwährend]], [[dauerhaft]], [[andauernd]]
-≈ [[permanent]], [[kontinuierlich]], [[beständig]], [[ununterbrochen]], [[pausenlos]]
-≠ [[selten]], [[gelegentlich]], [[unregelmäßig]], [[sporadisch]]
-
----
-constantly, continuously, persistently, perpetually
-постоянный, непрерывный, беспрестанный
-
----
-[[stän]]|[[dig]]
-
----
-N: [[ständig]], [[ständiger]], [[ständigster]]  
-A: [[ständigen]], [[ständigeren]], [[ständigsten]]  
-G: [[ständigen]], [[ständigeren]], [[ständigsten]]  
-D: [[ständigem]], [[ständigeren]], [[ständigstem]]  
-F: [[ständige]], [[ständigere]], [[ständigste]]  
-N: [[ständiges]], [[ständigeres]], [[ständigstes]]  
-P: [[ständigen]], [[ständigeren]], [[ständigsten]]  
-
----
-[[stehen]], [[Ständigkeit]], [[zuständig]], [[anständig]], [[beständig]], [[aufständig]]</agent_output>
+[[pequeñez]], [[pequeñito]], [[pequeñín]]
+</agent_output>
 </example>
 
 <example>
-<spanish_word>zweiteres</spanish_word>
-<agent_output>2️⃣ [[zwei]], [t͡svaɪ̯]  
+<spanish_word>aunque</spanish_word>
+<agent_output>🔗 [[aunque]], [ˈaunke]
 
 ---
 
----
-= [[doppelt]], [[beide]], [[paar]]  
-≈ [[ein paar]], [[mehrere]], [[einige]]  
-≠ [[eins]], [[drei]], [[keiner]]  
 
 ---
-two  
-два  
+= [[a pesar de que]], [[si bien]]
+≈ [[pero]], [[sin embargo]]
+≠ [[porque]], [[ya que]]
 
 ---
-[[zwei]]  
+although, even though
+хотя
 
 ---
-N: [[zwei]]  
-A: [[zwei]]  
-G: [[zweier]]  
-D: [[zweien]]  
+[[aunque]]
 
 ---
-📏 **Konjugierte Ordinalzahlen**  
-N: [[zweite]], [[zweiter]], [[zweites]], [[zweiten]]  
-A: [[zweiten]], [[zweiteren]], [[zweiten]]  
-G: [[zweiten]], [[zweiterer]], [[zweiten]]  
-D: [[zweitem]], [[zweiterem]], [[zweiten]]  
-F: [[zweite]], [[zweitere]], [[zweiteste]]  
-N: [[zweites]], [[zweiteres]], [[zweitestes]]  
-P: [[zweiten]], [[zweiteren]], [[zweitesten]]  
+Conjunción subordinante concesiva
 
 ---
-📊 **Konjugierte Indefinitzahlen** *(if applicable)*  
-(none for zwei)  
-
----
-[[zweitens]], [[zweifach]], [[zwilling]], [[zweierlei]], [[zweiundzwanzig]], [[der Zweite]], [[zweitweise]], [[zweimalig]]</agent_output>
-</example>
-
-
-<example>
-<spanish_word>einzigsten</spanish_word>
-<agent_output>1️⃣ [[eins]], [aɪ̯ns] | [[ein]], [aɪ̯n]  
-
----
-= [[einziger]], [[einer]], [[einmal]]  
-≈ [[gewisser]], [[irgendein]], [[ein paar]]  
-≠ [[null]], [[zwei]], [[kein]]  
-
----
-one, a/an, single  
-один, некий, какой-то  
-
----
-[[ein]]  
-
----
-N: [[ein]], [[eins]]  
-A: [[ein]]  
-G: [[eines]]  
-D: [[einem]]  
-
----
-📏 **Konjugierte Ordinalzahlen**  
-N: [[erste]], [[erster]], [[erstes]], [[ersten]]  
-A: [[ersten]], [[ersteren]], [[ersten]]  
-G: [[ersten]], [[ersterer]], [[ersten]]  
-D: [[erstem]], [[ersterem]], [[ersten]]  
-F: [[erste]], [[erstere]], [[ersteste]]  
-N: [[erstes]], [[ersteres]], [[erstestes]]  
-P: [[ersten]], [[ersteren]], [[erstesten]]  
-
----
-📊 **Konjugierte Indefinitzahlen**  
-N: [[einige]], [[einer]], [[einziges]], [[einigen]]  
-A: [[einigen]], [[einiger]], [[einzigsten]]  
-G: [[einiger]], [[einigerer]], [[einzigster]]  
-D: [[einigem]], [[einigerem]], [[einzigstem]]  
-F: [[einige]], [[einige]], [[einzigste]]  
-N: [[einiges]], [[einigeres]], [[einzigstes]]  
-P: [[einigen]], [[einigeren]], [[einzigsten]]  
-
----
-[[einmal]], [[einzig]], [[einer]], [[einige]], [[erstens]], [[einheit]], [[einzel]], [[einzigartig]], [[einmalig]]</agent_output>
+[[aun]], [[aún]]
+</agent_output>
 </example>
 
 <example>
-<spanish_word>traurig</spanish_word>
-<agent_output>😢 [[traurig]], [ˈtʁaʊ̯ʁɪç]
-nicht [[fröhlich]]
+<spanish_word>obstruido</spanish_word>
+<agent_output>🚫 [[obstruir]], [obstɾuˈiɾ] → [[obstruí]], haber [[obstruido]]
 
 ---
 
+---
+= [[bloquear]], [[tapar]]
+≈ [[cerrar]], [[impedir]]
+≠ [[abrir]], [[desbloquear]], [[destapar]]
 
 ---
-= [[betrübt]], [[bekümmert]], [[niedergeschlagen]]
-≈ [[melancholisch]], [[wehmütig]], [[bedrückt]]
-≠ [[fröhlich]], [[glücklich]], [[heiter]], [[vergnügt]]
+to obstruct, to block
+преграждать, блокировать
 
 ---
-sad, sorrowful
-грустный, печальный
+[[obstr]]|[[uir]]
 
 ---
-[[trau]]|[[rig]]
+Persona, Presente, Pretérito, Imperativo, Subjuntivo Presente, Subjuntivo Imperfecto
+yo, [[obstruyo]], [[obstruí]], [[obstruye]], [[obstruya]], [[obstruyera]]
+tú, [[obstruyes]], [[obstruiste]], [[obstruye]], [[obstruyas]], [[obstruyeras]]
+él, [[obstruye]], [[obstruyó]], [[obstruya]], [[obstruya]], [[obstruyera]]
+nosotros, [[obstruimos]], [[obstruimos]], [[obstruyamos]], [[obstruyamos]], [[obstruyéramos]]
+vosotros, [[obstruís]], [[obstruisteis]], [[obstruid]], [[obstruyáis]], [[obstruyerais]]
+ellos, [[obstruyen]], [[obstruyeron]], [[obstruyan]], [[obstruyan]], [[obstruyeran]]
+
+*Infinitivo*: [[obstruir]], *Participio*: [[obstruido]]
+Adjetivos: [[obstructivo]], [[obstructor]], [[obstruidísimo]]
 
 ---
-N: [[traurig]], [[trauriger]], [[traurigster]]  
-A: [[traurigen]], [[traurigeren]], [[traurigsten]]  
-G: [[trauriger]], [[traurigerer]], [[traurigster]]  
-D: [[traurigem]], [[traurigerem]], [[traurigstem]]  
-F: [[traurige]], [[traurigere]], [[traurigste]]  
-N: [[trauriges]], [[traurigeres]], [[traurigstes]]  
-P: [[traurigen]], [[traurigeren]], [[traurigsten]]  
 
 ---
-[[Trauer]], [[trauern]], [[Traurigkeit]], [[betrauern]], [[trauernd]]</agent_output>
+[[obstrucción]], [[obstructor]], [[obstructivo]]
+</agent_output>
 </example>
-<example>
-<spanish_word>obwohl</spanish_word>
-<agent_output>🔗 [[obwohl]], [ɔpˈvoːl]
-
----
-
-
----
-= [[obgleich]], [[wenngleich]], [[obschon]]
-≈ [[dennoch]], [[gleichwohl]], [[trotzdem]], [[nichtsdestotrotz]]
-≠ [[weil]], [[denn]], [[deshalb]], [[daher]]
-
----
-although, even though, despite
-хотя, не смотря на 
-
----
-[[ob]]|[[wohl]]
-
----
-[[trotz]], [[obschon]], [[obzwar]], [[wiewohl]], [[obgleich]]</agent_output>
-</example>
-<example>
-<spanish_word>Rechercheergebnisse</spanish_word>
-<agent_output>📄 🟢 das [[Rechercheergbenis]], [reˈʃɛrʃəʔɛɐ̯ɡeːpnɪs]
-die [[Rechercheergbnisse]]
-
----
-
-
----
-= [[Untersuchungsergebnis]], [[Forschungsergebnis]]
-≈ [[Ergebnis]], [[Resultate]], [[Erkenntnisse]], [[Befund]]
-≠ [[Hypothese]], [[Vermutung]], [[Spekulation]]
-
----
-research result, findings
-результаты исследования
-
----
-[[Recher­che]]+[[ergeb­nis]]
-[[Re]]|[[cher]]|[[che]]|[[er]]|[[geb]]|[[nis]]
-
----
-N: das [[Rechercheergbenis]], die [[Rechercheergbnisse]]  
-A: das [[Rechercheergbenis]], die [[Rechercheergbnisse]]  
-G: des [[Rechercheergbnis­ses]], der [[Rechercheergbnisse]]  
-D: dem [[Rechercheergbnis]], den [[Rechercheergbnissen]]  
-
----
-[[recherchieren]], [[Recherche]], [[ergebnisorientiert]], [[Forschung]]</agent_output>
-</example>
-</examples>
 
 <example>
-<spanish_word>her</spanish_word>
-<agent_output>⬆️ [[her]], [heːɐ̯]
+<spanish_word>elevado</spanish_word>
+<agent_output>⬆️ [[elevado]], [eleˈβaðo] ≠ [[bajo]]
 
 ---
 
----
-= [[hierher]], [[dorthin]]
-≈ [[hin]], [[dort]], [[hier]]
-≠ [[hinweg]], [[weg]]
 
 ---
-here, hither
-сюда
+= [[alto]], [[subido]]
+≈ [[superior]], [[levantado]]
+≠ [[bajo]], [[descendido]], [[inferior]]
 
 ---
-[[her]]
+elevated, high
+высокий, поднятый
 
 ---
-[[herkommen]], [[heraus]], [[herum]], [[herüber]], [[herunter]], [[herausfinden]], [[herstellen]], [[hergeben]]</agent_output>
+[[elev]]|[[ado]]
+
+---
+N: [[elevado]], [[más elevado]], [[el más elevado]]
+A: [[elevado]], [[más elevado]], [[el más elevado]]
+G: [[elevado]], [[más elevado]], [[el más elevado]]
+D: [[elevado]], [[más elevado]], [[el más elevado]]
+
+---
+[[elevar]], [[elevación]], [[elevador]]
+</agent_output>
 </example>
-`;
+</examples>`;

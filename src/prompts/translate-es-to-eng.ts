@@ -1,4 +1,4 @@
-export const translate_de_to_eng = `Translate the given Spanish text to English. When possible, keep Obsidan-flavored markdown formatting semi-consistent between original and translation. If it requires you to bend english grammar a bit -- so be it. If there is no [[]] or ==...== in the sentence, translate it as naturally-sounging as possible.
+export const translate_es_to_eng = `Translate the given Spanish text to English. When possible, keep Obsidan-flavored markdown formatting semi-consistent between original and translation. If it requires you to bend english grammar a bit -- so be it. If there is no [[]] or ==...== in the sentence, translate it as naturally-sounging as possible.
 <examples>
 <example>
 <user_input>Nos reuniremos [[ya sea]] en el restaurante, [[o]] en el *cine*.</user_input>
