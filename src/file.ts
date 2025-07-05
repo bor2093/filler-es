@@ -1,5 +1,5 @@
 import { MarkdownView, TFile, App, Vault } from 'obsidian';
-import { appendToFile, doesFileContainContent } from './utils';
+import { appendToExistingFile, doesExistingFileContainContent } from './utils';
 
 export class FileService {
 	constructor(
@@ -56,15 +56,14 @@ export class FileService {
 		}
 	}
 
-	async appendToFile(filePath: string, text: string): Promise<void> {
-		return appendToFile(this.vault, filePath, text);
-	}
-
-	async doesFileContainContent(
-		path: string,
-		content: string
-	): Promise<boolean | null> {
-		return doesFileContainContent(this.vault, path, content);
+	async writeToOpenedFile(filePath: string, text: string): Promise<void> {
+		const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+		if (view && view?.file && view?.file?.path === filePath) {
+			const editor = view?.editor;
+			if (editor) {
+				editor.replaceRange(text, { line: editor.lineCount(), ch: 0 });
+			}
+		}
 	}
 
 	public showLoadingOverlay(): void {

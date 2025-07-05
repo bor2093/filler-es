@@ -1,7 +1,7 @@
 # Textfresser (Obsidian Plugin)
 
 <p align="center">
-   <img src="img/icon.png" alt="icon" width="300"/>
+   <img src="img/new-icon.png" alt="icon" width="300"/>
 </p>
 
 Open a Spanish text.\
@@ -32,7 +32,8 @@ The "Populate" command will:
 - create the files for ALL the links in current file
 - add an explicit backlink to the current file in every created file
 
-### Trivializes the navigation from declined forms to the normal form
+### Trivialises the navigation from declined froms to the normal form
+
 ![Navigation Example](img/navigation.png)
 
 reise → ✈️ reisen\
@@ -41,6 +42,7 @@ gereist → ✈️ reisen\
 reistet → ✈️ reisen
 
 ### Enables the collection of semantically linked words
+
 ![Semantic group Example](img/explain-example.png)
 
 ## Key Features

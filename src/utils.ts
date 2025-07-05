@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, TFile, Vault, normalizePath } from 'obsidian';
+import { Notice, TFile, TFolder, Vault, normalizePath } from 'obsidian';
 
 export const longDash = '—';
 
@@ -22,51 +22,151 @@ export function formatSelectionWithBacklink(
 	return `${formattedBacklink} ${selection} ^${nextNumber}\n`;
 }
 
-export async function appendToFile(
+export async function appendToExistingFile(
 	vault: Vault,
-	filePath: string,
+	file: TFile,
 	text: string
 ): Promise<void> {
 	try {
-		const normalizedPath = normalizePath(filePath);
-		let abstractFile = vault.getAbstractFileByPath(normalizedPath);
-
-		if (!abstractFile || !(abstractFile instanceof TFile)) {
-			await vault.create(normalizedPath, '');
-			abstractFile = vault.getAbstractFileByPath(normalizedPath);
-
-			if (!abstractFile || !(abstractFile instanceof TFile)) {
-				console.error(`Failed to create file "${normalizedPath}".`);
-				return;
-			}
-		}
-
-		await vault.process(abstractFile, (currentContent) => {
+		await vault.process(file, (currentContent) => {
 			return currentContent + text;
 		});
 	} catch (error) {
-		console.error(`Failed to append to file ${filePath}: ${error}`);
+		console.error(`Failed to append to file ${file.path}: ${error}`);
 		throw error;
 	}
 }
 
-export async function doesFileContainContent(
+export async function doesExistingFileContainContent(
 	vault: Vault,
-	path: string,
+	file: TFile,
 	content: string
 ): Promise<boolean | null> {
 	try {
-		const normalizedPath = normalizePath(path);
-		const file = vault.getAbstractFileByPath(normalizedPath);
-
-		if (!file || !(file instanceof TFile)) {
-			return null;
-		}
-
 		const fileContent = await vault.read(file);
 		return fileContent.includes(content);
 	} catch (error) {
-		console.error(`Failed to check file content ${path}: ${error}`);
+		console.error(`Failed to check file content ${file.path}: ${error}`);
 		return null;
 	}
+}
+
+export async function getExisingOrCreatedFileInWorterDir(
+	vault: Vault,
+	item: { name: string; path: string | null }
+): Promise<TFile | null> {
+	try {
+		let filePath: string;
+
+		if (item.path) {
+			filePath = item.path;
+			const normalizedPath = normalizePath(filePath);
+			const existing = vault.getAbstractFileByPath(normalizedPath);
+
+			if (existing instanceof TFile) {
+				return existing;
+			}
+			return null;
+		} else {
+			const originalName = item.name.trim();
+
+			// used only for folder sharding
+			const shardKey = originalName
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '')
+				.replace(/[^a-zA-Z0-9]/g, '')
+				.toLowerCase()
+				.padEnd(4, '_'); // ensures at least 4 chars
+
+			const first = shardKey[0];
+			const prefix = shardKey.slice(0, 3);
+			const shard = shardKey[3];
+
+			const folderPath = normalizePath(
+				`Worter/Ordered/${first}/${prefix}/${shard}`
+			);
+
+			console.log('folderPath before', folderPath);
+			const folder = await ensureFolderExists(vault, folderPath);
+			console.log('folderPath after', folder, folder?.path);
+
+			const cleanFileName = originalName.replace(/[\\/:*?"<>|]/g, '');
+			filePath = `${folder.path}/${cleanFileName}.md`;
+
+			const normalizedPath = normalizePath(filePath);
+			const file = await ensureFileExists(vault, normalizedPath);
+			return file;
+		}
+	} catch (error) {
+		new Notice(`Error creating file ${item.name}: ${error.message}`);
+	}
+	return null;
+}
+
+async function ensureFolderExists(
+	vault: Vault,
+	folderPath: string
+): Promise<TFolder> {
+	const segments = folderPath.split('/').filter(Boolean);
+	let currentPath = '';
+	let currentFolder: TFolder | null = vault.getRoot();
+
+	for (const segment of segments) {
+		currentPath = normalizePath(`${currentPath}/${segment}`);
+		const existing = vault.getAbstractFileByPath(currentPath);
+
+		if (existing instanceof TFolder) {
+			currentFolder = existing;
+		} else if (!existing) {
+			try {
+				currentFolder = await vault.createFolder(currentPath);
+			} catch (err: any) {
+				if (err.message.includes('already exists')) {
+					// race condition: folder was created in parallel
+					currentFolder = vault.getAbstractFileByPath(currentPath) as TFolder;
+				} else {
+					throw err;
+				}
+			}
+		} else {
+			throw new Error(`Cannot create folder: file exists at ${currentPath}`);
+		}
+	}
+
+	if (!currentFolder) {
+		throw new Error(`Failed to create or retrieve folder at ${folderPath}`);
+	}
+
+	return currentFolder;
+}
+
+export async function ensureFileExists(
+	vault: Vault,
+	filePath: string,
+	defaultContent = ''
+): Promise<TFile> {
+	const normalizedPath = normalizePath(filePath);
+	let file = vault.getAbstractFileByPath(normalizedPath);
+
+	if (file instanceof TFile) return file;
+
+	const folderPath = normalizedPath.split('/').slice(0, -1).join('/');
+	await ensureFolderExists(vault, folderPath);
+
+	try {
+		await vault.create(normalizedPath, defaultContent);
+	} catch (err: any) {
+		if (!err.message.includes('already exists')) {
+			throw err;
+		}
+		// race condition: another process created it first
+	}
+
+	file = vault.getAbstractFileByPath(normalizedPath);
+
+	if (!(file instanceof TFile)) {
+		throw new Error(`Failed to create or resolve file: ${normalizedPath}`);
+	}
+
+	return file;
 }
