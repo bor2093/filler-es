@@ -1,7 +1,7 @@
 import { keymaker } from 'prompts/keymaker';
 import { determine_infinitive_and_pick_emoji } from 'prompts/determine-infinitive-and-pick-emoji';
 import { normalize } from 'prompts/normalize';
-import { translate_es_to_eng } from 'prompts/translate-es-to-eng';
+import { translate_es_to_eng } from './translate-es-to-eng';
 import { generate_valence_block } from './valence';
 import { generate_forms } from './generate-forms';
 import { baseDict } from './baseDict';
