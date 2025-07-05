@@ -96,6 +96,43 @@ function createConjugationLink(word: string): string {
 	return `**Conjugación**: [elconjugador.com](https://www.elconjugador.com/conjugacion/verbo/${word}.html)`;
 }
 
+function determinePartOfSpeech(content: string): string {
+	// Check for verb patterns
+	if (content.includes('→') && content.includes('haber') && content.includes('[[')) {
+		return 'verbo';
+	}
+	
+	// Check for noun patterns (gender markers)
+	if (content.includes('🔴') || content.includes('🔵') || 
+		content.includes('el [[') || content.includes('la [[') ||
+		content.includes('los [[') || content.includes('las [[')) {
+		return 'sustantivo';
+	}
+	
+	// Check for adjective patterns (comparative forms or ≠ patterns)
+	if (content.includes('más [[') || content.includes('menos [[') ||
+		content.includes('comparative') || content.includes('superlative') ||
+		(content.includes('≠') && !content.includes('→'))) {
+		return 'adjetivo';
+	}
+	
+	// Check for adverb patterns
+	if (content.includes('mente]]') || content.includes('adverbio') || 
+		content.includes('aquí') || content.includes('allí')) {
+		return 'adverbio';
+	}
+	
+	// Default to unknown if can't determine
+	return 'desconocido';
+}
+
+function createTags(fileName: string, content: string, isGroundForm: boolean): string {
+	const partOfSpeech = determinePartOfSpeech(content);
+	const groundFormStatus = isGroundForm ? 'forma-base' : 'forma-derivada';
+	
+	return `#${groundFormStatus} #${partOfSpeech}`;
+}
+
 export default async function fillTemplate(
 	plugin: TextEaterPlugin,
 	editor: Editor,
@@ -119,8 +156,20 @@ export default async function fillTemplate(
 
 		const trimmedBaseEntrie = cleanAITags(dictionaryEntry);
 
+		// Split content to insert tags after header
+		const lines = trimmedBaseEntrie.split('\n');
+		const headerLine = lines[0]; // First line with emoji, word, pronunciation
+		const restOfContent = lines.slice(1).join('\n');
+		
+		const normalForm = extractFirstBracketedWord(trimmedBaseEntrie);
+		const isGroundForm = normalForm?.toLocaleLowerCase() === word.toLocaleLowerCase();
+		
+		// Add tags right after header with proper spacing
+		const tags = createTags(word, trimmedBaseEntrie, isGroundForm);
+		const contentWithTags = `${headerLine}\n\n${tags}\n\n${restOfContent}`;
+		
 		const baseBlock = await incertClipbordContentsInContextsBlock(
-			incertYouglishLinkInIpa(trimmedBaseEntrie)
+			incertYouglishLinkInIpa(contentWithTags)
 		);
 		const morphemsBlock = createSectionBlock('MORFEMAS', cleanAITags(morphems), longDash);
 		const valenceBlock = createSectionBlock('VALENCIA', cleanAITags(valence), longDash);
@@ -145,15 +194,15 @@ export default async function fillTemplate(
 		];
 		const entrie = joinBlocksWithProperSpacing(blocks, getSectionSeparator());
 
-		const normalForm = extractFirstBracketedWord(baseBlock);
-
-		if (normalForm?.toLocaleLowerCase() === word.toLocaleLowerCase()) {
+		if (isGroundForm) {
+			// Ground form - write the full entry
 			await plugin.fileService.writeToOpenedFile(file.path, entrie);
 		} else {
-			await plugin.fileService.writeToOpenedFile(
-				file.path,
-				`[[${normalForm}]]`
-			);
+			// Non-ground form - create minimal entry with tags and link to ground form
+			const derivedTags = createTags(word, trimmedBaseEntrie, false);
+			const derivedEntry = `[[${normalForm}]]\n\n${derivedTags}`;
+			
+			await plugin.fileService.writeToOpenedFile(file.path, derivedEntry);
 			await navigator.clipboard.writeText(entrie);
 		}
 	} catch (error) {
