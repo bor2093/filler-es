@@ -47,22 +47,26 @@ Present only your final entry. Do not present the user with word_breakdown. Do n
 <agent_output>😤 [[enemistar]], [enemiˈstaɾ] → [[enemisté]], haber [[enemistado]]
 
 ---
+### Contexto
 
 
 ---
+### Sinónimos y Antónimos
 = [[enfrentar]], [[enemigar]]
 ≈ [[conflicto]], [[pelear]]
 ≠ [[reconciliar]], [[amigar]], [[hacer amigos]]
 
 ---
+### Traducciones
 to make enemies, to set at odds
 поссорить, сделать врагами
 
 ---
+### Morfemas
 [[enemist]]|[[ar]]
 
 ---
-
+### Formas Gramaticales
 Persona, Presente, Pretérito, Imperativo, Subjuntivo Presente, Subjuntivo Imperfecto
 yo, [[enemisto]], [[enemisté]], [[enemista]], [[enemiste]], [[enemistara]]
 tú, [[enemistas]], [[enemistaste]], [[enemista]], [[enemistes]], [[enemistaras]]
@@ -75,9 +79,7 @@ ellos, [[enemistan]], [[enemistaron]], [[enemisten]], [[enemisten]], [[enemistar
 Adjetivos: [[enemistante]], [[enemistador]], [[enemistadísimo]]
 
 ---
-[[enemistar]] - [[enemist]] = [[ar]] / to make enemies, to set at odds
-
----
+### Palabras Relacionadas
 [[enemistad]], [[enemigo]], [[enemistarse]], [[enemistamiento]]
 </agent_output>
 </example>
@@ -87,20 +89,25 @@ Adjetivos: [[enemistante]], [[enemistador]], [[enemistadísimo]]
 <agent_output>💃 [[bailar]], [baiˈlaɾ] → [[bailé]], haber [[bailado]]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[danzar]], [[mover]]
 ≈ [[girar]], [[saltar]], [[moverse]]
 ≠ [[sentar]], [[parar]], [[quedarse]], [[descansar]]
 
 ---
+### Traducciones
 to dance
 танцевать
 
 ---
+### Morfemas
 [[bail]]|[[ar]]
 
 ---
+### Formas Gramaticales
 Persona, Presente, Pretérito, Imperativo, Subjuntivo Presente, Subjuntivo Imperfecto
 yo, [[bailo]], [[bailé]], [[baila]], [[baile]], [[bailara]]
 tú, [[bailas]], [[bailaste]], [[baila]], [[bailes]], [[bailaras]]
@@ -113,8 +120,7 @@ ellos, [[bailan]], [[bailaron]], [[bailen]], [[bailen]], [[bailaran]]
 Adjetivos: [[bailador]], [[bailante]], [[bailadísimo]]
 
 ---
-
----
+### Palabras Relacionadas
 [[baile]], [[bailarín]], [[bailarina]], [[bailadero]]
 </agent_output>
 </example>
@@ -125,26 +131,32 @@ Adjetivos: [[bailador]], [[bailante]], [[bailadísimo]]
 las [[esperanzas]]
 
 ---
+### Contexto
 
 
 ---
+### Sinónimos y Antónimos
 = [[confianza]], [[optimismo]]
 ≈ [[expectativa]], [[fe]], [[deseo]]
 ≠ [[desesperación]], [[pesimismo]], [[desesperanza]]
 
 ---
+### Traducciones
 hope
 надежда
 
 ---
+### Morfemas
 [[esperan]]|[[za]]
 
 ---
+### Formas Gramaticales
 **Singular**: la [[esperanza]]  
 **Plural**: las [[esperanzas]]  
 **Con preposiciones**: de la [[esperanza]], a la [[esperanza]], con la [[esperanza]]
 
 ---
+### Palabras Relacionadas
 [[esperar]], [[esperanzado]], [[esperanzador]], [[esperanzarse]]
 </agent_output>
 </example>
@@ -155,26 +167,32 @@ hope
 los [[arbustos]]
 
 ---
+### Contexto
 
 
 ---
+### Sinónimos y Antónimos
 = [[mata]], [[matojo]]
 ≈ [[planta]], [[vegetal]]
 ≠ [[árbol]], [[hierba]]
 
 ---
+### Traducciones
 bush, shrub
 куст
 
 ---
+### Morfemas
 [[arbusto]]
 
 ---
+### Formas Gramaticales
 **Singular**: el [[arbusto]]  
 **Plural**: los [[arbustos]]  
 **Con preposiciones**: del [[arbusto]], al [[arbusto]], con el [[arbusto]]
 
 ---
+### Palabras Relacionadas
 [[arbustivo]], [[arbustillo]]
 </agent_output>
 </example>
@@ -184,27 +202,33 @@ bush, shrub
 <agent_output>🐭 [[pequeño]], [peˈkeɲo] ≠ [[grande]]
 
 ---
+### Contexto
 
 
 ---
+### Sinónimos y Antónimos
 = [[chico]], [[diminuto]]
 ≈ [[bajo]], [[estrecho]], [[delicado]]
 ≠ [[grande]], [[enorme]], [[amplio]]
 
 ---
+### Traducciones
 small, little
 маленький
 
 ---
+### Morfemas
 [[pequeñ]]|[[o]]
 
 ---
+### Formas Gramaticales
 **Masculino**: [[pequeño]], [[pequeños]]  
 **Femenino**: [[pequeña]], [[pequeñas]]  
 **Comparativo**: [[más pequeño]], [[menos pequeño]]  
 **Superlativo**: [[el más pequeño]], [[pequeñísimo]]
 
 ---
+### Palabras Relacionadas
 [[pequeñez]], [[pequeñito]], [[pequeñín]]
 </agent_output>
 </example>
@@ -214,24 +238,30 @@ small, little
 <agent_output>🔗 [[aunque]], [ˈaunke]
 
 ---
+### Contexto
 
 
 ---
+### Sinónimos y Antónimos
 = [[a pesar de que]], [[si bien]]
 ≈ [[pero]], [[sin embargo]]
 ≠ [[porque]], [[ya que]]
 
 ---
+### Traducciones
 although, even though
 хотя
 
 ---
+### Morfemas
 [[aunque]]
 
 ---
+### Formas Gramaticales
 Conjunción subordinante concesiva
 
 ---
+### Palabras Relacionadas
 [[aun]], [[aún]]
 </agent_output>
 </example>
@@ -241,20 +271,25 @@ Conjunción subordinante concesiva
 <agent_output>🚫 [[obstruir]], [obstɾuˈiɾ] → [[obstruí]], haber [[obstruido]]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[bloquear]], [[tapar]]
 ≈ [[cerrar]], [[impedir]]
 ≠ [[abrir]], [[desbloquear]], [[destapar]]
 
 ---
+### Traducciones
 to obstruct, to block
 преграждать, блокировать
 
 ---
+### Morfemas
 [[obstr]]|[[uir]]
 
 ---
+### Formas Gramaticales
 Persona, Presente, Pretérito, Imperativo, Subjuntivo Presente, Subjuntivo Imperfecto
 yo, [[obstruyo]], [[obstruí]], [[obstruye]], [[obstruya]], [[obstruyera]]
 tú, [[obstruyes]], [[obstruiste]], [[obstruye]], [[obstruyas]], [[obstruyeras]]
@@ -267,8 +302,7 @@ ellos, [[obstruyen]], [[obstruyeron]], [[obstruyan]], [[obstruyan]], [[obstruyer
 Adjetivos: [[obstructivo]], [[obstructor]], [[obstruidísimo]]
 
 ---
-
----
+### Palabras Relacionadas
 [[obstrucción]], [[obstructor]], [[obstructivo]]
 </agent_output>
 </example>
@@ -278,27 +312,33 @@ Adjetivos: [[obstructivo]], [[obstructor]], [[obstruidísimo]]
 <agent_output>⬆️ [[elevado]], [eleˈβaðo] ≠ [[bajo]]
 
 ---
+### Contexto
 
 
 ---
+### Sinónimos y Antónimos
 = [[alto]], [[subido]]
 ≈ [[superior]], [[levantado]]
 ≠ [[bajo]], [[descendido]], [[inferior]]
 
 ---
+### Traducciones
 elevated, high
 высокий, поднятый
 
 ---
+### Morfemas
 [[elev]]|[[ado]]
 
 ---
+### Formas Gramaticales
 **Masculino**: [[elevado]], [[elevados]]  
 **Femenino**: [[elevada]], [[elevadas]]  
 **Comparativo**: [[más elevado]], [[menos elevado]]  
 **Superlativo**: [[el más elevado]], [[elevadísimo]]
 
 ---
+### Palabras Relacionadas
 [[elevar]], [[elevación]], [[elevador]]
 </agent_output>
 </example>

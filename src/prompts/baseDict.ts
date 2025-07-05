@@ -54,17 +54,21 @@ export const baseDict = `<assistant_role>You are an expert linguist specializing
 😤 [[enemistar]], [enemiˈstaɾ] → [[enemisté]] → haber [[enemistado]]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[enfrentar]], [[enemigar]]
 ≈ [[conflicto]], [[pelear]]
 ≠ [[reconciliar]], [[amigar]], [[hacer amigos]]
 
 ---
+### Traducciones
 to make enemies, to set at odds  
 поссорить, сделать врагами
 
 ---
+### Palabras Relacionadas
 [[enemistad]], [[enemigo]], [[enemistarse]], [[enemistamiento]]
 </agent_output>
 </example>
@@ -75,17 +79,21 @@ to make enemies, to set at odds
 💃 [[bailar]], [baiˈlaɾ] | [[bailé]], haber [[bailado]]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[danzar]], [[mover]], [[saltar]]
 ≈ [[girar]], [[rotar]], [[saltar]], [[bailotear]]
 ≠ [[sentar]], [[parar]], [[quedar]], [[descansar]]
 
 ---
+### Traducciones
 to dance  
 танцевать
 
 ---
+### Palabras Relacionadas
 [[baile]], [[bailarín]], [[bailarina]], [[bailadero]], [[bailador]], [[bailongo]]
 </agent_output>
 </example>
@@ -97,17 +105,21 @@ to dance
 las [[esperanzas]]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[confianza]], [[optimismo]]
 ≈ [[expectativa]], [[confianza]], [[fe]], [[deseo]]
 ≠ [[desesperación]], [[pesimismo]], [[desesperanza]], [[resignación]]
 
 ---
+### Traducciones
 hope  
 надежда
 
 ---
+### Palabras Relacionadas
 [[esperar]], [[esperanzado]], [[esperanzador]], [[esperanzarse]]
 </agent_output>
 </example>
@@ -119,17 +131,21 @@ hope
 los [[resultados de investigación]]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[hallazgos]], [[descubrimientos]]
 ≈ [[conclusiones]], [[datos]], [[encontrados]], [[descubrimiento]]
 ≠ [[hipótesis]], [[suposición]], [[especulación]]
 
 ---
+### Traducciones
 research results, findings  
 результаты исследования
 
 ---
+### Palabras Relacionadas
 [[investigar]], [[investigación]], [[investigador]], [[investigativo]]
 </agent_output>
 </example>
@@ -140,17 +156,21 @@ research results, findings
 ⬆️ [[aquí]], [aˈki]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[acá]], [[hacia aquí]]
 ≈ [[allí]], [[allá]], [[ahí]]
 ≠ [[allá]], [[lejos]]
 
 ---
+### Traducciones
 here, hither  
 сюда
 
 ---
+### Palabras Relacionadas
 [[aquende]], [[aquí mismo]], [[por aquí]], [[hasta aquí]], [[desde aquí]]
 </agent_output>
 </example>
@@ -162,17 +182,21 @@ here, hither
 los [[lagos]] | no existe
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[estanque]], [[charca]] | no aplica
 ≈ [[embalse]], [[laguna]] | no aplica
 ≠ [[mar]] | no aplica
 
 ---
+### Traducciones
 lake  | sea  
 озеро | море
 
 ---
+### Palabras Relacionadas
 [[laguna]], [[lagunero]], [[lagunoso]] | no aplica
 </agent_output>
 </example>
@@ -184,17 +208,21 @@ lake  | sea
 los [[bancos]] | los [[bancos]]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[entidad financiera]], [[institución bancaria]] | [[asiento]]
 ≈ [[caja de ahorros]], [[casa bancaria]] | [[silla]], [[taburete]]
 ≠ [[escuela]] | [[mesa]]
 
 ---
+### Traducciones
 bank  | bench  
 банк  | скамья
 
 ---
+### Palabras Relacionadas
 [[bancario]], [[banquero]], [[bancarizar]] | [[bancada]], [[banquillo]]
 </agent_output>
 </example>
@@ -205,17 +233,21 @@ bank  | bench
 🍞 [[hornear]], [oɾneˈaɾ] → [[horneé]] → [[horneado]]
 
 ---
+### Contexto
 
 ---
+### Sinónimos y Antónimos
 = [[cocer]]
 ≈ [[cocinar]], [[preparar]]
 ≠ [[tostar]], [[calentar]]
 
 ---
+### Traducciones
 to bake  
 печь
 
 ---
+### Palabras Relacionadas
 [[horno]], [[horneado]], [[horneador]] | [[panadería]], [[arte culinario]]
 </agent_output>
 </example>

@@ -76,12 +76,12 @@ export default async function fillTemplate(
 			incertYouglishLinkInIpa(trimmedBaseEntrie)
 		);
 		const morphemsBlock =
-			morphems.replace('\n', '') === longDash ? '' : `${morphems}\n`;
+			morphems.replace('\n', '') === longDash ? '' : `### Morfemas\n${morphems}`;
 		const valenceBlock =
-			valence.replace('\n', '') === longDash ? '' : `${valence}`;
-		const fromsBlock = froms.replace('\n', '') === longDash ? '' : `${froms}`;
+			valence.replace('\n', '') === longDash ? '' : `### Valencia\n${valence}`;
+		const fromsBlock = froms.replace('\n', '') === longDash ? '' : `### Formas Gramaticales\n${froms}`;
 		const adjFormsBlock =
-			adjForms.replace('\n', '') === longDash ? '' : `${adjForms}`;
+			adjForms.replace('\n', '') === longDash ? '' : `### Formas Adjetivales\n${adjForms}`;
 
 		const blocks = [
 			baseBlock,
