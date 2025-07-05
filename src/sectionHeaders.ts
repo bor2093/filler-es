@@ -11,7 +11,8 @@ export const SECTION_HEADERS = {
   FORMAS_GRAMATICALES: '### Formas Gramaticales',
   VALENCIA: '### Valencia',
   FORMAS_ADJETIVALES: '### Formas Adjetivales',
-  PALABRAS_RELACIONADAS: '### Palabras Relacionadas'
+  PALABRAS_RELACIONADAS: '### Palabras Relacionadas',
+  ENLACES_ENTRANTES: '### Enlaces Entrantes'
 } as const;
 
 /**
@@ -76,6 +77,7 @@ export function createDictionaryEntryTemplate(
     valencia?: string;
     formasAdjetivales?: string;
     palabrasRelacionadas?: string;
+    enlacesEntrantes?: string;
   }
 ): string {
   const blocks = [headerContent];
@@ -144,6 +146,14 @@ export function createDictionaryEntryTemplate(
     );
   }
   
+  if (sections.enlacesEntrantes) {
+    blocks.push(
+      getSectionSeparator(),
+      SECTION_HEADERS.ENLACES_ENTRANTES,
+      sections.enlacesEntrantes
+    );
+  }
+  
   return blocks.join('\n');
 }
 
@@ -167,6 +177,7 @@ export function createExampleEntry(
     valencia?: string;
     formasAdjetivales?: string;
     palabrasRelacionadas?: string;
+    enlacesEntrantes?: string;
   }
 ): string {
   return `<example>

@@ -50,6 +50,14 @@ async function incertClipbordContentsInContextsBlock(
 	return baseBlock;
 }
 
+function createDataviewQuery(word: string): string {
+	return `\`\`\`dataview
+LIST FROM [[]]
+WHERE (file.name != this.file.name)
+SORT file.ctime ASC
+\`\`\``;
+}
+
 export default async function fillTemplate(
 	plugin: TextEaterPlugin,
 	editor: Editor,
@@ -80,6 +88,7 @@ export default async function fillTemplate(
 		const valenceBlock = createSectionBlock('VALENCIA', valence, longDash);
 		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', froms, longDash);
 		const adjFormsBlock = createSectionBlock('FORMAS_ADJETIVALES', adjForms, longDash);
+		const enlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
 
 		const blocks = [
 			baseBlock,
@@ -87,6 +96,7 @@ export default async function fillTemplate(
 			valenceBlock,
 			fromsBlock,
 			adjFormsBlock,
+			enlacesEntrantesBlock,
 		];
 		const entrie = blocks.filter(Boolean).join(`\n${getSectionSeparator()}\n`);
 
