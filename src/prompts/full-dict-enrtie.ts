@@ -140,10 +140,9 @@ hope
 [[esperan]]|[[za]]
 
 ---
-N: la [[esperanza]], las [[esperanzas]]
-A: la [[esperanza]], las [[esperanzas]]
-G: de la [[esperanza]], de las [[esperanzas]]
-D: a la [[esperanza]], a las [[esperanzas]]
+**Singular**: la [[esperanza]]  
+**Plural**: las [[esperanzas]]  
+**Con preposiciones**: de la [[esperanza]], a la [[esperanza]], con la [[esperanza]]
 
 ---
 [[esperar]], [[esperanzado]], [[esperanzador]], [[esperanzarse]]
@@ -171,10 +170,9 @@ bush, shrub
 [[arbusto]]
 
 ---
-N: el [[arbusto]], los [[arbustos]]
-A: el [[arbusto]], los [[arbustos]]
-G: del [[arbusto]], de los [[arbustos]]
-D: al [[arbusto]], a los [[arbustos]]
+**Singular**: el [[arbusto]]  
+**Plural**: los [[arbustos]]  
+**Con preposiciones**: del [[arbusto]], al [[arbusto]], con el [[arbusto]]
 
 ---
 [[arbustivo]], [[arbustillo]]
@@ -201,10 +199,10 @@ small, little
 [[pequeñ]]|[[o]]
 
 ---
-N: [[pequeño]], [[más pequeño]], [[el más pequeño]]
-A: [[pequeño]], [[más pequeño]], [[el más pequeño]]
-G: [[pequeño]], [[más pequeño]], [[el más pequeño]]
-D: [[pequeño]], [[más pequeño]], [[el más pequeño]]
+**Masculino**: [[pequeño]], [[pequeños]]  
+**Femenino**: [[pequeña]], [[pequeñas]]  
+**Comparativo**: [[más pequeño]], [[menos pequeño]]  
+**Superlativo**: [[el más pequeño]], [[pequeñísimo]]
 
 ---
 [[pequeñez]], [[pequeñito]], [[pequeñín]]
@@ -295,10 +293,10 @@ elevated, high
 [[elev]]|[[ado]]
 
 ---
-N: [[elevado]], [[más elevado]], [[el más elevado]]
-A: [[elevado]], [[más elevado]], [[el más elevado]]
-G: [[elevado]], [[más elevado]], [[el más elevado]]
-D: [[elevado]], [[más elevado]], [[el más elevado]]
+**Masculino**: [[elevado]], [[elevados]]  
+**Femenino**: [[elevada]], [[elevadas]]  
+**Comparativo**: [[más elevado]], [[menos elevado]]  
+**Superlativo**: [[el más elevado]], [[elevadísimo]]
 
 ---
 [[elevar]], [[elevación]], [[elevador]]

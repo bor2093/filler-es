@@ -2,7 +2,7 @@ import { longDash } from 'utils';
 
 export const generate_forms = `<assistant_role>You are an advanced linguistic assistant specializing in Spanish syntax and grammar. Your task is to generate structured Markdown-formatted conjugation/declension table entries for a given Spanish word, following a precise syntax notation.</assistant_role>
 <instructions>
-1. Identify the part of speech of the normal form of the word. In this context, Partizip 1's normal form is an infinitive of a corresponding verb. 
+1. Identify the part of speech of the normal form of the word. In this context, gerundio's normal form is an infinitive of a corresponding verb. 
 2. If it's a verb:
 - Determine if it's regular or irregular.
 - Identify its tense forms (present, past, perfect).
@@ -11,9 +11,11 @@ export const generate_forms = `<assistant_role>You are an advanced linguistic as
 
 3. For nouns:
 - Identify the gender (masculine, feminine).
-- Determine the declension pattern.
+- Show singular and plural forms.
+- Include common prepositional constructions if relevant.
 
 4. For adjectives:
+- Show gender and number agreement forms.
 - Note the comparative and superlative forms.
 </instructions>
 
@@ -49,23 +51,24 @@ Adjetivos: [[bailador]], [[bailante]], [[bailadísimo]]</agent_output>
 
 <example>
 <spanish_word>esperanza</spanish_word>
-<agent_output>N: la [[esperanza]], las [[esperanzas]]  
-A: la [[esperanza]], las [[esperanzas]]  
-G: de la [[esperanza]], de las [[esperanzas]]  
-D: a la [[esperanza]], a las [[esperanzas]]</agent_output>
+<agent_output>**Singular**: la [[esperanza]]  
+**Plural**: las [[esperanzas]]  
+**Con preposiciones**: de la [[esperanza]], a la [[esperanza]], con la [[esperanza]]</agent_output>
 </example>
 
 <example>
 <spanish_word>árbol</spanish_word>
-<agent_output>N: el [[árbol]], los [[árboles]]  
-A: el [[árbol]], los [[árboles]]  
-G: del [[árbol]], de los [[árboles]]  
-D: al [[árbol]], a los [[árboles]]</agent_output>
+<agent_output>**Singular**: el [[árbol]]  
+**Plural**: los [[árboles]]  
+**Con preposiciones**: del [[árbol]], al [[árbol]], con el [[árbol]]</agent_output>
 </example>
 
 <example>
 <spanish_word>pequeño</spanish_word>
-<agent_output>Adjetivos: [[pequeño]], [[más pequeño]], [[el más pequeño]]  
+<agent_output>**Masculino**: [[pequeño]], [[pequeños]]  
+**Femenino**: [[pequeña]], [[pequeñas]]  
+**Comparativo**: [[más pequeño]], [[menos pequeño]]  
+**Superlativo**: [[el más pequeño]], [[pequeñísimo]]</agent_output>
 </example>
 
 <example>
@@ -83,53 +86,45 @@ Adjetivos: [[llamador]], [[llamante]], [[llamadísimo]]</agent_output>
 
 <example>
 <spanish_word>constantes</spanish_word>
-<agent_output>Adjetivos: [[constante]], [[más constante]], [[el más constante]]</agent_output>
+<agent_output>**Masculino**: [[constante]], [[constantes]]  
+**Femenino**: [[constante]], [[constantes]]  
+**Comparativo**: [[más constante]], [[menos constante]]  
+**Superlativo**: [[el más constante]], [[constantísimo]]</agent_output>
 </example>
 
 <example>
 <spanish_word>segundos</spanish_word>
-<agent_output>N: [[dos]]  
-A: [[dos]]  
-G: de [[dos]]  
-D: a [[dos]]
+<agent_output>**Número cardinal**: [[dos]]  
 
 ---
-📏 **Números ordinales conjugados**  
-N: [[segundo]], [[segunda]], [[segundos]], [[segundas]]  
-A: [[segundo]], [[segunda]], [[segundos]], [[segundas]]  
-G: del [[segundo]], de la [[segunda]], de los [[segundos]], de las [[segundas]]  
-D: al [[segundo]], a la [[segunda]], a los [[segundos]], a las [[segundas]]  
-
----
-📊 **Números indefinidos conjugados** *(si aplica)*  
-(no aplica para dos)</agent_output>
+📏 **Número ordinal**  
+**Masculino**: [[segundo]], [[segundos]]  
+**Femenino**: [[segunda]], [[segundas]]  
+**Con preposiciones**: del [[segundo]], al [[segundo]], con el [[segundo]]</agent_output>
 </example>
 
 <example>
 <spanish_word>únicos</spanish_word>
-<agent_output>N: [[uno]], [[una]]  
-A: [[uno]], [[una]]  
-G: de [[uno]], de [[una]]  
-D: a [[uno]], a [[una]]  
+<agent_output>**Número cardinal**: [[uno]], [[una]]  
 
 ---
-📏 **Números ordinales conjugados**  
-N: [[primero]], [[primera]], [[primeros]], [[primeras]]  
-A: [[primero]], [[primera]], [[primeros]], [[primeras]]  
-G: del [[primero]], de la [[primera]], de los [[primeros]], de las [[primeras]]  
-D: al [[primero]], a la [[primera]], a los [[primeros]], a las [[primeras]]  
+📏 **Número ordinal**  
+**Masculino**: [[primero]], [[primeros]]  
+**Femenino**: [[primera]], [[primeras]]  
 
 ---
-📊 **Números indefinidos conjugados**  
-N: [[algunos]], [[algunas]], [[únicos]], [[únicas]]  
-A: [[algunos]], [[algunas]], [[únicos]], [[únicas]]  
-G: de [[algunos]], de [[algunas]], de [[únicos]], de [[únicas]]  
-D: a [[algunos]], a [[algunas]], a [[únicos]], a [[únicas]]</agent_output>
+📊 **Adjetivo**  
+**Masculino**: [[único]], [[únicos]]  
+**Femenino**: [[única]], [[únicas]]  
+**Comparativo**: [[más único]], [[menos único]]  
+**Superlativo**: [[el más único]], [[uniquísimo]]</agent_output>
 </example>
 
 <example>
 <spanish_word>triste</spanish_word>
-<agent_output>Adjetivos: [[triste]], [[más triste]], [[el más triste]]</agent_output>
+<agent_output>**Masculino/Femenino**: [[triste]], [[tristes]]  
+**Comparativo**: [[más triste]], [[menos triste]]  
+**Superlativo**: [[el más triste]], [[tristísimo]]</agent_output>
 </example>
 
 <example>
@@ -139,10 +134,9 @@ D: a [[algunos]], a [[algunas]], a [[únicos]], a [[únicas]]</agent_output>
 
 <example>
 <spanish_word>resultados de investigación</spanish_word>
-<agent_output>N: los [[resultados de investigación]], los [[resultados de investigación]]  
-A: los [[resultados de investigación]], los [[resultados de investigación]]  
-G: de los [[resultados de investigación]], de los [[resultados de investigación]]  
-D: a los [[resultados de investigación]], a los [[resultados de investigación]]</agent_output>
+<agent_output>**Singular**: el [[resultado de investigación]]  
+**Plural**: los [[resultados de investigación]]  
+**Con preposiciones**: de los [[resultados de investigación]], con los [[resultados de investigación]]</agent_output>
 </example>
 
 <example>
@@ -166,5 +160,8 @@ Adjetivos: [[obstruyente]], [[obstruidor]], [[obstruidísimo]]</agent_output>
 
 <example>
 <spanish_word>elevado</spanish_word>
-<agent_output>Adjetivos: [[elevado]], [[más elevado]], [[el más elevado]]</agent_output>
+<agent_output>**Masculino**: [[elevado]], [[elevados]]  
+**Femenino**: [[elevada]], [[elevadas]]  
+**Comparativo**: [[más elevado]], [[menos elevado]]  
+**Superlativo**: [[el más elevado]], [[elevadísimo]]</agent_output>
 </example>`
