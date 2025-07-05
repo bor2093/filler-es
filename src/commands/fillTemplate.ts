@@ -52,10 +52,34 @@ async function incertClipbordContentsInContextsBlock(
 
 function createDataviewQuery(word: string): string {
 	return `\`\`\`dataview
-LIST FROM [[]]
-WHERE (file.name != this.file.name)
+LIST FROM [[${word}]]
+WHERE (file.name != this.file.name) AND (!contains(this.file.outlinks, file.link))
 SORT file.ctime ASC
 \`\`\``;
+}
+
+function cleanAITags(content: string): string {
+	return content
+		.replace(/<agent_output>/g, '')
+		.replace(/<\/agent_output>/g, '')
+		.replace(/^<agent_output>/, '')
+		.replace(/<\/agent_output>$/, '')
+		.trim();
+}
+
+function ensureProperSpacing(content: string): string {
+	// Remove any trailing whitespace and ensure content ends with a single newline
+	return content.trim();
+}
+
+function joinBlocksWithProperSpacing(blocks: string[], separator: string): string {
+	// Filter out empty blocks and ensure proper spacing
+	const cleanBlocks = blocks
+		.filter(Boolean)
+		.map(block => ensureProperSpacing(block));
+	
+	// Join with proper spacing: content + empty line + separator + empty line + content
+	return cleanBlocks.join(`\n\n${separator}\n`);
 }
 
 export default async function fillTemplate(
@@ -79,15 +103,15 @@ export default async function fillTemplate(
 
 		const adjForms = extractAdjectiveForms(froms);
 
-		const trimmedBaseEntrie = `${dictionaryEntry.replace('<agent_output>', '').replace('</agent_output>', '')}`;
+		const trimmedBaseEntrie = cleanAITags(dictionaryEntry);
 
 		const baseBlock = await incertClipbordContentsInContextsBlock(
 			incertYouglishLinkInIpa(trimmedBaseEntrie)
 		);
-		const morphemsBlock = createSectionBlock('MORFEMAS', morphems, longDash);
-		const valenceBlock = createSectionBlock('VALENCIA', valence, longDash);
-		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', froms, longDash);
-		const adjFormsBlock = createSectionBlock('FORMAS_ADJETIVALES', adjForms, longDash);
+		const morphemsBlock = createSectionBlock('MORFEMAS', cleanAITags(morphems), longDash);
+		const valenceBlock = createSectionBlock('VALENCIA', cleanAITags(valence), longDash);
+		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', cleanAITags(froms), longDash);
+		const adjFormsBlock = createSectionBlock('FORMAS_ADJETIVALES', cleanAITags(adjForms), longDash);
 		const enlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
 
 		const blocks = [
@@ -98,7 +122,7 @@ export default async function fillTemplate(
 			adjFormsBlock,
 			enlacesEntrantesBlock,
 		];
-		const entrie = blocks.filter(Boolean).join(`\n${getSectionSeparator()}\n`);
+		const entrie = joinBlocksWithProperSpacing(blocks, getSectionSeparator());
 
 		const normalForm = extractFirstBracketedWord(baseBlock);
 
