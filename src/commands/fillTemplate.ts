@@ -82,6 +82,20 @@ function joinBlocksWithProperSpacing(blocks: string[], separator: string): strin
 	return cleanBlocks.join(`\n\n${separator}\n`);
 }
 
+function isVerb(content: string): boolean {
+	// Check if the content contains verb patterns like "→ [[word]] → haber [[word]]"
+	// or conjugation tables, or infinitive patterns
+	return (
+		content.includes('→') &&
+		content.includes('haber') &&
+		content.includes('[[')
+	) || content.includes('Infinitivo') || content.includes('Participio');
+}
+
+function createConjugationLink(word: string): string {
+	return `**Conjugación**: [elconjugador.com](https://www.elconjugador.com/conjugacion/verbo/${word}.html)`;
+}
+
 export default async function fillTemplate(
 	plugin: TextEaterPlugin,
 	editor: Editor,
@@ -110,7 +124,14 @@ export default async function fillTemplate(
 		);
 		const morphemsBlock = createSectionBlock('MORFEMAS', cleanAITags(morphems), longDash);
 		const valenceBlock = createSectionBlock('VALENCIA', cleanAITags(valence), longDash);
-		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', cleanAITags(froms), longDash);
+		
+		// Add conjugation link to Formas Gramaticales for verbs
+		let formasContent = cleanAITags(froms);
+		if (isVerb(trimmedBaseEntrie) && formasContent !== longDash) {
+			formasContent += `\n\n${createConjugationLink(word)}`;
+		}
+		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', formasContent, longDash);
+		
 		const adjFormsBlock = createSectionBlock('FORMAS_ADJETIVALES', cleanAITags(adjForms), longDash);
 		const enlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
 
