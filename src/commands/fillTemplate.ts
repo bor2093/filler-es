@@ -110,7 +110,7 @@ export default async function fillTemplate(
 
 function extractBaseForms(text: string): string[] | null {
 	const match = text.match(
-		/Adjektive:\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\]/
+		/Adjetivos:\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\]/
 	);
 	if (!match) {
 		return null;
@@ -128,7 +128,7 @@ function extractAdjectiveForms(text: string): string {
 		return longDash;
 	}
 
-	const endings = ['er', 'es', 'e', 'en', 'em'];
+	const endings = ['o', 'a', 'os', 'as'];
 
 	const result: string[] = [];
 
