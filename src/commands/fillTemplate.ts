@@ -198,9 +198,11 @@ export default async function fillTemplate(
 			// Ground form - write the full entry
 			await plugin.fileService.writeToOpenedFile(file.path, entrie);
 		} else {
-			// Non-ground form - create minimal entry with tags and link to ground form
+			// Non-ground form - create minimal entry with tags, link to ground form, and incoming links
 			const derivedTags = createTags(word, trimmedBaseEntrie, false);
-			const derivedEntry = `[[${normalForm}]]\n\n${derivedTags}`;
+			const derivedEnlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
+			
+			const derivedEntry = `[[${normalForm}]]\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}`;
 			
 			await plugin.fileService.writeToOpenedFile(file.path, derivedEntry);
 			await navigator.clipboard.writeText(entrie);
