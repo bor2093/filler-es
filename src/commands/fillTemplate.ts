@@ -2,6 +2,7 @@ import { Editor, MarkdownView, Notice, TFile } from 'obsidian';
 import TextEaterPlugin from '../main';
 import { prompts } from '../prompts';
 import { longDash } from '../utils';
+import { createSectionBlock, SECTION_HEADERS, getSectionSeparator } from '../sectionHeaders';
 
 function extractFirstBracketedWord(text: string) {
 	const match = text.match(/\[\[([^\]]+)\]\]/);
@@ -75,13 +76,10 @@ export default async function fillTemplate(
 		const baseBlock = await incertClipbordContentsInContextsBlock(
 			incertYouglishLinkInIpa(trimmedBaseEntrie)
 		);
-		const morphemsBlock =
-			morphems.replace('\n', '') === longDash ? '' : `### Morfemas\n${morphems}`;
-		const valenceBlock =
-			valence.replace('\n', '') === longDash ? '' : `### Valencia\n${valence}`;
-		const fromsBlock = froms.replace('\n', '') === longDash ? '' : `### Formas Gramaticales\n${froms}`;
-		const adjFormsBlock =
-			adjForms.replace('\n', '') === longDash ? '' : `### Formas Adjetivales\n${adjForms}`;
+		const morphemsBlock = createSectionBlock('MORFEMAS', morphems, longDash);
+		const valenceBlock = createSectionBlock('VALENCIA', valence, longDash);
+		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', froms, longDash);
+		const adjFormsBlock = createSectionBlock('FORMAS_ADJETIVALES', adjForms, longDash);
 
 		const blocks = [
 			baseBlock,
@@ -90,7 +88,7 @@ export default async function fillTemplate(
 			fromsBlock,
 			adjFormsBlock,
 		];
-		const entrie = blocks.filter(Boolean).join('\n---\n');
+		const entrie = blocks.filter(Boolean).join(`\n${getSectionSeparator()}\n`);
 
 		const normalForm = extractFirstBracketedWord(baseBlock);
 
