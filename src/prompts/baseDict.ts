@@ -54,9 +54,6 @@ export const baseDict = `<assistant_role>You are an expert linguist specializing
 😤 [[enemistar]], [enemiˈstaɾ] → [[enemisté]] → haber [[enemistado]]
 
 ---
-### Contexto
-
----
 ### Sinónimos y Antónimos
 = [[enfrentar]], [[enemigar]]
 ≈ [[conflicto]], [[pelear]]
@@ -77,9 +74,6 @@ to make enemies, to set at odds
 <spanish_word>bailaste</spanish_word>
 <agent_output>
 💃 [[bailar]], [baiˈlaɾ] | [[bailé]], haber [[bailado]]
-
----
-### Contexto
 
 ---
 ### Sinónimos y Antónimos
@@ -105,9 +99,6 @@ to dance
 las [[esperanzas]]
 
 ---
-### Contexto
-
----
 ### Sinónimos y Antónimos
 = [[confianza]], [[optimismo]]
 ≈ [[expectativa]], [[confianza]], [[fe]], [[deseo]]
@@ -129,9 +120,6 @@ hope
 <agent_output>
 📄 🟢 los [[resultados de investigación]], [resulˈtaðos ðe investiɣaˈθjon]  
 los [[resultados de investigación]]
-
----
-### Contexto
 
 ---
 ### Sinónimos y Antónimos
@@ -156,9 +144,6 @@ research results, findings
 ⬆️ [[aquí]], [aˈki]
 
 ---
-### Contexto
-
----
 ### Sinónimos y Antónimos
 = [[acá]], [[hacia aquí]]
 ≈ [[allí]], [[allá]], [[ahí]]
@@ -180,9 +165,6 @@ here, hither
 <agent_output>
 🏞️ 🔵 el [[lago]], [ˈlaɣo] | 🌊 🔴 la [[lago]] (no existe)
 los [[lagos]] | no existe
-
----
-### Contexto
 
 ---
 ### Sinónimos y Antónimos

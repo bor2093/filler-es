@@ -183,6 +183,7 @@ export default async function fillTemplate(
 		
 		const adjFormsBlock = createSectionBlock('FORMAS_ADJETIVALES', cleanAITags(adjForms), longDash);
 		const enlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
+		const contextoBlock = createSectionBlock('CONTEXTO', longDash, longDash);
 
 		const blocks = [
 			baseBlock,
@@ -191,6 +192,7 @@ export default async function fillTemplate(
 			fromsBlock,
 			adjFormsBlock,
 			enlacesEntrantesBlock,
+			contextoBlock,
 		];
 		const entrie = joinBlocksWithProperSpacing(blocks, getSectionSeparator());
 
@@ -198,11 +200,12 @@ export default async function fillTemplate(
 			// Ground form - write the full entry
 			await plugin.fileService.writeToOpenedFile(file.path, entrie);
 		} else {
-			// Non-ground form - create minimal entry with tags, link to ground form, and incoming links
+			// Non-ground form - create minimal entry with tags, link to ground form, incoming links, and context
 			const derivedTags = createTags(word, trimmedBaseEntrie, false);
 			const derivedEnlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
+			const derivedContextoBlock = createSectionBlock('CONTEXTO', longDash, longDash);
 			
-			const derivedEntry = `[[${normalForm}]]\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}`;
+			const derivedEntry = `[[${normalForm}]]\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}\n\n${getSectionSeparator()}\n\n${derivedContextoBlock}`;
 			
 			await plugin.fileService.writeToOpenedFile(file.path, derivedEntry);
 			await navigator.clipboard.writeText(entrie);
