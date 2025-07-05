@@ -71,7 +71,6 @@ export default class TextEaterPlugin extends Plugin {
 				if (view.file) {
 					if (!checking) {
 						fillTemplate(this, editor, view.file);
-						// testEndgame(this, editor, view.file);
 					}
 					return true;
 				}
