@@ -52,8 +52,8 @@ async function incertClipbordContentsInContextsBlock(
 
 function createDataviewQuery(word: string): string {
 	return `\`\`\`dataview
-LIST FROM [[${word}]]
-WHERE (file.name != this.file.name) AND (!contains(this.file.outlinks, file.link))
+LIST FROM [[]]
+WHERE (file.name != this.file.name)
 SORT file.ctime ASC
 \`\`\``;
 }
