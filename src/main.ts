@@ -8,7 +8,6 @@ import getInfinitiveAndEmoji from './commands/getInfinitiveAndEmoji';
 import normalizeSelection from './commands/normalizeSelection';
 import translateSelection from './commands/translateSelection';
 import formatSelectionWithNumber from './commands/formatSelectionWithNumber';
-import addBacklinksToCurrentFile from './commands/addBacklinksToCurrentFile';
 import insertReplyFromKeymaker from './commands/insertReplyFromC1Richter';
 import insertReplyFromC1Richter from './commands/insertReplyFromC1Richter';
 
@@ -32,33 +31,7 @@ export default class TextEaterPlugin extends Plugin {
 		this.apiService = new ApiService(this.settings, this.app.vault);
 		this.fileService = new FileService(this.app, this.app.vault);
 
-		this.addCommand({
-			id: 'backlink-all-to-current-file',
-			name: 'Populate all referenced files with a backlink to the current file',
-			editorCheckCallback: (
-				checking: boolean,
-				editor: Editor,
-				view: MarkdownView
-			) => {
-				const fileName = view.file?.name;
-				const backlink = view.file?.basename;
 
-				if (view.file && fileName && backlink) {
-					if (!checking) {
-						addBacklinksToCurrentFile(
-							view.file,
-							backlink,
-							this.app.vault,
-							this.app.metadataCache,
-							editor
-						);
-					}
-					return true;
-				}
-
-				return false;
-			},
-		});
 
 		this.addCommand({
 			id: 'fill-template',
