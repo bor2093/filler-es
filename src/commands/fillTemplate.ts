@@ -46,29 +46,7 @@ function incertYouglishLinkInIpa(baseBlock: string) {
 async function incertClipbordContentsInContextsBlock(
 	baseBlock: string
 ): Promise<string> {
-	try {
-		let clipboardContent = '';
-		if (typeof navigator !== 'undefined' && navigator.clipboard) {
-			clipboardContent = await navigator.clipboard.readText();
-		}
-		const [first, ...rest] = baseBlock.split('---');
-
-		if (rest.length >= 1) {
-			// Insert clipboard content between the first two dividers
-			return (
-				first +
-				'---\n' +
-				clipboardContent.trim() +
-				rest.map((a) => a.trim()).join('\n\n---\n') +
-				'\n'
-			);
-		}
-
-		return baseBlock;
-	} catch (error) {
-		console.error('Failed to read clipboard:', error);
-		return baseBlock;
-	}
+	return baseBlock;
 }
 
 export default async function fillTemplate(
