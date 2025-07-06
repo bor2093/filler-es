@@ -7,7 +7,7 @@ import fillTemplate from './commands/fillTemplate';
 import getInfinitiveAndEmoji from './commands/getInfinitiveAndEmoji';
 import normalizeSelection from './commands/normalizeSelection';
 import translateSelection from './commands/translateSelection';
-import formatSelectionWithNumber from './commands/formatSelectionWithNumber';
+
 import insertReplyFromKeymaker from './commands/insertReplyFromC1Richter';
 import insertReplyFromC1Richter from './commands/insertReplyFromC1Richter';
 import addContext from './commands/addContext';
@@ -104,24 +104,7 @@ export default class TextEaterPlugin extends Plugin {
 			},
 		});
 
-		this.addCommand({
-			id: 'format-selection-with-number',
-			name: 'Split selection into linked blocks',
-			editorCheckCallback: (
-				checking: boolean,
-				editor: Editor,
-				view: MarkdownView
-			) => {
-				const selection = editor.getSelection();
-				if (selection && view.file) {
-					if (!checking) {
-						formatSelectionWithNumber(this, editor, view.file, selection);
-					}
-					return true;
-				}
-				return false;
-			},
-		});
+
 
 		this.addCommand({
 			id: 'check-ru-de-translation',
