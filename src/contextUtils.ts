@@ -223,7 +223,11 @@ export async function addContextToFile(
 			// Get ground form
 			const groundForm = await getGroundForm(plugin, selectedWord);
 			if (groundForm && groundForm !== selectedWord) {
-				await appendContextToFile(plugin, groundForm, contextEntry);
+				// Ensure ground form dictionary entry exists
+				const groundFormFile = await findOrCreateDictionaryEntry(plugin, groundForm);
+				if (groundFormFile) {
+					await appendContextToFile(plugin, groundForm, contextEntry);
+				}
 			}
 		}
 	} catch (error) {
@@ -275,17 +279,40 @@ async function appendContextToFile(
 		console.log(`File content for ${word}:`, content.substring(0, 200) + '...');
 		
 		// Find the Context section
-		const contextSectionIndex = content.lastIndexOf('### Contexto');
+		let contextSectionIndex = content.lastIndexOf('### Contexto');
+		let currentContent = content;
+		
 		if (contextSectionIndex === -1) {
 			console.log(`No Context section found in file for word: ${word}`);
-			return;
+			
+			// If file is empty or missing Context section, regenerate the dictionary entry
+			if (content.trim().length === 0) {
+				console.log(`File is empty, generating dictionary entry for: ${word}`);
+				await generateDictionaryEntry(plugin, wordFile, word);
+				// Read the newly generated content
+				currentContent = await plugin.app.vault.read(wordFile);
+				contextSectionIndex = currentContent.lastIndexOf('### Contexto');
+			} else {
+				// File has content but no Context section - add it at the end
+				console.log(`Adding Context section to existing file for: ${word}`);
+				const contextSection = `\n\n### Contexto\n`;
+				currentContent = content + contextSection;
+				await plugin.app.vault.modify(wordFile, currentContent);
+				contextSectionIndex = currentContent.lastIndexOf('### Contexto');
+			}
+			
+			// If we still don't have a Context section, something is wrong
+			if (contextSectionIndex === -1) {
+				console.error(`Failed to create Context section for word: ${word}`);
+				return;
+			}
 		}
 		
 		console.log(`Found Context section at index: ${contextSectionIndex}`);
 		
 		// Find the end of the Context section (or end of file)
-		let insertionPoint = content.length;
-		const afterContextSection = content.substring(contextSectionIndex);
+		let insertionPoint = currentContent.length;
+		const afterContextSection = currentContent.substring(contextSectionIndex);
 		const nextSectionMatch = afterContextSection.match(/\n### /);
 		
 		if (nextSectionMatch) {
@@ -293,7 +320,7 @@ async function appendContextToFile(
 		}
 		
 		// Count existing context entries to determine the next number
-		const contextContent = content.substring(contextSectionIndex, insertionPoint);
+		const contextContent = currentContent.substring(contextSectionIndex, insertionPoint);
 		const existingEntries = contextContent.match(/^\d+\. \*\*/gm) || [];
 		const nextNumber = existingEntries.length + 1;
 		
@@ -305,19 +332,19 @@ async function appendContextToFile(
 		console.log(`Numbered entry: "${numberedEntry}"`);
 		
 		// Find where the Context header ends to check for existing content
-		const contextHeaderLine = content.indexOf('### Contexto');
-		const contextHeaderEnd = content.indexOf('\n', contextHeaderLine) + 1;
+		const contextHeaderLine = currentContent.indexOf('### Contexto');
+		const contextHeaderEnd = currentContent.indexOf('\n', contextHeaderLine) + 1;
 		
 		// Check if there's already content in the Context section
-		const contextSectionContent = content.substring(contextHeaderEnd, insertionPoint);
+		const contextSectionContent = currentContent.substring(contextHeaderEnd, insertionPoint);
 		const hasExistingContent = contextSectionContent.trim().length > 0;
 		
 		console.log(`Context section content: "${contextSectionContent}"`);
 		console.log(`Has existing content: ${hasExistingContent}`);
 		
 		// Insert the new context entry at the end of the Context section
-		const beforeInsertion = content.substring(0, insertionPoint);
-		const afterInsertion = content.substring(insertionPoint);
+		const beforeInsertion = currentContent.substring(0, insertionPoint);
+		const afterInsertion = currentContent.substring(insertionPoint);
 		
 		// Add the context entry with proper spacing
 		const updatedContent = `${beforeInsertion}${hasExistingContent ? '\n' : ''}${numberedEntry}\n${afterInsertion}`;
