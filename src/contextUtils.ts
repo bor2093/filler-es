@@ -319,17 +319,9 @@ async function appendContextToFile(
 			insertionPoint = contextSectionIndex + nextSectionMatch.index!;
 		}
 		
-		// Count existing context entries to determine the next number
-		const contextContent = currentContent.substring(contextSectionIndex, insertionPoint);
-		const existingEntries = contextContent.match(/^\d+\. \*\*/gm) || [];
-		const nextNumber = existingEntries.length + 1;
-		
-		console.log(`Context content: "${contextContent}"`);
-		console.log(`Existing entries: ${existingEntries.length}, Next number: ${nextNumber}`);
-		
-		// Create the new context entry with numbering
-		const numberedEntry = `${nextNumber}. ${contextEntry}`;
-		console.log(`Numbered entry: "${numberedEntry}"`);
+		// Create the new context entry with bullet point
+		const bulletEntry = `- ${contextEntry}`;
+		console.log(`Bullet entry: "${bulletEntry}"`);
 		
 		// Find where the Context header ends to check for existing content
 		const contextHeaderLine = currentContent.indexOf('### Contexto');
@@ -347,7 +339,7 @@ async function appendContextToFile(
 		const afterInsertion = currentContent.substring(insertionPoint);
 		
 		// Add the context entry with proper spacing
-		const updatedContent = `${beforeInsertion}${hasExistingContent ? '\n' : ''}${numberedEntry}\n${afterInsertion}`;
+		const updatedContent = `${beforeInsertion}${hasExistingContent ? '\n' : ''}${bulletEntry}\n${afterInsertion}`;
 		
 		console.log(`Updated content preview: "${updatedContent.substring(Math.max(0, insertionPoint - 50), insertionPoint + 100)}"`);
 		
