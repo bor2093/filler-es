@@ -8,7 +8,7 @@ import getInfinitiveAndEmoji from './commands/getInfinitiveAndEmoji';
 import normalizeSelection from './commands/normalizeSelection';
 import translateSelection from './commands/translateSelection';
 
-import insertReplyFromKeymaker from './commands/insertReplyFromC1Richter';
+import insertReplyFromKeymaker from './commands/insertReplyFromKeymaker';
 import insertReplyFromC1Richter from './commands/insertReplyFromC1Richter';
 import addContext from './commands/addContext';
 
@@ -107,8 +107,8 @@ export default class TextEaterPlugin extends Plugin {
 
 
 		this.addCommand({
-			id: 'check-ru-de-translation',
-			name: 'Keymaker',
+			id: 'spanish-grammar-check',
+			name: 'Spanish Grammar Check & Homework Assistant',
 			editorCheckCallback: (checking: boolean, editor: Editor) => {
 				const selection = editor.getSelection();
 				if (selection) {
