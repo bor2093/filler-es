@@ -53,7 +53,9 @@ export async function doesExistingFileContainContent(
 
 export async function getExisingOrCreatedFileInWorterDir(
 	vault: Vault,
-	item: { name: string; path: string | null }
+	item: { name: string; path: string | null },
+	useShardedStructure: boolean = true,
+	dictionaryFolderPath: string = 'words'
 ): Promise<TFile | null> {
 	try {
 		let filePath: string;
@@ -69,28 +71,35 @@ export async function getExisingOrCreatedFileInWorterDir(
 			return null;
 		} else {
 			const originalName = item.name.trim();
+			const cleanFileName = originalName.replace(/[\\/:*?"<>|]/g, '');
 
-			// used only for folder sharding
-			const shardKey = originalName
-				.normalize('NFD')
-				.replace(/[\u0300-\u036f]/g, '')
-				.replace(/[^a-zA-Z0-9]/g, '')
-				.toLowerCase()
-				.padEnd(4, '_'); // ensures at least 4 chars
+			let folderPath: string;
+			
+			if (useShardedStructure) {
+				// Used for folder sharding
+				const shardKey = originalName
+					.normalize('NFD')
+					.replace(/[\u0300-\u036f]/g, '')
+					.replace(/[^a-zA-Z0-9]/g, '')
+					.toLowerCase()
+					.padEnd(4, '_'); // ensures at least 4 chars
 
-			const first = shardKey[0];
-			const prefix = shardKey.slice(0, 3);
-			const shard = shardKey[3];
+				const first = shardKey[0];
+				const prefix = shardKey.slice(0, 3);
+				const shard = shardKey[3];
 
-			const folderPath = normalizePath(
-				`Worter/Ordered/${first}/${prefix}/${shard}`
-			);
+				folderPath = normalizePath(
+					`${dictionaryFolderPath}/Ordered/${first}/${prefix}/${shard}`
+				);
+			} else {
+				// Simple folder structure
+				folderPath = normalizePath(dictionaryFolderPath);
+			}
 
 			console.log('folderPath before', folderPath);
 			const folder = await ensureFolderExists(vault, folderPath);
 			console.log('folderPath after', folder, folder?.path);
 
-			const cleanFileName = originalName.replace(/[\\/:*?"<>|]/g, '');
 			filePath = `${folder.path}/${cleanFileName}.md`;
 
 			const normalizedPath = normalizePath(filePath);
