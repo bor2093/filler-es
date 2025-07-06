@@ -36,7 +36,7 @@ export default class TextEaterPlugin extends Plugin {
 
 		this.addCommand({
 			id: 'fill-template',
-			name: 'Generate a dictionary entry for the word in the title of the file',
+			name: 'Generate Dictionary Entry',
 			editorCheckCallback: (
 				checking: boolean,
 				editor: Editor,
@@ -56,7 +56,7 @@ export default class TextEaterPlugin extends Plugin {
 
 		this.addCommand({
 			id: 'duplicate-selection',
-			name: 'Add links to normal/inf forms to selected text',
+			name: 'Normalize Selection (Add Links)',
 			editorCheckCallback: (
 				checking: boolean,
 				editor: Editor,
@@ -75,7 +75,7 @@ export default class TextEaterPlugin extends Plugin {
 
 		this.addCommand({
 			id: 'translate-selection',
-			name: 'Translate selected text',
+			name: 'Translate Spanish to English',
 			editorCheckCallback: (checking: boolean, editor: Editor) => {
 				const selection = editor.getSelection();
 				if (selection) {
@@ -106,8 +106,8 @@ export default class TextEaterPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: 'check-schriben',
-			name: 'Schriben check',
+			id: 'spanish-writing-tutor',
+			name: 'Spanish Writing Tutor & Detailed Analysis',
 			editorCheckCallback: (checking: boolean, editor: Editor) => {
 				const selection = editor.getSelection();
 				if (selection) {
@@ -122,7 +122,7 @@ export default class TextEaterPlugin extends Plugin {
 
 		this.addCommand({
 			id: 'add-context',
-			name: 'Add selected word to dictionary with context',
+			name: 'Add Context to Dictionary',
 			editorCheckCallback: (
 				checking: boolean,
 				editor: Editor,
