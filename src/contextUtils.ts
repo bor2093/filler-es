@@ -123,32 +123,54 @@ export async function createBlockReference(
 			blockEndIndex++;
 		}
 		
-		// Check if there's already a block reference at the end of this block
+		// Check for existing elements in this block
 		const blockContent = fileContent.substring(sentenceIndex, blockEndIndex);
 		const existingBlockRefMatch = blockContent.match(/\^(\d+)$/);
+		const existingContextLinkMatch = blockContent.match(/^\*\[\[[^\]]+#\^(\d+)\|\^\]\]\*/);
+		
+		// If there's already a context link at the beginning, reuse its block reference
+		if (existingContextLinkMatch) {
+			return existingContextLinkMatch[1];
+		}
+		
+		// Determine the block reference to use
+		let blockRef: string;
+		let needToAddBlockRef = false;
 		
 		if (existingBlockRefMatch) {
 			// Reuse existing block reference
-			return existingBlockRefMatch[1];
+			blockRef = existingBlockRefMatch[1];
+		} else {
+			// Create a new block reference
+			const maxContextNumber = plugin.findHighestContextNumber(fileContent);
+			const nextNumber = maxContextNumber + 1;
+			blockRef = `${nextNumber}`;
+			needToAddBlockRef = true;
 		}
 		
-		// No existing block reference, create a new one
-		const maxContextNumber = plugin.findHighestContextNumber(fileContent);
-		const nextNumber = maxContextNumber + 1;
-		const blockRef = `${nextNumber}`;
+		// Create and add the context link at the beginning
+		const sourceFileName = file.basename;
+		const contextLink = `*[[${sourceFileName}#^${blockRef}|^]]* `;
 		
-		// Find the last non-whitespace character in the block
-		let lastNonWhitespaceIndex = blockEndIndex - 1;
-		while (lastNonWhitespaceIndex > sentenceIndex && /\s/.test(fileContent[lastNonWhitespaceIndex])) {
-			lastNonWhitespaceIndex--;
+		const sentenceStartPos = editor.offsetToPos(sentenceIndex);
+		editor.replaceRange(contextLink, sentenceStartPos, sentenceStartPos);
+		
+		// Add block reference at the end if it doesn't exist
+		if (needToAddBlockRef) {
+			// Find the last non-whitespace character in the block (after adding the context link)
+			const addedLength = contextLink.length;
+			let lastNonWhitespaceIndex = blockEndIndex + addedLength - 1;
+			while (lastNonWhitespaceIndex > sentenceIndex + addedLength && /\s/.test(editor.getValue()[lastNonWhitespaceIndex])) {
+				lastNonWhitespaceIndex--;
+			}
+			
+			// Calculate positions for block reference at the end
+			const startPos = editor.offsetToPos(lastNonWhitespaceIndex + 1);
+			const endPos = editor.offsetToPos(blockEndIndex + addedLength);
+			
+			// Add block reference at the end
+			editor.replaceRange(` ^${blockRef}`, startPos, endPos);
 		}
-		
-		// Calculate positions for replacement
-		const startPos = editor.offsetToPos(lastNonWhitespaceIndex + 1);
-		const endPos = editor.offsetToPos(blockEndIndex);
-		
-		// Replace all trailing whitespace with exactly one space + block reference
-		editor.replaceRange(` ^${blockRef}`, startPos, endPos);
 		
 		return blockRef;
 	} catch (error) {
@@ -241,7 +263,7 @@ export async function addContextToFile(
 		const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 		
 		// Create context entry
-		const contextEntry = `**[[${sourceFileName}#^${blockRef}|📍]]** (${currentDate}): "${contextSentence}"`;
+		const contextEntry = `*[[${sourceFileName}#^${blockRef}|^]]* ${contextSentence}`;
 		
 		// Add to the selected word's file
 		await appendContextToFile(plugin, selectedWord, contextEntry);
