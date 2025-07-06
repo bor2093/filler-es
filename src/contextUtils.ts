@@ -1,4 +1,4 @@
-import { Editor, TFile, normalizePath } from 'obsidian';
+import { Editor, TFile, normalizePath, Notice } from 'obsidian';
 import { sentences } from 'sbd';
 import TextEaterPlugin from './main';
 import { getExisingOrCreatedFileInWorterDir, longDash } from './utils';
@@ -6,9 +6,9 @@ import { prompts } from './prompts';
 import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './sectionHeaders';
 
 /**
- * Extracts the sentence containing the selected word from the full text
+ * Extracts the sentence containing the selected word from the full text near the cursor position
  */
-export function extractSentenceContainingWord(fullText: string, word: string): string | null {
+export function extractSentenceContainingWord(fullText: string, word: string, cursorOffset?: number): string | null {
 	try {
 		const splitSentences = sentences(fullText, {
 			preserve_whitespace: false,
@@ -17,11 +17,35 @@ export function extractSentenceContainingWord(fullText: string, word: string): s
 			sanitize: true,
 		});
 
-		// Find the sentence containing the word
-		for (const sentence of splitSentences) {
-			if (sentence.toLowerCase().includes(word.toLowerCase())) {
-				return sentence.trim();
+		// If no cursor position provided, fall back to first occurrence
+		if (cursorOffset === undefined) {
+			for (const sentence of splitSentences) {
+				if (sentence.toLowerCase().includes(word.toLowerCase())) {
+					return sentence.trim();
+				}
 			}
+			return null;
+		}
+
+		// Find sentences that contain the word and their positions in the text
+		const candidateSentences: { sentence: string; distance: number }[] = [];
+		let textPosition = 0;
+
+		for (const sentence of splitSentences) {
+			const sentenceIndex = fullText.indexOf(sentence, textPosition);
+			if (sentenceIndex !== -1 && sentence.toLowerCase().includes(word.toLowerCase())) {
+				// Calculate distance from cursor to the middle of this sentence
+				const sentenceMiddle = sentenceIndex + sentence.length / 2;
+				const distance = Math.abs(cursorOffset - sentenceMiddle);
+				candidateSentences.push({ sentence: sentence.trim(), distance });
+			}
+			textPosition = sentenceIndex + sentence.length;
+		}
+
+		// Return the sentence closest to the cursor position
+		if (candidateSentences.length > 0) {
+			candidateSentences.sort((a, b) => a.distance - b.distance);
+			return candidateSentences[0].sentence;
 		}
 
 		return null;
@@ -41,26 +65,54 @@ export async function createBlockReference(
 	sentence: string
 ): Promise<string | null> {
 	try {
-		// Find the highest existing block reference number
+		// Find the highest existing context block reference number
 		const fileContent = editor.getValue();
-		const maxNumber = plugin.findHighestNumber(fileContent);
-		const nextNumber = maxNumber + 1;
+		const maxContextNumber = plugin.findHighestContextNumber(fileContent);
+		const nextNumber = maxContextNumber + 1;
 		
 		// Create the block reference
 		const blockRef = `context${nextNumber}`;
 		
-		// Find the sentence in the text and add the block reference
+		// Find the sentence in the text
 		const sentenceIndex = fileContent.indexOf(sentence);
 		if (sentenceIndex === -1) {
 			return null;
 		}
 		
-		// Calculate the position where to insert the block reference
-		const insertPosition = sentenceIndex + sentence.length;
+		// Find the end of the entire block/paragraph that contains this sentence
+		// Look for the next empty line or end of file
+		let blockEndIndex = sentenceIndex + sentence.length;
 		
-		// Use editor to insert the block reference instead of modifying the file directly
-		const positionInEditor = editor.offsetToPos(insertPosition);
-		editor.replaceRange(` ^${blockRef}`, positionInEditor, positionInEditor);
+		// Continue searching for the end of the block
+		while (blockEndIndex < fileContent.length) {
+			const char = fileContent[blockEndIndex];
+			
+			// If we hit a double newline (empty line), this is the end of the block
+			if (fileContent.substring(blockEndIndex, blockEndIndex + 2) === '\n\n') {
+				break;
+			}
+			
+			// If we hit end of file, this is the end of the block
+			if (blockEndIndex === fileContent.length - 1) {
+				blockEndIndex = fileContent.length;
+				break;
+			}
+			
+			blockEndIndex++;
+		}
+		
+		// Find the last non-whitespace character in the block
+		let lastNonWhitespaceIndex = blockEndIndex - 1;
+		while (lastNonWhitespaceIndex > sentenceIndex && /\s/.test(fileContent[lastNonWhitespaceIndex])) {
+			lastNonWhitespaceIndex--;
+		}
+		
+		// Calculate positions for replacement
+		const startPos = editor.offsetToPos(lastNonWhitespaceIndex + 1);
+		const endPos = editor.offsetToPos(blockEndIndex);
+		
+		// Replace all trailing whitespace with exactly one space + block reference
+		editor.replaceRange(` ^${blockRef}`, startPos, endPos);
 		
 		return blockRef;
 	} catch (error) {
@@ -167,6 +219,7 @@ export async function addContextToFile(
 			}
 		}
 	} catch (error) {
+		new Notice(`[ERROR] Error in addContextToFile: ${error.message}`);
 		console.error('Error adding context to file:', error);
 	}
 }
@@ -243,11 +296,9 @@ async function appendContextToFile(
 		const numberedEntry = `${nextNumber}. ${contextEntry}`;
 		console.log(`Numbered entry: "${numberedEntry}"`);
 		
-		// Find where to insert the context entry (right after the Context header)
+		// Find where the Context header ends to check for existing content
 		const contextHeaderLine = content.indexOf('### Contexto');
 		const contextHeaderEnd = content.indexOf('\n', contextHeaderLine) + 1;
-		
-		console.log(`Context header end: ${contextHeaderEnd}`);
 		
 		// Check if there's already content in the Context section
 		const contextSectionContent = content.substring(contextHeaderEnd, insertionPoint);
@@ -256,18 +307,19 @@ async function appendContextToFile(
 		console.log(`Context section content: "${contextSectionContent}"`);
 		console.log(`Has existing content: ${hasExistingContent}`);
 		
-		// Insert the new context entry right after the Context header
-		const beforeInsertion = content.substring(0, contextHeaderEnd);
-		const afterInsertion = content.substring(contextHeaderEnd);
+		// Insert the new context entry at the end of the Context section
+		const beforeInsertion = content.substring(0, insertionPoint);
+		const afterInsertion = content.substring(insertionPoint);
 		
 		// Add the context entry with proper spacing
-		const updatedContent = `${beforeInsertion}${numberedEntry}\n${hasExistingContent ? '\n' : ''}${afterInsertion}`;
+		const updatedContent = `${beforeInsertion}${hasExistingContent ? '\n' : ''}${numberedEntry}\n${afterInsertion}`;
 		
-		console.log(`Updated content preview: "${updatedContent.substring(Math.max(0, contextHeaderEnd - 50), contextHeaderEnd + 100)}"`);
+		console.log(`Updated content preview: "${updatedContent.substring(Math.max(0, insertionPoint - 50), insertionPoint + 100)}"`);
 		
 		// Write back to file
 		await plugin.app.vault.modify(wordFile, updatedContent);
 	} catch (error) {
+		new Notice(`[ERROR] Error in appendContextToFile: ${error.message}`);
 		console.error('Error appending context to file:', error);
 	}
 }

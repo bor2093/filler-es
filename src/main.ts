@@ -192,4 +192,16 @@ export default class TextEaterPlugin extends Plugin {
 
 		return Math.max(0, ...numbers);
 	}
+
+	findHighestContextNumber(content: string): number {
+		const matches = content.match(/\^context(\d+)/g);
+		if (!matches) return 0;
+
+		const numbers = matches.map((match) => {
+			const num = match.replace('^context', '');
+			return parseInt(num, 10);
+		});
+
+		return Math.max(0, ...numbers);
+	}
 }

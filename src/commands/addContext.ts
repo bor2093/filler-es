@@ -34,7 +34,9 @@ export default async function addContext(
 		
 		// Step 3: Extract context sentence from the text
 		const fullText = editor.getValue();
-		const contextSentence = extractSentenceContainingWord(fullText, cleanWord);
+		const cursorPos = editor.getCursor();
+		const cursorOffset = editor.posToOffset(cursorPos);
+		const contextSentence = extractSentenceContainingWord(fullText, cleanWord, cursorOffset);
 		if (!contextSentence) {
 			new Notice(`Could not extract context sentence for: ${selection}`);
 			return;
