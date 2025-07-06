@@ -10,6 +10,7 @@ import translateSelection from './commands/translateSelection';
 import formatSelectionWithNumber from './commands/formatSelectionWithNumber';
 import insertReplyFromKeymaker from './commands/insertReplyFromC1Richter';
 import insertReplyFromC1Richter from './commands/insertReplyFromC1Richter';
+import addContext from './commands/addContext';
 
 export default class TextEaterPlugin extends Plugin {
 	settings: TextEaterSettings;
@@ -145,6 +146,25 @@ export default class TextEaterPlugin extends Plugin {
 				if (selection) {
 					if (!checking) {
 						insertReplyFromC1Richter(this, editor, selection);
+					}
+					return true;
+				}
+				return false;
+			},
+		});
+
+		this.addCommand({
+			id: 'add-context',
+			name: 'Add selected word to dictionary with context',
+			editorCheckCallback: (
+				checking: boolean,
+				editor: Editor,
+				view: MarkdownView
+			) => {
+				const selection = editor.getSelection();
+				if (selection && view.file) {
+					if (!checking) {
+						addContext(this, editor, view.file, selection);
 					}
 					return true;
 				}
