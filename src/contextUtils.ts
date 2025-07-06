@@ -125,7 +125,7 @@ export async function createBlockReference(
 		
 		// Check if there's already a block reference at the end of this block
 		const blockContent = fileContent.substring(sentenceIndex, blockEndIndex);
-		const existingBlockRefMatch = blockContent.match(/\^(context\d+)$/);
+		const existingBlockRefMatch = blockContent.match(/\^(\d+)$/);
 		
 		if (existingBlockRefMatch) {
 			// Reuse existing block reference
@@ -135,7 +135,7 @@ export async function createBlockReference(
 		// No existing block reference, create a new one
 		const maxContextNumber = plugin.findHighestContextNumber(fileContent);
 		const nextNumber = maxContextNumber + 1;
-		const blockRef = `context${nextNumber}`;
+		const blockRef = `${nextNumber}`;
 		
 		// Find the last non-whitespace character in the block
 		let lastNonWhitespaceIndex = blockEndIndex - 1;
