@@ -1,0 +1,588 @@
+import { Editor, TFile, normalizePath, Notice } from 'obsidian';
+import { sentences } from 'sbd';
+import TextEaterPlugin from './main';
+import { getExisingOrCreatedFileInWorterDir, longDash } from './utils';
+import { prompts } from './prompts';
+import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './sectionHeaders';
+
+/**
+ * Extracts the sentence containing the selected word from the full text near the cursor position
+ */
+export function extractSentenceContainingWord(fullText: string, word: string, cursorOffset?: number): { sentence: string; startIndex: number } | null {
+	try {
+		const splitSentences = sentences(fullText, {
+			preserve_whitespace: false,
+			newline_boundaries: true,
+			html_boundaries: false,
+			sanitize: true,
+		});
+
+		// If no cursor position provided, fall back to first occurrence
+		if (cursorOffset === undefined) {
+			let textPosition = 0;
+			for (const sentence of splitSentences) {
+				const sentenceIndex = fullText.indexOf(sentence, textPosition);
+				// Check if sentence contains the word directly or inside a link
+				const containsWord = sentence.toLowerCase().includes(word.toLowerCase()) ||
+					// Check for [[word|display]] format
+					sentence.toLowerCase().includes(`[[${word.toLowerCase()}|`) ||
+					// Check for [[word]] format
+					sentence.toLowerCase().includes(`[[${word.toLowerCase()}]]`);
+				
+				if (containsWord) {
+					return { sentence: sentence.trim(), startIndex: sentenceIndex };
+				}
+				textPosition = sentenceIndex + sentence.length;
+			}
+			return null;
+		}
+
+		// Find sentences that contain the word and their positions in the text
+		const candidateSentences: { sentence: string; distance: number; startIndex: number }[] = [];
+		let textPosition = 0;
+
+		for (const sentence of splitSentences) {
+			const sentenceIndex = fullText.indexOf(sentence, textPosition);
+			if (sentenceIndex !== -1) {
+				// Check if sentence contains the word directly or inside a link
+				const containsWord = sentence.toLowerCase().includes(word.toLowerCase()) ||
+					// Check for [[word|display]] format
+					sentence.toLowerCase().includes(`[[${word.toLowerCase()}|`) ||
+					// Check for [[word]] format
+					sentence.toLowerCase().includes(`[[${word.toLowerCase()}]]`);
+				
+				if (containsWord) {
+					// Calculate distance from cursor to the middle of this sentence
+					const sentenceMiddle = sentenceIndex + sentence.length / 2;
+					const distance = Math.abs(cursorOffset - sentenceMiddle);
+					candidateSentences.push({ sentence: sentence.trim(), distance, startIndex: sentenceIndex });
+				}
+			}
+			textPosition = sentenceIndex + sentence.length;
+		}
+
+		// Return the sentence closest to the cursor position
+		if (candidateSentences.length > 0) {
+			candidateSentences.sort((a, b) => a.distance - b.distance);
+			
+			// Return the sentence with its correct start index
+			const selected = candidateSentences[0];
+			return { sentence: selected.sentence, startIndex: selected.startIndex };
+		}
+
+		return null;
+	} catch (error) {
+		console.error('Error extracting sentence:', error);
+		return null;
+	}
+}
+
+/**
+ * Creates a block reference in the source document for the context sentence
+ */
+export async function createBlockReference(
+	plugin: TextEaterPlugin,
+	editor: Editor,
+	file: TFile,
+	sentence: string,
+	sentenceStartIndex?: number
+): Promise<string | null> {
+	try {
+		const fileContent = editor.getValue();
+		
+		// Use provided sentence index or find the sentence in the text
+		let sentenceIndex: number;
+		if (sentenceStartIndex !== undefined) {
+			sentenceIndex = sentenceStartIndex;
+		} else {
+			sentenceIndex = fileContent.indexOf(sentence);
+			if (sentenceIndex === -1) {
+				return null;
+			}
+		}
+		
+		// Find the end of the entire block/paragraph that contains this sentence
+		// Look for the next empty line or end of file
+		let blockEndIndex = sentenceIndex + sentence.length;
+		
+		// Continue searching for the end of the block
+		while (blockEndIndex < fileContent.length) {
+			const char = fileContent[blockEndIndex];
+			
+			// If we hit a double newline (empty line), this is the end of the block
+			if (fileContent.substring(blockEndIndex, blockEndIndex + 2) === '\n\n') {
+				break;
+			}
+			
+			// If we hit end of file, this is the end of the block
+			if (blockEndIndex === fileContent.length - 1) {
+				blockEndIndex = fileContent.length;
+				break;
+			}
+			
+			blockEndIndex++;
+		}
+		
+		// Check for existing elements in this block
+		const blockContent = fileContent.substring(sentenceIndex, blockEndIndex);
+		const existingBlockRefMatch = blockContent.match(/\^(\d+)$/);
+		const existingContextLinkMatch = blockContent.match(/^\*\[\[[^\]]+#\^(\d+)\|\^\]\]\*/);
+		
+		// If there's already a context link at the beginning, reuse its block reference
+		if (existingContextLinkMatch) {
+			return existingContextLinkMatch[1];
+		}
+		
+		// Determine the block reference to use
+		let blockRef: string;
+		let needToAddBlockRef = false;
+		
+		if (existingBlockRefMatch) {
+			// Reuse existing block reference
+			blockRef = existingBlockRefMatch[1];
+		} else {
+			// Create a new block reference
+			const maxContextNumber = plugin.findHighestContextNumber(fileContent);
+			const nextNumber = maxContextNumber + 1;
+			blockRef = `${nextNumber}`;
+			needToAddBlockRef = true;
+		}
+		
+		// Create and add the context link at the beginning
+		const sourceFileName = file.basename;
+		const contextLink = `*[[${sourceFileName}#^${blockRef}|^]]* `;
+		
+		const sentenceStartPos = editor.offsetToPos(sentenceIndex);
+		editor.replaceRange(contextLink, sentenceStartPos, sentenceStartPos);
+		
+		// Add block reference at the end if it doesn't exist
+		if (needToAddBlockRef) {
+			// Find the last non-whitespace character in the block (after adding the context link)
+			const addedLength = contextLink.length;
+			let lastNonWhitespaceIndex = blockEndIndex + addedLength - 1;
+			while (lastNonWhitespaceIndex > sentenceIndex + addedLength && /\s/.test(editor.getValue()[lastNonWhitespaceIndex])) {
+				lastNonWhitespaceIndex--;
+			}
+			
+			// Calculate positions for block reference at the end
+			const startPos = editor.offsetToPos(lastNonWhitespaceIndex + 1);
+			const endPos = editor.offsetToPos(blockEndIndex + addedLength);
+			
+			// Add block reference at the end
+			editor.replaceRange(` ^${blockRef}`, startPos, endPos);
+		}
+		
+		return blockRef;
+	} catch (error) {
+		console.error('Error creating block reference:', error);
+		return null;
+	}
+}
+
+/**
+ * Finds or creates a dictionary entry for the given word
+ */
+export async function findOrCreateDictionaryEntry(
+	plugin: TextEaterPlugin,
+	word: string
+): Promise<TFile | null> {
+	try {
+		// Try to find existing file
+		const existingFile = await getExisingOrCreatedFileInWorterDir(
+			plugin.app.vault,
+			{ name: word, path: null },
+			plugin.settings.useShardedFileStructure,
+			plugin.settings.dictionaryFolderPath
+		);
+		
+		if (existingFile) {
+			// Check if file has content (is a proper dictionary entry)
+			const content = await plugin.app.vault.read(existingFile);
+			if (content.trim().length > 0) {
+				return existingFile;
+			}
+		}
+		
+		// Create new dictionary entry
+		const newFile = existingFile || await getExisingOrCreatedFileInWorterDir(
+			plugin.app.vault,
+			{ name: word, path: null },
+			plugin.settings.useShardedFileStructure,
+			plugin.settings.dictionaryFolderPath
+		);
+		
+		if (newFile) {
+			// Check if file is empty and needs dictionary entry generation
+			const content = await plugin.app.vault.read(newFile);
+			if (content.trim().length === 0) {
+				// Generate full dictionary entry automatically
+				await generateDictionaryEntry(plugin, newFile, word);
+			}
+		}
+		
+		return newFile;
+	} catch (error) {
+		console.error('Error finding/creating dictionary entry:', error);
+		return null;
+	}
+}
+
+/**
+ * Determines if a word is in its ground form by checking with AI
+ */
+export async function isGroundFormWord(plugin: TextEaterPlugin, word: string): Promise<boolean> {
+	try {
+		// Use the existing infinitive detection logic
+		const response = await plugin.apiService.determineInfinitiveAndEmoji(word);
+		if (!response) return false;
+		
+		// Extract the canonical form from the response
+		const canonicalMatch = response.match(/\[\[([^\]]+)\]\]/);
+		if (!canonicalMatch) return false;
+		
+		const canonicalForm = canonicalMatch[1];
+		return word.toLowerCase() === canonicalForm.toLowerCase();
+	} catch (error) {
+		console.error('Error determining ground form:', error);
+		return false;
+	}
+}
+
+/**
+ * Adds context entry to the appropriate dictionary files
+ */
+export async function addContextToFile(
+	plugin: TextEaterPlugin,
+	selectedWord: string,
+	sourceFileName: string,
+	blockRef: string,
+	contextSentence: string,
+	isGroundForm: boolean
+): Promise<void> {
+	try {
+		const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+		
+		// Create context entry
+		const contextEntry = `*[[${sourceFileName}#^${blockRef}|^]]* ${contextSentence}`;
+		
+		// Add to the selected word's file
+		await appendContextToFile(plugin, selectedWord, contextEntry);
+		
+		// If not ground form, also add to ground form file
+		if (!isGroundForm) {
+			// Get ground form
+			const groundForm = await getGroundForm(plugin, selectedWord);
+			if (groundForm && groundForm !== selectedWord) {
+				// Ensure ground form dictionary entry exists
+				const groundFormFile = await findOrCreateDictionaryEntry(plugin, groundForm);
+				if (groundFormFile) {
+					await appendContextToFile(plugin, groundForm, contextEntry);
+				}
+			}
+		}
+	} catch (error) {
+		new Notice(`[ERROR] Error in addContextToFile: ${error.message}`);
+		console.error('Error adding context to file:', error);
+	}
+}
+
+/**
+ * Gets the ground form of a word
+ */
+async function getGroundForm(plugin: TextEaterPlugin, word: string): Promise<string | null> {
+	try {
+		const response = await plugin.apiService.determineInfinitiveAndEmoji(word);
+		if (!response) return null;
+		
+		const canonicalMatch = response.match(/\[\[([^\]]+)\]\]/);
+		return canonicalMatch ? canonicalMatch[1] : null;
+	} catch (error) {
+		console.error('Error getting ground form:', error);
+		return null;
+	}
+}
+
+/**
+ * Appends context entry to a dictionary file's Context section
+ */
+async function appendContextToFile(
+	plugin: TextEaterPlugin,
+	word: string,
+	contextEntry: string
+): Promise<void> {
+	try {
+		// Find the word's file
+		const wordFile = await getExisingOrCreatedFileInWorterDir(
+			plugin.app.vault,
+			{ name: word, path: null },
+			plugin.settings.useShardedFileStructure,
+			plugin.settings.dictionaryFolderPath
+		);
+		
+		if (!wordFile) {
+			return;
+		}
+		
+		// Read current content
+		const content = await plugin.app.vault.read(wordFile);
+		
+		// Find the Context section
+		let contextSectionIndex = content.lastIndexOf('### Contexto');
+		let currentContent = content;
+		
+		if (contextSectionIndex === -1) {
+			// If file is empty or missing Context section, regenerate the dictionary entry
+			if (content.trim().length === 0) {
+				await generateDictionaryEntry(plugin, wordFile, word);
+				// Read the newly generated content
+				currentContent = await plugin.app.vault.read(wordFile);
+				contextSectionIndex = currentContent.lastIndexOf('### Contexto');
+			} else {
+				// File has content but no Context section - add it at the end
+				const contextSection = `\n\n### Contexto\n`;
+				currentContent = content + contextSection;
+				await plugin.app.vault.modify(wordFile, currentContent);
+				contextSectionIndex = currentContent.lastIndexOf('### Contexto');
+			}
+			
+			// If we still don't have a Context section, something is wrong
+			if (contextSectionIndex === -1) {
+				console.error(`Failed to create Context section for word: ${word}`);
+				return;
+			}
+		}
+		
+		// Find the end of the Context section (or end of file)
+		let insertionPoint = currentContent.length;
+		const afterContextSection = currentContent.substring(contextSectionIndex);
+		const nextSectionMatch = afterContextSection.match(/\n### /);
+		
+		if (nextSectionMatch) {
+			insertionPoint = contextSectionIndex + nextSectionMatch.index!;
+		}
+		
+		// Create the new context entry with bullet point
+		const bulletEntry = `- ${contextEntry}`;
+		
+		// Find where the Context header ends to check for existing content
+		const contextHeaderLine = currentContent.indexOf('### Contexto');
+		const contextHeaderEnd = currentContent.indexOf('\n', contextHeaderLine) + 1;
+		
+		// Check if there's already content in the Context section
+		const contextSectionContent = currentContent.substring(contextHeaderEnd, insertionPoint);
+		const hasExistingContent = contextSectionContent.trim().length > 0;
+		
+		// Insert the new context entry at the end of the Context section
+		const beforeInsertion = currentContent.substring(0, insertionPoint);
+		const afterInsertion = currentContent.substring(insertionPoint);
+		
+		// Add the context entry with proper spacing
+		const updatedContent = `${beforeInsertion}${hasExistingContent ? '\n' : ''}${bulletEntry}\n${afterInsertion}`;
+		
+		// Write back to file
+		await plugin.app.vault.modify(wordFile, updatedContent);
+	} catch (error) {
+		new Notice(`[ERROR] Error in appendContextToFile: ${error.message}`);
+		console.error('Error appending context to file:', error);
+	}
+}
+
+/**
+ * Generates a full dictionary entry for a new file
+ */
+async function generateDictionaryEntry(
+	plugin: TextEaterPlugin,
+	file: TFile,
+	word: string
+): Promise<void> {
+	try {
+		// Generate all content in parallel (same as fillTemplate)
+		const [dictionaryEntry, froms, morphems, valence] = await Promise.all([
+			plugin.apiService.generateContent(prompts.generate_dictionary_entry, word),
+			plugin.apiService.generateContent(prompts.generate_forms, word),
+			plugin.apiService.generateContent(prompts.morphems, word),
+			plugin.apiService.generateContent(prompts.generate_valence_block, word),
+		]);
+
+		// Helper functions from fillTemplate
+		const cleanAITags = (content: string): string => {
+			return content
+				.replace(/<agent_output>/g, '')
+				.replace(/<\/agent_output>/g, '')
+				.replace(/^<agent_output>/, '')
+				.replace(/<\/agent_output>$/, '')
+				.trim();
+		};
+
+		const extractFirstBracketedWord = (text: string): string | null => {
+			const match = text.match(/\[\[([^\]]+)\]\]/);
+			return match ? match[1] : null;
+		};
+
+		const determinePartOfSpeech = (content: string): string => {
+			if (content.includes('→') && content.includes('haber') && content.includes('[[')) {
+				return 'verbo';
+			}
+			if (content.includes('🔴') || content.includes('🔵') || 
+				content.includes('el [[') || content.includes('la [[') ||
+				content.includes('los [[') || content.includes('las [[')) {
+				return 'sustantivo';
+			}
+			if (content.includes('más [[') || content.includes('menos [[') ||
+				content.includes('comparative') || content.includes('superlative') ||
+				(content.includes('≠') && !content.includes('→'))) {
+				return 'adjetivo';
+			}
+			if (content.includes('mente]]') || content.includes('adverbio') || 
+				content.includes('aquí') || content.includes('allí')) {
+				return 'adverbio';
+			}
+			return 'desconocido';
+		};
+
+		const createTags = (fileName: string, content: string, isGroundForm: boolean): string => {
+			const partOfSpeech = determinePartOfSpeech(content);
+			const groundFormStatus = isGroundForm ? 'forma-base' : 'forma-derivada';
+			return `#${groundFormStatus} #${partOfSpeech}`;
+		};
+
+		const isVerb = (content: string): boolean => {
+			return (
+				content.includes('→') &&
+				content.includes('haber') &&
+				content.includes('[[')
+			) || content.includes('Infinitivo') || content.includes('Participio');
+		};
+
+		const createConjugationLink = (word: string): string => {
+			return `**Conjugación**: [elconjugador.com](https://www.elconjugador.com/conjugacion/verbo/${word}.html)`;
+		};
+
+		const extractAdjectiveForms = (text: string): string => {
+			const match = text.match(/Adjetivos:\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\]/);
+			if (!match) return longDash;
+
+			const [_, base, comparative, superlative] = match;
+			const endings = ['o', 'a', 'os', 'as'];
+			const result: string[] = [];
+
+			for (const suf of [base, comparative, superlative]) {
+				for (const end of endings) {
+					result.push(`[[${suf + end}]]`);
+				}
+			}
+			return result.join(', ');
+		};
+
+		const createDataviewQuery = (word: string): string => {
+			return `\`\`\`dataview
+LIST FROM [[]]
+WHERE (file.name != this.file.name)
+SORT file.ctime ASC
+\`\`\``;
+		};
+
+		const incertYouglishLinkInIpa = (baseBlock: string): string => {
+			const regex = /\[(?!\[)(.*?)(?<!\])\]/g;
+			const matches = [];
+			let match;
+
+			while ((match = regex.exec(baseBlock)) !== null) {
+				if (match.index === 0 || baseBlock[match.index - 1] !== '[') {
+					matches.push([match.index, regex.lastIndex - 1]);
+				}
+			}
+
+			const ipaI = matches.length ? matches[0] : null;
+			const wordMatch = baseBlock.match(/\[\[([^\]]+)\]\]/);
+			const wordFromBlock = wordMatch ? wordMatch[1] : null;
+
+			if (!ipaI || !wordFromBlock) {
+				return baseBlock;
+			}
+
+			const ipa1 = ipaI[1];
+			if (!ipa1) {
+				return baseBlock;
+			}
+
+			return (
+				baseBlock.slice(0, ipa1 + 1) +
+				`(https://youglish.com/pronounce/${wordFromBlock}/spanish)` +
+				baseBlock.slice(ipa1 + 1)
+			);
+		};
+
+		const joinBlocksWithProperSpacing = (blocks: string[], separator: string): string => {
+			const cleanBlocks = blocks
+				.filter(Boolean)
+				.map(block => block.trim());
+			
+			return cleanBlocks.join(`\n\n${separator}\n`);
+		};
+
+		// Process content (same logic as fillTemplate)
+		const adjForms = extractAdjectiveForms(froms);
+		const trimmedBaseEntrie = cleanAITags(dictionaryEntry);
+
+		// Split content to insert tags after header
+		const lines = trimmedBaseEntrie.split('\n');
+		const headerLine = lines[0];
+		const restOfContent = lines.slice(1).join('\n');
+		
+		// Use the same ground form detection logic as in context addition
+		const isGroundForm = await isGroundFormWord(plugin, word);
+		const normalForm = isGroundForm ? word : await getGroundForm(plugin, word);
+		
+		// Add tags right after header
+		const tags = createTags(word, trimmedBaseEntrie, isGroundForm);
+		const contentWithTags = `${headerLine}\n\n${tags}\n\n${restOfContent}`;
+		
+		const baseBlock = incertYouglishLinkInIpa(contentWithTags);
+		const morphemsBlock = createSectionBlock('MORFEMAS', cleanAITags(morphems), longDash);
+		const valenceBlock = createSectionBlock('VALENCIA', cleanAITags(valence), longDash);
+		
+		// Add conjugation link to Formas Gramaticales for verbs
+		let formasContent = cleanAITags(froms);
+		if (isVerb(trimmedBaseEntrie) && formasContent !== longDash) {
+			formasContent += `\n\n${createConjugationLink(word)}`;
+		}
+		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', formasContent, longDash);
+		
+		const adjFormsBlock = createSectionBlock('FORMAS_ADJETIVALES', cleanAITags(adjForms), longDash);
+		const enlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
+		// Always create Context section (even if empty) so that context can be added later
+		const contextoBlock = `${SECTION_HEADERS.CONTEXTO}\n`;
+
+		const blocks = [
+			baseBlock,
+			morphemsBlock,
+			valenceBlock,
+			fromsBlock,
+			adjFormsBlock,
+			enlacesEntrantesBlock,
+			contextoBlock,
+		];
+		const entrie = joinBlocksWithProperSpacing(blocks, getSectionSeparator());
+
+		if (isGroundForm) {
+			// Ground form - write the full entry
+			await plugin.app.vault.modify(file, entrie);
+		} else {
+			// Non-ground form - create minimal entry with tags, link to ground form, incoming links, and context
+			const derivedTags = createTags(word, trimmedBaseEntrie, false);
+			const derivedEnlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
+			const derivedContextoBlock = `${SECTION_HEADERS.CONTEXTO}\n`;
+			
+			// Use the ground form if found, otherwise fallback to the word itself
+			const groundFormLink = normalForm ? `[[${normalForm}]]` : `*Ground form not found*`;
+			const derivedEntry = `${groundFormLink}\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}\n\n${getSectionSeparator()}\n\n${derivedContextoBlock}`;
+			
+			await plugin.app.vault.modify(file, derivedEntry);
+		}
+	} catch (error) {
+		console.error('Error generating dictionary entry:', error);
+		// Fallback to placeholder if generation fails
+		await plugin.app.vault.modify(file, `# ${word}\n\n*Dictionary entry generation failed. Please run the Fill Template command manually.*`);
+	}
+} 

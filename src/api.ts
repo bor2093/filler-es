@@ -112,7 +112,7 @@ export class ApiService {
 	}
 
 	async translateText(text: string): Promise<string> {
-		return this.generateContent(prompts.translate_de_to_eng, text);
+		return this.generateContent(prompts.translate_es_to_eng, text);
 	}
 
 	async consultKeymaker(text: string): Promise<string> {

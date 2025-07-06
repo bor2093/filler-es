@@ -54,5 +54,32 @@ export class SettingsTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					});
 			});
+
+		new Setting(containerEl).setName('File organization').setHeading();
+
+		new Setting(containerEl)
+			.setName('Dictionary folder path')
+			.setDesc('The base folder where dictionary files will be stored.')
+			.addText((text) =>
+				text
+					.setPlaceholder('words')
+					.setValue(this.plugin.settings.dictionaryFolderPath)
+					.onChange(async (value) => {
+						this.plugin.settings.dictionaryFolderPath = value || 'words';
+						await this.plugin.saveSettings();
+					})
+			);
+
+		new Setting(containerEl)
+			.setName('Use sharded file structure')
+			.setDesc('When enabled, files are organized in {folder}/Ordered/{letter}/{prefix}/{shard}/ folders. When disabled, all files are placed directly in the dictionary folder.')
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.useShardedFileStructure)
+					.onChange(async (value) => {
+						this.plugin.settings.useShardedFileStructure = value;
+						await this.plugin.saveSettings();
+					})
+			);
 	}
 }

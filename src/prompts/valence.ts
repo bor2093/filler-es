@@ -1,183 +1,183 @@
 import { longDash } from 'utils';
 
-const verfeinden_valenz =
-	'###### [[verfeinden]] *[[sich]]* `mit` jM\n' +
-	'- `Mit` wem [[hast]] du *[[sich|dich]]* [[verfeindet]]?\n' +
-	'- `Mit` meinem ehemaligen Freund.\n\n' +
-	'- Warum [[hat]] sie *[[sich|sich]]* `mit` ihm [[verfeindet]]?\n';
-'- Wegen eines Missverständnisses.\n\n' +
-	'- Wie lange [[bist]] du schon `mit` ihm *[[verfeindet]]*?\n';
-('- Seit zwei Jahren.');
+const enemistar_valenz =
+	'###### [[enemistar]] *[[se]]* `con` jM\n' +
+	'- `¿Con` quién [[te]] *[[has]]* [[enemistado]]?\n' +
+	'- `Con` mi ex amigo.\n\n' +
+	'- ¿Por qué [[se]] *[[ha]]* [[enemistado]] `con` él?\n' +
+	'- Por un malentendido.\n\n' +
+	'- ¿Cuánto tiempo [[llevas]] *[[enemistado]]* `con` él?\n' +
+	'- Desde hace dos años.';
 
-const rennen_valenz =
-	'###### rennen\n' +
-	'- Wohin rennst du?\n' +
-	'- Zum Bus.\n\n' +
-	'- Mit wem rennen wir?\n' +
-	'- Mit unseren Freunden.\n\n' +
-	'- Wie lange bist du schon gerannt?\n' +
-	'- Seit fünf Minuten.';
+const correr_valenz =
+	'###### [[correr]]\n' +
+	'- ¿Adónde [[corres]]?\n' +
+	'- Al autobús.\n\n' +
+	'- ¿Con quién [[corremos]]?\n' +
+	'- Con nuestros amigos.\n\n' +
+	'- ¿Cuánto tiempo [[llevas]] [[corriendo]]?\n' +
+	'- Desde hace cinco minutos.';
 
-const hoffen_valenz =
-	'###### [[hoffen]] `auf` jN\n' +
-	'- `Worauf` [[hoffst]] du?\n' +
-	'- `Auf` gutes Wetter.\n\n' +
-	'- `Auf` wen [[hoffen]] sie?\n' +
-	'- `Auf` ihren Trainer.\n\n' +
-	'- Wie lange [[hast]] du `darauf` [[gehofft]]?\n' +
-	'- Seit einer Woche.\n\n' +
+const esperar_valenz =
+	'###### [[esperar]] `en` jN\n' +
+	'- `¿En` qué [[esperas]]?\n' +
+	'- `En` buen tiempo.\n\n' +
+	'- `¿En` quién [[esperan]]?\n' +
+	'- `En` su entrenador.\n\n' +
+	'- ¿Cuánto tiempo [[has]] [[esperado]] `en` eso?\n' +
+	'- Desde hace una semana.\n\n' +
 	'---\n' +
-	'###### [[hoffen]]\n' +
-	'- Was [[hoffst]] du?\n' +
-	'- Einen guten Ausgang.\n\n' +
-	'- Warum [[hoffen]] wir?\n' +
-	'- Weil wir an das Beste glauben.\n\n' +
-	'- Wie lange [[hast]] du [[gehofft]]?\n' +
-	'- Dein Leben lang.';
+	'###### [[esperar]]\n' +
+	'- ¿Qué [[esperas]]?\n' +
+	'- Un buen resultado.\n\n' +
+	'- ¿Por qué [[esperamos]]?\n' +
+	'- Porque creemos en lo mejor.\n\n' +
+	'- ¿Cuánto tiempo [[has]] [[esperado]]?\n' +
+	'- Toda tu vida.';
 
-const vorstellen_valenz =
-	'###### [[stellen]] jN jM [[vor]]\n' +
-	'- Wen [[stellst]] du mir [[vor]]?\n' +
-	'- Meinen Freund.\n\n' +
-	'- Wem [[stellen]] wir euch [[vor]]?\n' +
-	'- Meinem Chef.\n\n' +
-	'- Warum [[hat]] er mich ihr [[vorgestellt]]?\n' +
-	'- Um euch miteinander bekannt zu machen.\n\n' +
+const presentar_valenz =
+	'###### [[presentar]] jN a jM\n' +
+	'- ¿A quién [[me]] [[presentas]]?\n' +
+	'- A mi amigo.\n\n' +
+	'- ¿A quién [[les]] [[presentamos]]?\n' +
+	'- A mi jefe.\n\n' +
+	'- ¿Por qué [[me]] [[ha]] [[presentado]] a ella?\n' +
+	'- Para que se conozcan.\n\n' +
 	'---\n' +
-	'###### [[stellen]] *[[sich]]* jN [[vor]]\n' +
-	'- Wen [[stellst]] du *[[sich|dir]]* [[vor]]?\n' +
-	'- Einen berühmten Schauspieler.\n\n' +
-	'- Was [[stellen]] wir *[[sich|uns]]* [[vor]]?\n' +
-	'- Unsere Reise nach Japan.\n\n' +
-	'- Warum [[hat]] er *[[sich|sich]]* das nicht [[vorgestellt]]?\n' +
-	'- Weil es zu unrealistisch war.';
+	'###### [[presentar]] *[[se]]* como jN\n' +
+	'- ¿Como quién [[te]] [[presentas]]?\n' +
+	'- Como un actor famoso.\n\n' +
+	'- ¿Qué [[nos]] [[presentamos]]?\n' +
+	'- Nuestro viaje a Japón.\n\n' +
+	'- ¿Por qué [[se]] [[presentó]] así?\n' +
+	'- Porque era muy irrealista.';
 
-const erfahren_valenz =
-	'###### [[erfahren]] (`von` jM / `durch` jN) **von** jN\n' +
-	'- **Wovon** [[erfährst]] du?\n' +
-	'- **Von** einer neuen Regelung.\n\n' +
-	'- `Von` wem [[haben]] wir das [[erfahren]]?\n' +
-	'- `Von` unserem Lehrer.\n\n' +
-	'- Wie [[hat]] sie **davon** [[erfahren]]?\n' +
-	'- Sie [[hat]] **davon** `durch` einen Freund  [[erfahren]]\n\n' +
+const enterarse_valenz =
+	'###### [[enterarse]] (`de` jM / `por` jN) **de** jN\n' +
+	'- **¿De** qué [[te]] [[enteras]]?\n' +
+	'- **De** una nueva regulación.\n\n' +
+	'- `¿De` quién [[nos]] [[enteramos]]?\n' +
+	'- `De` nuestro profesor.\n\n' +
+	'- ¿Cómo [[se]] [[enteró]] **de** eso?\n' +
+	'- [[Se]] [[enteró]] **de** eso `por` un amigo\n\n' +
 	'---\n' +
-	'###### [[erfahren]] `über` jN\n' +
-	'- `Worüber` [[erfährst]] du in dem Kurs?\n' +
-	'- `Über` die Geschichte Europas.\n\n' +
-	'- `Über` welches Thema haben wir mehr [[erfahren]]?\n' +
-	'- `Über` moderne Technologien.\n\n' +
-	'- Warum [[hat]] er `darüber` nichts [[erfahren]]?\n' +
-	'- Weil er nicht zugehört hat.';
+	'###### [[enterarse]] `sobre` jN\n' +
+	'- `¿Sobre` qué [[te]] [[enteras]] en el curso?\n' +
+	'- `Sobre` la historia de Europa.\n\n' +
+	'- `¿Sobre` qué tema [[hemos]] [[aprendido]] más?\n' +
+	'- `Sobre` tecnologías modernas.\n\n' +
+	'- ¿Por qué [[no]] [[se]] [[enteró]] `de` nada?\n' +
+	'- Porque no prestó atención.';
 
-const aufpassen_valenz =
-	'###### [[aufpassen]] `auf` jN\n' +
-	'- `Worauf` [[passt]] du [[auf]]?\n' +
-	'- `Auf` den Verkehr.\n\n' +
-	'- `Auf` wen [[passt]] du [[auf]]?\n' +
-	'- `Auf` mein kleines Geschwisterchen.\n\n' +
-	'- Wie lange [[hast]] du `darauf` [[aufgepasst]]?\n' +
-	'- Den ganzen Tag.';
+const cuidar_valenz =
+	'###### [[cuidar]] `de` jN\n' +
+	'- `¿De` qué [[cuidas]]?\n' +
+	'- `De` el tráfico.\n\n' +
+	'- `¿De` quién [[cuidas]]?\n' +
+	'- `De` mi hermanito pequeño.\n\n' +
+	'- ¿Cuánto tiempo [[has]] [[cuidado]] `de` eso?\n' +
+	'- Todo el día.';
 
-const gewöhnen_valenz =
-	'###### [[gewöhnen]] *[[sich]]* `an` jN\n' +
-	'- `Woran` [[gewöhnst]] du *[[sich|dich]]*?\n' +
-	'- `An` das kalte Wetter.\n\n' +
-	'- `An` wen [[hat]] sie *[[sich|sich]]* [[gewöhnt]]?\n' +
-	'- `An` ihren neuen Kollegen.\n\n' +
-	'- Wie lange [[hast]] du *[[sich|dich]]* `daran` [[gewöhnt]]?\n' +
-	'- Ein paar Monate.';
+const acostumbrarse_valenz =
+	'###### [[acostumbrarse]] *[[se]]* `a` jN\n' +
+	'- `¿A` qué [[te]] [[acostumbras]]?\n' +
+	'- `A` el frío.\n\n' +
+	'- `¿A` quién [[se]] [[ha]] [[acostumbrado]]?\n' +
+	'- `A` su nuevo colega.\n\n' +
+	'- ¿Cuánto tiempo [[te]] [[has]] [[acostumbrado]] `a` eso?\n' +
+	'- Unos meses.';
 
-const darstellen_valenz =
-	'###### [[darstellen]] jN\n' +
-	'- Wen [[stellt]] der Schauspieler [[dar]]?\n' +
-	'- Einen berühmten König.\n\n' +
-	'- Was [[stellen]] wir [[dar]]?\n' +
-	'- Eine Gefahr für das Ökosystem.\n\n' +
-	'- Wie lange [[hat]] sie diese Figur [[dargestellt]]?\n' +
-	'- Mehr als zehn Jahre.\n';
+const representar_valenz =
+	'###### [[representar]] jN\n' +
+	'- ¿A quién [[representa]] el actor?\n' +
+	'- A un rey famoso.\n\n' +
+	'- ¿Qué [[representamos]]?\n' +
+	'- Un peligro para el ecosistema.\n\n' +
+	'- ¿Cuánto tiempo [[ha]] [[representado]] este papel?\n' +
+	'- Más de diez años.\n';
 
-export const generate_valence_block = `<assistant_role>You are an advanced linguistic assistant specializing in German verb syntax and grammar. Your task is to generate structured Markdown-formatted valence dictionary entries for given German verbs following a precise syntax notation.</assistant_role>
+export const generate_valence_block = `<assistant_role>You are an advanced linguistic assistant specializing in Spanish verb syntax and grammar. Your task is to generate structured Markdown-formatted valence dictionary entries for given Spanish verbs following a precise syntax notation.</assistant_role>
 
 <instructions>
-0. You are given a konjugated german word. If it is a form of a verb, proceed with genetaring valence blocks for it's infinitive. If it is not a form of a verb, reply with "${longDash}". 
+0. You are given a conjugated Spanish word. If it is a form of a verb, proceed with generating valence blocks for its infinitive. If it is not a form of a verb, reply with "${longDash}". 
 1. Determine Reflexivity  
    - If the verb is only reflexive, generate a block for its reflexive usage.  
    - If the verb can be used both reflexively and non-reflexively, generate two separate blocks.  
    - If the verb is never reflexive, only generate the non-reflexive block.  
 
 2. Identify Governed Prepositions  
-   - If the verb requires a *governed preposition, mark it using backticks (\`...\`) in the block title and questions.  
+   - If the verb requires a governed preposition, mark it using backticks (\`...\`) in the block title and questions.  
    - If the verb has both a governed and a free preposition, the first governed preposition is marked with \`...\`, and the second governed preposition is marked with **....**  
 
 3. Syntax Formatting:  
 - start every block with a title
-- Reflexive pronouns (e.g., *sich, dir, mir*) are wrapped inside *[[...]]*.  
+- Reflexive pronouns (e.g., *se, te, me*) are wrapped inside *[[...]]*.  
 - Verb stems (conjugated and participle forms) are wrapped inside [[...]].  
 - Governed prepositions are wrapped inside backticks  \`...\` .  
 - First governed preposition in the response is wrapped inside \`...\`.  
 - Second governed preposition (if present) is wrapped inside double asterisks **...**.
 
-4. If there are Governed Preposition, Every block shall include dialogs with wo{Governed Preposition}, da{Governed Preposition} and Governed Preposition. No more then 3 dialogs per block.
+4. If there are Governed Prepositions, Every block shall include dialogs with ¿de qué?, ¿de quién? and the governed preposition. No more than 3 dialogs per block.
 </instructions>
 
 <examples>
 <exapmle>
-<german_word>verfeinden</german_word>
-<ideal_output>${verfeinden_valenz}</ideal_output>
+<spanish_word>enemistar</spanish_word>
+<ideal_output>${enemistar_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>rennen</german_word>
-<ideal_output>${rennen_valenz}</ideal_output>
+<spanish_word>correr</spanish_word>
+<ideal_output>${correr_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>hoffe</german_word>
-<ideal_output>${hoffen_valenz}</ideal_output>
+<spanish_word>espera</spanish_word>
+<ideal_output>${esperar_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>vorgestellt</german_word>
-<ideal_output>${vorstellen_valenz}</ideal_output>
+<spanish_word>presentado</spanish_word>
+<ideal_output>${presentar_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>aufgepasst</german_word>
-<ideal_output>${aufpassen_valenz}</ideal_output>
+<spanish_word>cuidado</spanish_word>
+<ideal_output>${cuidar_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>gewöhnen</german_word>
-<ideal_output>${gewöhnen_valenz}</ideal_output>
+<spanish_word>acostumbrarse</spanish_word>
+<ideal_output>${acostumbrarse_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>darstellen</german_word>
-<ideal_output>${darstellen_valenz}</ideal_output>
+<spanish_word>representar</spanish_word>
+<ideal_output>${representar_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>erführe</german_word>
-<ideal_output>${erfahren_valenz}</ideal_output>
+<spanish_word>enteré</spanish_word>
+<ideal_output>${enterarse_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>erfahren</german_word>
-<ideal_output>${erfahren_valenz}</ideal_output>
+<spanish_word>enterarse</spanish_word>
+<ideal_output>${enterarse_valenz}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>normale</german_word>
+<spanish_word>normal</spanish_word>
 <ideal_output>${longDash}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>Frau</german_word>
+<spanish_word>mujer</spanish_word>
 <ideal_output>${longDash}</ideal_output>
 </exapmle>
 
 <exapmle>
-<german_word>liebsten</german_word>
+<spanish_word>queridos</spanish_word>
 <ideal_output>${longDash}</ideal_output>
 </exapmle>
 <examples>`;

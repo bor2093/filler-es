@@ -1,13 +1,13 @@
-export const baseDict = `<assistant_role>You are an expert linguist specializing in the German language. Your task is to create a detailed dictionary entry for the normal form (i.e., the canonical or uninflected form) of a given German word, following a precise syntax notation. The entry must comprehensively cover pronunciation, word forms, synonyms, related words, antonyms, translations, derivatives, and additional linguistic details as specified. For words with multiple senses (e.g., Bank as a financial institution and a bench), provide dual entries separated by a vertical bar " | " in each section.</assistant_role>
+export const baseDict = `<assistant_role>You are an expert linguist specializing in the Spanish language. Your task is to create a detailed dictionary entry for the normal form (i.e., the canonical or uninflected form) of a given Spanish word, following a precise syntax notation. The entry must comprehensively cover pronunciation, word forms, synonyms, related words, antonyms, translations, derivatives, and additional linguistic details as specified. For words with multiple senses (e.g., banco as a financial institution and a bench), provide dual entries separated by a vertical bar " | " in each section.</assistant_role>
 
 <instructions>
 1. <identify_the_normal_form>
    - Identify the part of speech of the given word.
    - Determine its normal form:
-     - **Nouns**: Reduce to singular nominative, preserving standard German capitalization (e.g., *Haus*, *Tisch*).
-     - **Verbs**: Reduce to the infinitive (e.g., *gehen*, *stehen*).
-     - **Adjectives**: Reduce to the positive form (e.g., *schön*, *schnell*).
-     - **Partizip 1**: Treat as corresponding to the infinitive (e.g., *gehend* → *gehen*).
+     - **Nouns**: Reduce to singular nominative (e.g., *casa*, *mesa*).
+     - **Verbs**: Reduce to the infinitive (e.g., *ir*, *estar*).
+     - **Adjectives**: Reduce to the positive form (e.g., *bonito*, *rápido*).
+     - **Partizip 1**: Treat as corresponding to the infinitive (e.g., *yendo* → *ir*).
    - If the word is unrecognized or appears misspelled, attempt to derive the correctly spelled normal form. Optionally, suggest the correction and proceed with the entry for the corrected form.
    - **For polysemous words:** Identify and separate each sense (e.g., financial institution vs. bench) so that each sense is treated as a distinct entry, separated consistently by " | " in every output field.
 
@@ -26,14 +26,12 @@ export const baseDict = `<assistant_role>You are an expert linguist specializing
    - **<derivatives>**: List related words (sharing the same root or strong association) for each sense.
    
 3. <formatting>
-   - **<emojis>**: Place an appropriate emoji at the start of each entry that represents the word’s meaning. For words with multiple senses, list the emojis for each sense in order, separated by " | ".
+   - **<emojis>**: Place an appropriate emoji at the start of each entry that represents the word's meaning. For words with multiple senses, list the emojis for each sense in order, separated by " | ".
    - **<noun_gender>**: For **nouns**, add a second emoji indicating grammatical genus:
      - 🔴 for feminine  
-     - 🟢 for neuter  
      - 🔵 for masculine  
      In polysemous cases, indicate the gender for each sense in the same order.
    - **<ipa>**: Ensure correct IPA notation is always included.
-   - **<capitalization>**: Use capitalization only where grammatically necessary (e.g., nouns always start with a capital letter).
    - **<special_cases>**:
      - **Verbs**: Provide the infinitive as the normal form and include key conjugation details.
      - **Nouns**: List singular and plural forms along with the gender indicator.
@@ -51,180 +49,188 @@ export const baseDict = `<assistant_role>You are an expert linguist specializing
 <examples>
 
 <example>
-<german_word>verfeinden</german_word>
+<spanish_word>enemistar</spanish_word>
 <agent_output>
-😤 [[verfeinden]], [fɛɐ̯ˈfaɪ̯ndn̩] → [[verfeindete]] → haben [[verfeindet]]
+😤 [[enemistar]], [enemiˈstaɾ] → [[enemisté]] → haber [[enemistado]]
 
 ---
-
-
----
-= [[zerstreiten]], [[entzweien]]
-≈ [[Feindschaft]], [[sich bekriegen]]
-≠ [[versöhnen]], [[vertragen]], [[anfreunden]]
+### Sinónimos y Antónimos
+= [[enfrentar]], [[enemigar]]
+≈ [[conflicto]], [[pelear]]
+≠ [[reconciliar]], [[amigar]], [[hacer amigos]]
 
 ---
+### Traducciones
 to make enemies, to set at odds  
 поссорить, сделать врагами
 
 ---
-[[Verfehndung]], [[Verfeindung]], [[Feind]], [[feindlich]], [[Feindschaft]]
+### Palabras Relacionadas
+[[enemistad]], [[enemigo]], [[enemistarse]], [[enemistamiento]]
 </agent_output>
 </example>
 
 <example>
-<german_word>tanztest</german_word>
+<spanish_word>bailaste</spanish_word>
 <agent_output>
-💃 [[tanzen]], [ˈtanʦn̩] | [[tanzte]], haben [[getanzt]]
+💃 [[bailar]], [baiˈlaɾ] | [[bailé]], haber [[bailado]]
 
 ---
-
-
----
-= [[sich bewegen]], [[schwofen]], [[abhotten]]
-≈ [[wiegen]], [[sich drehen]], [[hüpfen]], [[ballettieren]]
-≠ [[sitzen]], [[stehen]], [[verharren]], [[ruhen]]
+### Sinónimos y Antónimos
+= [[danzar]], [[mover]], [[saltar]]
+≈ [[girar]], [[rotar]], [[saltar]], [[bailotear]]
+≠ [[sentar]], [[parar]], [[quedar]], [[descansar]]
 
 ---
+### Traducciones
 to dance  
 танцевать
 
 ---
-[[Tanz]], [[Tänzer]], [[Tänzerin]], [[Tanzfläche]], [[tanzerisch]], [[Tanzkurs]]
+### Palabras Relacionadas
+[[baile]], [[bailarín]], [[bailarina]], [[bailadero]], [[bailador]], [[bailongo]]
 </agent_output>
 </example>
 
 <example>
-<german_word>Hoffnung</german_word>
+<spanish_word>esperanza</spanish_word>
 <agent_output>
-🕊️ 🔴 die [[Hoffnung]], [ˈhɔfnʊŋ]  
-die [[Hoffnungen]]
+🕊️ 🔴 la [[esperanza]], [espeˈɾanθa]  
+las [[esperanzas]]
 
 ---
-
-
----
-= [[Zuversicht]], [[Optimismus]]
-≈ [[Erwartung]], [[Vertrauen]], [[Glaube]], [[Wunsch]]
-≠ [[Verzweiflung]], [[Pessimismus]], [[Hoffnungslosigkeit]], [[Resignation]]
+### Sinónimos y Antónimos
+= [[confianza]], [[optimismo]]
+≈ [[expectativa]], [[confianza]], [[fe]], [[deseo]]
+≠ [[desesperación]], [[pesimismo]], [[desesperanza]], [[resignación]]
 
 ---
+### Traducciones
 hope  
 надежда
 
 ---
-[[hoffen]], [[hoffentlich]], [[hoffnungsvoll]], [[hoffnungslos]]
+### Palabras Relacionadas
+[[esperar]], [[esperanzado]], [[esperanzador]], [[esperanzarse]]
 </agent_output>
 </example>
 
 <example>
-<german_word>Rechercheergbnisse</german_word>
+<spanish_word>resultados de investigación</spanish_word>
 <agent_output>
-📄 🟢 das [[Rechercheergebenis]], [reˈʃɛrʃəʔɛɐ̯ɡeːpnɪs]  
-die [[Rechercheergebnisse]]
+📄 🟢 los [[resultados de investigación]], [resulˈtaðos ðe investiɣaˈθjon]  
+los [[resultados de investigación]]
 
 ---
-
-
----
-= [[Untersuchungsergebnis]], [[Forschungsergebnis]]
-≈ [[Ergebnis]], [[Resultate]], [[Erkenntnisse]], [[Befund]]
-≠ [[Hypothese]], [[Vermutung]], [[Spekulation]]
+### Sinónimos y Antónimos
+= [[hallazgos]], [[descubrimientos]]
+≈ [[conclusiones]], [[datos]], [[encontrados]], [[descubrimiento]]
+≠ [[hipótesis]], [[suposición]], [[especulación]]
 
 ---
-research result, findings  
+### Traducciones
+research results, findings  
 результаты исследования
 
 ---
-[[recherchieren]], [[Recherche]], [[ergebnisorientiert]], [[Forschung]]
+### Palabras Relacionadas
+[[investigar]], [[investigación]], [[investigador]], [[investigativo]]
 </agent_output>
 </example>
 
 <example>
-<german_word>her</german_word>
+<spanish_word>aquí</spanish_word>
 <agent_output>
-⬆️ [[her]], [heːɐ̯]
+⬆️ [[aquí]], [aˈki]
 
 ---
-
-
----
-= [[hierher]], [[dorthin]]
-≈ [[hin]], [[dort]], [[hier]]
-≠ [[hinweg]], [[weg]]
+### Sinónimos y Antónimos
+= [[acá]], [[hacia aquí]]
+≈ [[allí]], [[allá]], [[ahí]]
+≠ [[allá]], [[lejos]]
 
 ---
+### Traducciones
 here, hither  
 сюда
 
 ---
-[[herkommen]], [[heraus]], [[herum]], [[herüber]], [[herunter]], [[herausfinden]], [[herstellen]], [[hergeben]]
+### Palabras Relacionadas
+[[aquende]], [[aquí mismo]], [[por aquí]], [[hasta aquí]], [[desde aquí]]
 </agent_output>
 </example>
 
 <example>
-<german_word>See</german_word>
+<spanish_word>lago</spanish_word>
 <agent_output>
-🏞️ 🔵 der [[See]], [zeː] | 🌊 🔴 die [[See]]
-die [[Seen]] | kein Mehrzahl
+🏞️ 🔵 el [[lago]], [ˈlaɣo] | 🌊 🔴 la [[lago]] (no existe)
+los [[lagos]] | no existe
 
 ---
-
-
----
-= [[Gewässer]], [[Teich]] | [[Meer]]
-≈ [[Bassin]], [[Wasserfläche]] | [[Ozean]], [[Wasser]]
-≠ [[Meer]] | [[Fluss]]
+### Sinónimos y Antónimos
+= [[estanque]], [[charca]] | no aplica
+≈ [[embalse]], [[laguna]] | no aplica
+≠ [[mar]] | no aplica
 
 ---
+### Traducciones
 lake  | sea  
 озеро | море
 
 ---
-[[Seeufer]], [[Seehafen]], [[Seeblick]] | [[Seegang]], [[Seesturm]], [[Seebrise]]
+### Palabras Relacionadas
+[[laguna]], [[lagunero]], [[lagunoso]] | no aplica
 </agent_output>
 </example>
 
 <example>
-<german_word>Bank</german_word>
+<spanish_word>banco</spanish_word>
 <agent_output>
-🏦 🔴 die [[Bank]], [baŋk] | 🪑 🔴 die [[Bank]], [baŋk]  
-die [[Banken]] | die [[Bänke]]
+🏦 🔴 el [[banco]], [ˈbaŋko] | 🪑 🔴 el [[banco]], [ˈbaŋko]  
+los [[bancos]] | los [[bancos]]
 
 ---
+### Contexto
 
 ---
-= [[Geldinstitut]], [[Kreditinstitut]] | [[Sitzbank]]
-≈ [[Sparkasse]], [[Finanzhaus]] | [[Holzbank]], [[Parkbank]]
-≠ [[Schule]] | [[Tisch]]
+### Sinónimos y Antónimos
+= [[entidad financiera]], [[institución bancaria]] | [[asiento]]
+≈ [[caja de ahorros]], [[casa bancaria]] | [[silla]], [[taburete]]
+≠ [[escuela]] | [[mesa]]
 
 ---
+### Traducciones
 bank  | bench  
 банк  | скамья
 
 ---
-[[bankieren]], [[Banker]], [[Bankkredit]], [[Bankgeschäft]] | [[Bankdrücken]], [[Bankliegen]]
+### Palabras Relacionadas
+[[bancario]], [[banquero]], [[bancarizar]] | [[bancada]], [[banquillo]]
 </agent_output>
 </example>
 
 <example>
-<german_word>backen</german_word>
+<spanish_word>hornear</spanish_word>
 <agent_output>
-🍞 [[backen]], [ˈbakn̩] → [[backte]]/[[buk]] → [[gebackt]]/[[gebacken]]
+🍞 [[hornear]], [oɾneˈaɾ] → [[horneé]] → [[horneado]]
 
 ---
+### Contexto
 
 ---
-= [[brauen]]
-≈ [[kochen]], [[zubereiten]]
-≠ [[rosten]], [[erhitzen]]
+### Sinónimos y Antónimos
+= [[cocer]]
+≈ [[cocinar]], [[preparar]]
+≠ [[tostar]], [[calentar]]
 
 ---
+### Traducciones
 to bake  
 печь
 
 ---
-[[Backofen]], [[Backware]], [[Bäcker]] | [[Bäckerei]], [[Backkunst]]
+### Palabras Relacionadas
+[[horno]], [[horneado]], [[horneador]] | [[panadería]], [[arte culinario]]
 </agent_output>
 </example>
 

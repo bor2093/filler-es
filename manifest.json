@@ -1,11 +1,11 @@
 {
-	"id": "cbcr-text-eater-de",
-	"name": "Textfresser",
-	"version": "0.0.2",
+	"id": "cbcr-text-eater-esp",
+	"name": "DevoradorDeTexto",
+	"version": "0.0.3",
 	"minAppVersion": "1.8.0",
-	"description": "Go trough the german texts and build your own dictionary based on your own unique contexts",
-	"author": "clockblocker",
-	"authorUrl": "https://github.com/clockblocker/",
+	"description": "Go trough the spanish texts and build your own dictionary based on your own unique contexts",
+	"author": "bor2093",
+	"authorUrl": "https://github.com/bor2093",
 	"fundingUrl": "https://buymeacoffee.com/fniqc5g0nr",
 	"isDesktopOnly": false
 }

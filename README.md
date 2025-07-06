@@ -1,108 +1,169 @@
-# Textfresser (Obsidian Plugin)
+# Spanish Dictionary Builder (Obsidian Plugin)
 
 <p align="center">
    <img src="img/new-icon.png" alt="icon" width="300"/>
 </p>
 
-Open a German text.\
-Go to an unknown word.\
-Create a dictionary entry for it.\
-Add your context.\
-Link all forms and similar words.\
-Repeat.
+**Transform your Spanish learning with an intelligent, AI-powered dictionary builder for Obsidian.**
 
-![Text with linked words](img/new-text-and-links.png)
+Open a Spanish text.\
+Select an unknown word.\
+Add it to your dictionary with context.\
+Build connections between words.\
+Create your personalized Spanish knowledge base.
 
-![Graph View Example](img/new-graph.png)
+
 
 ## Overview
 
-The "Generate" command will take the name of the opened file and:
+This Obsidian plugin helps you build a comprehensive Spanish dictionary with automatic word form detection, context examples, and intelligent linking between related words. It leverages AI to generate detailed dictionary entries and creates a connected knowledge base for effective Spanish learning.
 
-- if it's _not a normal form_ of a word, add a link to a file with a _normal form_
-- if it's a _normal form_, will generate the structured dictionary entry
-
-### Makes a dictionary entry with all forms of the word
-![A dictionary entry](img/new-note.png)
-
-The "Populate" command will:
-
-- create the files for ALL the links in current file
-- add an explicit backlink to the current file in every created file
-
-### Trivialises the navigation from declined froms to the normal form
-
-![Navigation Example](img/navigation.png)
-
-reise → ✈️ reisen\
-reisender → ✈️ reisen\
-gereist → ✈️ reisen\
-reistet → ✈️ reisen
-
-### Enables the collection of semantically linked words
-
-![Semantic group Example](img/explain-example.png)
 
 ## Key Features
 
-### 1. Structured Entry Templates
+### 🎯 **Core Dictionary Commands**
 
-Each word type has a specialized template that includes:
+#### 1. **Generate Dictionary Entry**
+Creates comprehensive dictionary entries including:
+- **Pronunciation** with IPA notation
+- **Word forms** (conjugations, plurals, gender variations)  
+- **Morphological breakdown** 
+- **Valence patterns** (for verbs)
+- **Smart tagging** (ground form vs. derived form)
+- **Automatic file organization** with sharded folder structure
 
-- Pronunciation
-- Conjugation/declension tables
-- Synonyms and antonyms
-- Translation
-- Morphological breakdown
+#### 2. **Add Context to Dictionary**
+Intelligently adds context examples with:
+- **Smart anchoring** - creates block references (`^1`, `^2`, etc.)
+- **Source linking** - `*[[filename#^1|^]]* context sentence`
+- **Ground form handling** - adds context to both word and its base form
+- **Capitalization normalization** - handles sentence-initial words properly
+- **Cursor-aware sentence detection** - finds the exact sentence you're working with
 
-### 2. Automatic Backlink Management
+### 🔧 **Text Processing Commands**
 
-The plugin automatically maintains bidirectional links between related words, helping you build a network of connected vocabulary:
+#### 3. **Normalize Selection (Add Links)**
+Transforms Spanish text into a linked knowledge base:
+- **Grammar-aware linking** - `corrían` → `[[correr|corrían]]`
+- **Handles complex forms** - reflexive verbs, compound tenses, plurals
+- **Smart exclusions** - leaves pronouns, auxiliary verbs unlinked
+- **Preserves formatting** - maintains structure while adding connections
 
-- Links between base verbs and their prefixed forms
-- Connections between synonyms and antonyms
-- References between related grammatical forms
+#### 4. **Translate Spanish to English**
+Quick translation helper for comprehension and learning.
+
+### 🎓 **Learning & Correction Commands**
+
+#### 5. **Spanish Grammar Check & Homework Assistant**
+Quick exercise checking and corrections:
+- **Fast validation** - Simple ✅ or corrections with `==word==`
+- **Exercise support** - fill-in-gaps, translations, grammar checks
+- **Concise feedback** - immediate answers for homework
+
+#### 6. **Spanish Writing Tutor & Detailed Analysis**
+Comprehensive learning with detailed explanations:
+- **In-depth corrections** with explanations under "Explicación"
+- **Stylistic improvements** under "Mejora estilística" 
+- **Educational feedback** - helps understand mistakes
+- **Advanced grammar analysis**
+
+## Smart Features
+
+### **Intelligent Word Processing**
+- **Ground form detection** - automatically identifies base forms (e.g., "pura" → "puro")
+- **Capitalization handling** - `[[tengo|Tengo]]` for sentence-initial words
+- **Context reuse** - reuses existing block references when adding multiple words from same paragraph
+- **Auto-navigation** - automatically opens dictionary entry after adding context
+
+### **Connected Knowledge Base**
+- **Bidirectional linking** - connects word forms to base forms
+- **Context anchoring** - enables easy navigation between source and definition
+- **Graph visualization** - see connections between related words
+- **Smart file organization** - optional sharded folder structure for large vocabularies
 
 ## Setup
 
-0. The plugin will drastically alter the default Obsidian behavior. It is highly recommended to use it in a special Vault. The easiest way is to copy [the Vault with onboarding Tutorial](https://github.com/clockblocker/Textfresser_vault)
+### Prerequisites
+1. **Dedicated Vault Recommended** - The plugin creates many interconnected files
+2. **API Key Required** - Google Gemini API key for AI-powered features
+3. **Folder Organization** - Set up a dedicated folder (e.g., "words") for dictionary entries
 
-1. The plugin will be creating a LOT of files (every conjugation of every word will live in its own file). So it is highly recommended to make a special folder ("Worter") for all the new files to go to by default.
-   ![The example of the default folder](img/worter.png)
-   All of the automatically created files go to Worter/{the_first_letter_of_the_word}/{word} by default
+### Installation
+1. Install the plugin in Obsidian
+2. Configure your Google Gemini API key in settings
+3. Set your dictionary folder path (default: "words")
+4. Optionally enable sharded file structure for large vocabularies
 
-2. Setup the hotkeys for plugin's commands. The essential ones are:
+### Essential Hotkeys
+Set up keyboard shortcuts for frequently used commands:
+- **Generate Dictionary Entry** - For creating new word definitions
+- **Add Context to Dictionary** - For adding examples from reading material
+- **Normalize Selection** - For processing Spanish text with automatic linking
 
-- Generate a dictionary entry for the word in the title of the file (Generate command)
-- Add backlinks to the current file in all referenced files (Populate command)
+## Usage Workflow
 
-## Usage
+### Basic Dictionary Building
+1. **Encounter unknown word** in Spanish text
+2. **Select the word** and create a link `[[palabra]]`
+3. **Navigate to the word file** and run "Generate Dictionary Entry"
+4. **Return to source text**, select the word again
+5. **Run "Add Context to Dictionary"** to add the sentence as an example
 
-1. Go to any German text
-2. Select any German word and enclose it in [[]]
-3. Copy the context with [[selected_word]]
-4. Go to the [[selected_word]]
-5. Invoke the Generate command
-6. Go to the generated infinitive / normal form of the word
-7. Paste (Ctrl / Command + V)
-8. Invoke the Populate command
+### Advanced Text Processing
+1. **Select Spanish paragraphs** in reading material
+2. **Run "Normalize Selection"** to automatically link all words
+3. **Build interconnected knowledge base** through repeated use
+4. **Use Graph View** to visualize word relationships
 
-## Network Use
+### Learning and Correction
+- **Quick homework check** - Use "Spanish Grammar Check & Homework Assistant"
+- **Detailed learning** - Use "Spanish Writing Tutor & Detailed Analysis"
+- **Translation help** - Use "Translate Spanish to English" for comprehension
 
-This plugin utilizes network requests to communicate with the following remote services:
+## Example Output
 
-- **Google Gemini API:** Used for translation, dictionary entry generation, and other language processing tasks.
+### Dictionary Entry
+```markdown
+🔵 [[gato]] /ˈɡato/ 
 
-These APIs require network access to function properly. The plugin sends text to these services for processing and receives the results back. Your API keys are stored securely within your Obsidian vault and are not shared with any third parties.
+#forma-base #sustantivo
 
-## API Keys
+**Definición**: Animal doméstico felino...
 
-This plugin requires you to provide your own API keys for the Google Gemini API. You can obtain these keys by creating accounts on the respective platforms.
+### Formas Gramaticales
+- **Singular**: [[gato]], [[gata]]
+- **Plural**: [[gatos]], [[gatas]]
 
-## Disclaimer
+### Contexto
+- *[[cuento-infantil#^1|^]]* El gato subió al tejado.
+- *[[novela-española#^3|^]]* Los gatos duermen mucho.
+```
 
-This plugin is not affiliated with or endorsed by Google. The use of the Google Gemini API is subject to their respective terms of service.
+### Context Addition
+**Source file** (after adding context):
+```markdown
+*[[cuento-infantil#^1|^]]* El [[gato]] subió al tejado. ^1
+```
+
+## Network Usage
+
+This plugin communicates with:
+- **Google Gemini API** - For AI-powered dictionary generation, translation, and language analysis
+
+Your API keys are stored securely in your Obsidian vault and are not shared with third parties.
+
+## Configuration
+
+### Settings
+- **API Keys** - Google Gemini API key
+- **Dictionary Folder** - Base folder for dictionary files (default: "words")
+- **File Organization** - Enable/disable sharded folder structure
+- **API Provider** - Currently supports Google Gemini
 
 ## License
 
-This plugin is licensed under the MIT License. See the `LICENSE` file for the full license text.
+This plugin is licensed under the MIT License. See the `LICENSE` file for details.
+
+## Disclaimer
+
+This plugin is not affiliated with or endorsed by Google. Use of the Google Gemini API is subject to their terms of service.
