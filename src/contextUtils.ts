@@ -65,13 +65,7 @@ export async function createBlockReference(
 	sentence: string
 ): Promise<string | null> {
 	try {
-		// Find the highest existing context block reference number
 		const fileContent = editor.getValue();
-		const maxContextNumber = plugin.findHighestContextNumber(fileContent);
-		const nextNumber = maxContextNumber + 1;
-		
-		// Create the block reference
-		const blockRef = `context${nextNumber}`;
 		
 		// Find the sentence in the text
 		const sentenceIndex = fileContent.indexOf(sentence);
@@ -100,6 +94,20 @@ export async function createBlockReference(
 			
 			blockEndIndex++;
 		}
+		
+		// Check if there's already a block reference at the end of this block
+		const blockContent = fileContent.substring(sentenceIndex, blockEndIndex);
+		const existingBlockRefMatch = blockContent.match(/\^(context\d+)$/);
+		
+		if (existingBlockRefMatch) {
+			// Reuse existing block reference
+			return existingBlockRefMatch[1];
+		}
+		
+		// No existing block reference, create a new one
+		const maxContextNumber = plugin.findHighestContextNumber(fileContent);
+		const nextNumber = maxContextNumber + 1;
+		const blockRef = `context${nextNumber}`;
 		
 		// Find the last non-whitespace character in the block
 		let lastNonWhitespaceIndex = blockEndIndex - 1;
