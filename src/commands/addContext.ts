@@ -56,7 +56,15 @@ export default async function addContext(
 		await addContextToFile(plugin, cleanWord, file.basename, blockRef, contextSentence, isGroundForm);
 		
 		new Notice(`Context added for: ${selection}`);
-    
+		
+		// Step 7: Switch to the dictionary entry file
+		try {
+			const leaf = plugin.app.workspace.getLeaf();
+			await leaf.openFile(wordFile);
+		} catch (error) {
+			console.error('Error switching to dictionary entry:', error);
+			// Don't show error notice as context was still added successfully
+		}
 		
 	} catch (error) {
 		new Notice(`Error adding context: ${error.message}`);
