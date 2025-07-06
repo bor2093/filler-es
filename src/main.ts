@@ -4,7 +4,7 @@ import { DEFAULT_SETTINGS, TextEaterSettings } from './types';
 import { ApiService } from './api';
 import { FileService } from './file';
 import fillTemplate from './commands/fillTemplate';
-import getInfinitiveAndEmoji from './commands/getInfinitiveAndEmoji';
+
 import normalizeSelection from './commands/normalizeSelection';
 import translateSelection from './commands/translateSelection';
 
@@ -52,23 +52,7 @@ export default class TextEaterPlugin extends Plugin {
 			},
 		});
 
-		this.addCommand({
-			id: 'get-infinitive-and-emoji',
-			name: 'Get infinitive/normal form and emoji for current word',
-			editorCheckCallback: (
-				checking: boolean,
-				editor: Editor,
-				view: MarkdownView
-			) => {
-				if (view.file) {
-					if (!checking) {
-						getInfinitiveAndEmoji(this, editor, view.file);
-					}
-					return true;
-				}
-				return false;
-			},
-		});
+
 
 		this.addCommand({
 			id: 'duplicate-selection',
