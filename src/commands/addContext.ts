@@ -72,15 +72,18 @@ export default async function addContext(
 			cleanWord = cleanWord.slice(2, -2);
 		}
 		
-		// Step 2: Extract context sentence first (needed for capitalization normalization)
+		// Step 2: Extract context sentence BEFORE making any changes (using original text and cursor position)
 		const fullText = editor.getValue();
 		const cursorPos = editor.getCursor();
 		const cursorOffset = editor.posToOffset(cursorPos);
-		const contextSentence = extractSentenceContainingWord(fullText, cleanWord, cursorOffset);
-		if (!contextSentence) {
+		
+		const contextResult = extractSentenceContainingWord(fullText, cleanWord, cursorOffset);
+		if (!contextResult) {
 			new Notice(`Could not extract context sentence for: ${selection}`);
 			return;
 		}
+		
+		const { sentence: contextSentence, startIndex: sentenceStartIndex } = contextResult;
 		
 		// Step 3: Normalize capitalization if needed
 		const { normalizedWord, displayFormat, shouldNormalize } = normalizeCapitalization(cleanWord, contextSentence);
@@ -96,8 +99,8 @@ export default async function addContext(
 			return;
 		}
 
-		// Step 6: Add anchor to the sentence in source document
-		const blockRef = await createBlockReference(plugin, editor, file, contextSentence);
+		// Step 6: Add anchor to the sentence in source document (using original sentence and its index)
+		const blockRef = await createBlockReference(plugin, editor, file, contextSentence, sentenceStartIndex);
 		if (!blockRef) {
 			new Notice(`Could not create block reference for context`);
 			return;

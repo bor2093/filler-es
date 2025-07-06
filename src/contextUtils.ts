@@ -8,7 +8,7 @@ import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './sect
 /**
  * Extracts the sentence containing the selected word from the full text near the cursor position
  */
-export function extractSentenceContainingWord(fullText: string, word: string, cursorOffset?: number): string | null {
+export function extractSentenceContainingWord(fullText: string, word: string, cursorOffset?: number): { sentence: string; startIndex: number } | null {
 	try {
 		const splitSentences = sentences(fullText, {
 			preserve_whitespace: false,
@@ -19,25 +19,44 @@ export function extractSentenceContainingWord(fullText: string, word: string, cu
 
 		// If no cursor position provided, fall back to first occurrence
 		if (cursorOffset === undefined) {
+			let textPosition = 0;
 			for (const sentence of splitSentences) {
-				if (sentence.toLowerCase().includes(word.toLowerCase())) {
-					return sentence.trim();
+				const sentenceIndex = fullText.indexOf(sentence, textPosition);
+				// Check if sentence contains the word directly or inside a link
+				const containsWord = sentence.toLowerCase().includes(word.toLowerCase()) ||
+					// Check for [[word|display]] format
+					sentence.toLowerCase().includes(`[[${word.toLowerCase()}|`) ||
+					// Check for [[word]] format
+					sentence.toLowerCase().includes(`[[${word.toLowerCase()}]]`);
+				
+				if (containsWord) {
+					return { sentence: sentence.trim(), startIndex: sentenceIndex };
 				}
+				textPosition = sentenceIndex + sentence.length;
 			}
 			return null;
 		}
 
 		// Find sentences that contain the word and their positions in the text
-		const candidateSentences: { sentence: string; distance: number }[] = [];
+		const candidateSentences: { sentence: string; distance: number; startIndex: number }[] = [];
 		let textPosition = 0;
 
 		for (const sentence of splitSentences) {
 			const sentenceIndex = fullText.indexOf(sentence, textPosition);
-			if (sentenceIndex !== -1 && sentence.toLowerCase().includes(word.toLowerCase())) {
-				// Calculate distance from cursor to the middle of this sentence
-				const sentenceMiddle = sentenceIndex + sentence.length / 2;
-				const distance = Math.abs(cursorOffset - sentenceMiddle);
-				candidateSentences.push({ sentence: sentence.trim(), distance });
+			if (sentenceIndex !== -1) {
+				// Check if sentence contains the word directly or inside a link
+				const containsWord = sentence.toLowerCase().includes(word.toLowerCase()) ||
+					// Check for [[word|display]] format
+					sentence.toLowerCase().includes(`[[${word.toLowerCase()}|`) ||
+					// Check for [[word]] format
+					sentence.toLowerCase().includes(`[[${word.toLowerCase()}]]`);
+				
+				if (containsWord) {
+					// Calculate distance from cursor to the middle of this sentence
+					const sentenceMiddle = sentenceIndex + sentence.length / 2;
+					const distance = Math.abs(cursorOffset - sentenceMiddle);
+					candidateSentences.push({ sentence: sentence.trim(), distance, startIndex: sentenceIndex });
+				}
 			}
 			textPosition = sentenceIndex + sentence.length;
 		}
@@ -45,7 +64,10 @@ export function extractSentenceContainingWord(fullText: string, word: string, cu
 		// Return the sentence closest to the cursor position
 		if (candidateSentences.length > 0) {
 			candidateSentences.sort((a, b) => a.distance - b.distance);
-			return candidateSentences[0].sentence;
+			
+			// Return the sentence with its correct start index
+			const selected = candidateSentences[0];
+			return { sentence: selected.sentence, startIndex: selected.startIndex };
 		}
 
 		return null;
@@ -62,15 +84,21 @@ export async function createBlockReference(
 	plugin: TextEaterPlugin,
 	editor: Editor,
 	file: TFile,
-	sentence: string
+	sentence: string,
+	sentenceStartIndex?: number
 ): Promise<string | null> {
 	try {
 		const fileContent = editor.getValue();
 		
-		// Find the sentence in the text
-		const sentenceIndex = fileContent.indexOf(sentence);
-		if (sentenceIndex === -1) {
-			return null;
+		// Use provided sentence index or find the sentence in the text
+		let sentenceIndex: number;
+		if (sentenceStartIndex !== undefined) {
+			sentenceIndex = sentenceStartIndex;
+		} else {
+			sentenceIndex = fileContent.indexOf(sentence);
+			if (sentenceIndex === -1) {
+				return null;
+			}
 		}
 		
 		// Find the end of the entire block/paragraph that contains this sentence
