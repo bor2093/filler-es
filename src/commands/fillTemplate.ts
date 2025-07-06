@@ -3,6 +3,21 @@ import TextEaterPlugin from '../main';
 import { prompts } from '../prompts';
 import { longDash } from '../utils';
 import { createSectionBlock, SECTION_HEADERS, getSectionSeparator } from '../sectionHeaders';
+import { isGroundFormWord } from '../contextUtils';
+
+// Helper function to get ground form - we'll add this since getGroundForm is private
+async function getGroundForm(plugin: TextEaterPlugin, word: string): Promise<string | null> {
+	try {
+		const response = await plugin.apiService.determineInfinitiveAndEmoji(word);
+		if (!response) return null;
+		
+		const canonicalMatch = response.match(/\[\[([^\]]+)\]\]/);
+		return canonicalMatch ? canonicalMatch[1] : null;
+	} catch (error) {
+		console.error('Error getting ground form:', error);
+		return null;
+	}
+}
 
 function extractFirstBracketedWord(text: string) {
 	const match = text.match(/\[\[([^\]]+)\]\]/);
@@ -161,8 +176,9 @@ export default async function fillTemplate(
 		const headerLine = lines[0]; // First line with emoji, word, pronunciation
 		const restOfContent = lines.slice(1).join('\n');
 		
-		const normalForm = extractFirstBracketedWord(trimmedBaseEntrie);
-		const isGroundForm = normalForm?.toLocaleLowerCase() === word.toLocaleLowerCase();
+		// Use the same ground form detection logic as in context addition
+		const isGroundForm = await isGroundFormWord(plugin, word);
+		const normalForm = isGroundForm ? word : await getGroundForm(plugin, word);
 		
 		// Add tags right after header with proper spacing
 		const tags = createTags(word, trimmedBaseEntrie, isGroundForm);
@@ -205,7 +221,9 @@ export default async function fillTemplate(
 			const derivedEnlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
 			const derivedContextoBlock = createSectionBlock('CONTEXTO', longDash, longDash);
 			
-			const derivedEntry = `[[${normalForm}]]\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}\n\n${getSectionSeparator()}\n\n${derivedContextoBlock}`;
+			// Use the ground form if found, otherwise fallback to the word itself
+			const groundFormLink = normalForm ? `[[${normalForm}]]` : `*Ground form not found*`;
+			const derivedEntry = `${groundFormLink}\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}\n\n${getSectionSeparator()}\n\n${derivedContextoBlock}`;
 			
 			await plugin.fileService.writeToOpenedFile(file.path, derivedEntry);
 			await navigator.clipboard.writeText(entrie);

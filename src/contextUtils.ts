@@ -270,31 +270,25 @@ async function appendContextToFile(
 		);
 		
 		if (!wordFile) {
-			console.log(`No file found for word: ${word}`);
 			return;
 		}
 		
 		// Read current content
 		const content = await plugin.app.vault.read(wordFile);
-		console.log(`File content for ${word}:`, content.substring(0, 200) + '...');
 		
 		// Find the Context section
 		let contextSectionIndex = content.lastIndexOf('### Contexto');
 		let currentContent = content;
 		
 		if (contextSectionIndex === -1) {
-			console.log(`No Context section found in file for word: ${word}`);
-			
 			// If file is empty or missing Context section, regenerate the dictionary entry
 			if (content.trim().length === 0) {
-				console.log(`File is empty, generating dictionary entry for: ${word}`);
 				await generateDictionaryEntry(plugin, wordFile, word);
 				// Read the newly generated content
 				currentContent = await plugin.app.vault.read(wordFile);
 				contextSectionIndex = currentContent.lastIndexOf('### Contexto');
 			} else {
 				// File has content but no Context section - add it at the end
-				console.log(`Adding Context section to existing file for: ${word}`);
 				const contextSection = `\n\n### Contexto\n`;
 				currentContent = content + contextSection;
 				await plugin.app.vault.modify(wordFile, currentContent);
@@ -308,8 +302,6 @@ async function appendContextToFile(
 			}
 		}
 		
-		console.log(`Found Context section at index: ${contextSectionIndex}`);
-		
 		// Find the end of the Context section (or end of file)
 		let insertionPoint = currentContent.length;
 		const afterContextSection = currentContent.substring(contextSectionIndex);
@@ -321,7 +313,6 @@ async function appendContextToFile(
 		
 		// Create the new context entry with bullet point
 		const bulletEntry = `- ${contextEntry}`;
-		console.log(`Bullet entry: "${bulletEntry}"`);
 		
 		// Find where the Context header ends to check for existing content
 		const contextHeaderLine = currentContent.indexOf('### Contexto');
@@ -331,17 +322,12 @@ async function appendContextToFile(
 		const contextSectionContent = currentContent.substring(contextHeaderEnd, insertionPoint);
 		const hasExistingContent = contextSectionContent.trim().length > 0;
 		
-		console.log(`Context section content: "${contextSectionContent}"`);
-		console.log(`Has existing content: ${hasExistingContent}`);
-		
 		// Insert the new context entry at the end of the Context section
 		const beforeInsertion = currentContent.substring(0, insertionPoint);
 		const afterInsertion = currentContent.substring(insertionPoint);
 		
 		// Add the context entry with proper spacing
 		const updatedContent = `${beforeInsertion}${hasExistingContent ? '\n' : ''}${bulletEntry}\n${afterInsertion}`;
-		
-		console.log(`Updated content preview: "${updatedContent.substring(Math.max(0, insertionPoint - 50), insertionPoint + 100)}"`);
 		
 		// Write back to file
 		await plugin.app.vault.modify(wordFile, updatedContent);
@@ -494,8 +480,9 @@ SORT file.ctime ASC
 		const headerLine = lines[0];
 		const restOfContent = lines.slice(1).join('\n');
 		
-		const normalForm = extractFirstBracketedWord(trimmedBaseEntrie);
-		const isGroundForm = normalForm?.toLowerCase() === word.toLowerCase();
+		// Use the same ground form detection logic as in context addition
+		const isGroundForm = await isGroundFormWord(plugin, word);
+		const normalForm = isGroundForm ? word : await getGroundForm(plugin, word);
 		
 		// Add tags right after header
 		const tags = createTags(word, trimmedBaseEntrie, isGroundForm);
@@ -537,7 +524,9 @@ SORT file.ctime ASC
 			const derivedEnlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', createDataviewQuery(word), longDash);
 			const derivedContextoBlock = `${SECTION_HEADERS.CONTEXTO}\n`;
 			
-			const derivedEntry = `[[${normalForm}]]\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}\n\n${getSectionSeparator()}\n\n${derivedContextoBlock}`;
+			// Use the ground form if found, otherwise fallback to the word itself
+			const groundFormLink = normalForm ? `[[${normalForm}]]` : `*Ground form not found*`;
+			const derivedEntry = `${groundFormLink}\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}\n\n${getSectionSeparator()}\n\n${derivedContextoBlock}`;
 			
 			await plugin.app.vault.modify(file, derivedEntry);
 		}
