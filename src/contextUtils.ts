@@ -123,15 +123,9 @@ export async function createBlockReference(
 			blockEndIndex++;
 		}
 		
-		// Check for existing elements in this block
+		// Check for existing block reference in this block
 		const blockContent = fileContent.substring(sentenceIndex, blockEndIndex);
 		const existingBlockRefMatch = blockContent.match(/\^(\d+)$/);
-		const existingContextLinkMatch = blockContent.match(/^\*\[\[[^\]]+#\^(\d+)\|\^\]\]\*/);
-		
-		// If there's already a context link at the beginning, reuse its block reference
-		if (existingContextLinkMatch) {
-			return existingContextLinkMatch[1];
-		}
 		
 		// Determine the block reference to use
 		let blockRef: string;
@@ -148,28 +142,26 @@ export async function createBlockReference(
 			needToAddBlockRef = true;
 		}
 		
-		// Create and add the context link at the beginning
-		const sourceFileName = file.basename;
-		const contextLink = `*[[${sourceFileName}#^${blockRef}|^]]* `;
-		
-		const sentenceStartPos = editor.offsetToPos(sentenceIndex);
-		editor.replaceRange(contextLink, sentenceStartPos, sentenceStartPos);
-		
 		// Add block reference at the end if it doesn't exist
 		if (needToAddBlockRef) {
-			// Find the last non-whitespace character in the block (after adding the context link)
-			const addedLength = contextLink.length;
-			let lastNonWhitespaceIndex = blockEndIndex + addedLength - 1;
-			while (lastNonWhitespaceIndex > sentenceIndex + addedLength && /\s/.test(editor.getValue()[lastNonWhitespaceIndex])) {
+			// Find the last non-whitespace character in the block
+			let lastNonWhitespaceIndex = blockEndIndex - 1;
+			while (lastNonWhitespaceIndex > sentenceIndex && /\s/.test(fileContent[lastNonWhitespaceIndex])) {
 				lastNonWhitespaceIndex--;
 			}
 			
 			// Calculate positions for block reference at the end
 			const startPos = editor.offsetToPos(lastNonWhitespaceIndex + 1);
-			const endPos = editor.offsetToPos(blockEndIndex + addedLength);
+			const endPos = editor.offsetToPos(blockEndIndex);
 			
 			// Add block reference at the end
 			editor.replaceRange(` ^${blockRef}`, startPos, endPos);
+			
+			// Force save the editor content to ensure the block reference is persisted
+			// This helps prevent race conditions where context entries are created before
+			// the block reference is properly indexed by Obsidian
+			await plugin.app.vault.modify(file, editor.getValue());
+			
 		}
 		
 		return blockRef;
@@ -256,14 +248,11 @@ export async function addContextToFile(
 	selectedWord: string,
 	sourceFileName: string,
 	blockRef: string,
-	contextSentence: string,
 	isGroundForm: boolean
 ): Promise<void> {
-	try {
-		const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-		
+	try {		
 		// Create context entry
-		const contextEntry = `*[[${sourceFileName}#^${blockRef}|^]]* ${contextSentence}`;
+		const contextEntry = `![[${sourceFileName}#^${blockRef}]]`;
 		
 		// Add to the selected word's file
 		await appendContextToFile(plugin, selectedWord, contextEntry);
@@ -362,7 +351,7 @@ async function appendContextToFile(
 		}
 		
 		// Create the new context entry with bullet point
-		const bulletEntry = `- ${contextEntry}`;
+		const bulletEntry = `${contextEntry}\n`;
 		
 		// Find where the Context header ends to check for existing content
 		const contextHeaderLine = currentContent.indexOf('### Contexto');

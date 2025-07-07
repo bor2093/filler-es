@@ -110,7 +110,7 @@ export default async function addContext(
 		const isGroundForm = await isGroundFormWord(plugin, normalizedWord);
 		
 		// Step 8: Add context to appropriate dictionary entries (using normalized word)
-		await addContextToFile(plugin, normalizedWord, file.basename, blockRef, contextSentence, isGroundForm);
+		await addContextToFile(plugin, normalizedWord, file.basename, blockRef, isGroundForm);
 		
 		new Notice(`Context added for: ${shouldNormalize ? `${cleanWord} → ${normalizedWord}` : normalizedWord}`);
 		
