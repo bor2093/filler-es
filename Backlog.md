@@ -1,0 +1,43 @@
+
+- [ ] Update documentation and diagrams
+- [ ] Use ! for contexts
+- [ ] Color markdown for genders
+- [ ] Consider moving context in the begining of entry
+- [ ] Switch immediately to normal form (possibly)
+- [ ] Add link immediately to normal form (possibly)
+- [ ] Fix bugs with parts of speech
+- [ ] Fix bugs when extra content is added to context
+- [ ] Fix bugs with form 
+	- [ ] for example "el"
+	- [ ] for example "como"
+- [ ] Make true multilingual support
+- [x] Add version control for dictionary (git)
+- [x] Remove all unnecessary code and commands
+- [x] Fix readme
+- [x] For verbs add link to https://www.elconjugador.com/conjugacion/verbo/ser.html
+- [x] Cluster graph vertices
+	- [x] Content
+		- [x] Song
+		- [x] Subtitles
+		- [x] Article
+		- [x] Book
+		- [x] ...
+	- [x] Word
+		- [x] Base form
+		- [x] Non-base form
+		- [x] Part of speech
+- [x] Create dictionary entry by template(s)
+	- [x] headers
+- [x] Populate command - replaced with block backlinks list
+	- [x] separate command output from rest of the article
+	- [x] no annoying comma at the beginning
+- [x] Add backlinks or forward links between content and base form
+- [x] Implement adding context to dictionary entry. Preferably with 1st super command
+	- [x] Improve context string so you can copy the line directly from content to dictionary entry
+	- [x] For capitalized words lead to page with lowercase
+	- [x] Bug: sometimes anchor is written in capital letters
+	- [x] Bug: sometimes anchor is placed who knows where
+	- [x] Bug: sometimes link sends you to wrong place
+	- [x] Bug: pura
+	- [x] Switch to created dictionary entry
+	- [x] Bug: add links to ground forms 
