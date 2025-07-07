@@ -1,6 +1,8 @@
 
 - [ ] Update documentation and diagrams
-- [ ] Add version control for dictionary (git)
+- [ ] Use ! for contexts
+- [ ] Color markdown for genders
+- [ ] Consider moving context in the begining of entry
 - [ ] Switch immediately to normal form (possibly)
 - [ ] Add link immediately to normal form (possibly)
 - [ ] Fix bugs with parts of speech
@@ -9,6 +11,7 @@
 	- [ ] for example "el"
 	- [ ] for example "como"
 - [ ] Make true multilingual support
+- [x] Add version control for dictionary (git)
 - [x] Remove all unnecessary code and commands
 - [x] Fix readme
 - [x] For verbs add link to https://www.elconjugador.com/conjugacion/verbo/ser.html
