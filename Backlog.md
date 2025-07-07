@@ -5,11 +5,14 @@
 - [ ] Switch immediately to normal form (possibly)
 - [ ] Add link immediately to normal form (possibly)
 - [ ] Fix bugs with parts of speech
-- [ ] Fix bugs when extra content is added to context
 - [ ] Fix bugs with form 
 	- [ ] for example "el"
 	- [ ] for example "como"
+- [ ] Split big blocks into sentences (possibly)
+- [ ] Are "block" and "sentence" the same things in terms of context? 
+- [ ] Fix bug with identifyng context for tables (1000 palabras)
 - [ ] Make true multilingual support
+- [x] Fix bugs when extra content is added to context
 - [x] Use ! for contexts
 - [x] Add version control for dictionary (git)
 - [x] Remove all unnecessary code and commands
