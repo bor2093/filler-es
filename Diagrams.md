@@ -84,55 +84,65 @@ graph TD
 
 ```mermaid
 flowchart TD
-    A["User selects word in text<br/>and calls AddContext command"] --> B["Wrap selected word<br/>in double brackets"]
+    A["User selects word in text and calls Add Context command"] --> B["Clean up nested brackets from selected word"]
     
-    B --> C{"Dictionary entry<br/>exists for word?"}
+    B --> C["Extract context sentence containing the selected word"]
     
-    C -->|No| D["Create dictionary file<br/>for selected word"]
-    C -->|Yes| E["File already exists"]
+    C --> D["Normalize capitalization detect proper nouns vs sentence-start"]
     
-    D --> F["Generate dictionary entry<br/>using fillTemplate command"]
+    D --> E["Create link format and replace selection"]
     
-    F --> G{"Is selected word<br/>ground form?"}
+    E --> F{"Dictionary entry exists for word?"}
     
-    G -->|Yes| H["Ground form entry created"]
-    G -->|No| I{"Ground form entry<br/>exists?"}
+    F -->|No| G["Create dictionary file and auto-generate entry using fillTemplate"]
+    F -->|Yes| H["Dictionary file exists"]
     
-    I -->|No| J["Create ground form<br/>dictionary entry"]
-    I -->|Yes| K["Ground form already exists"]
+    G --> I["Determine if word is ground form using AI"]
+    H --> I
     
-    J --> L["Both entries now exist"]
-    K --> L
-    H --> M["Single entry exists"]
-    E --> N["Determine if word<br/>is ground form"]
+    I --> J["Create block reference in source document"]
     
-    M --> O["Extract context sentence<br/>containing the selected word"]
-    L --> O
-    N --> O
+    J --> K["Add context link prefix to sentence"]
     
-    O --> P["Add block reference anchor<br/>to the sentence: ^contextN"]
+    K --> L["Add block reference suffix to end of paragraph"]
     
-    P --> Q["Update source document<br/>with anchor"]
+    L --> M{"Is selected word in ground form?"}
     
-    Q --> R{"Is selected word<br/>ground form?"}
+    M -->|Yes| N["Add context entry to selected word Context section"]
+    M -->|No| O["Get ground form using AI"]
     
-    R -->|Yes| S["Add context entry only to<br/>ground form Context section"]
-    R -->|No| T["Add context entry to both:<br/>ground form AND non-ground form<br/>Context sections"]
+    O --> P["Ensure ground form dictionary entry exists"]
     
-    S --> U["Context entry format:<br/>N. **SourceFile#^contextN** (date): sentence..."]
-    T --> U
+    P --> Q["Add context entry to BOTH selected word and ground form Context sections"]
     
-    U --> V["Complete: Word linked,<br/>context added to dictionary"]
+    N --> R["Switch to dictionary entry file"]
+    Q --> R
+    
+    R --> S["Complete: Word linked, context added, file opened"]
     
     style A fill:#e1f5fe
-    style V fill:#e8f5e8
-    style C fill:#fff3e0
-    style G fill:#fff3e0
-    style I fill:#fff3e0
-    style R fill:#fff3e0
-    style D fill:#ffebee
-    style F fill:#ffebee
-    style J fill:#ffebee
+    style S fill:#e8f5e8
+    style F fill:#fff3e0
+    style M fill:#fff3e0
+    style G fill:#ffebee
+    style J fill:#fce4ec
+    style K fill:#fce4ec
+    style L fill:#fce4ec
+```
+
+### 🔍 Key Features of Add Context Command:
+
+1. **Smart Capitalization Handling**: Detects proper nouns vs sentence-start capitalization
+2. **Context Sentence Extraction**: Uses cursor position to find the most relevant sentence
+3. **Automatic Dictionary Generation**: Creates full dictionary entries when needed
+4. **Block Reference System**: Creates numbered anchors with context links
+5. **Ground Form Detection**: Uses AI to determine canonical word forms
+6. **Dual Context Addition**: Adds context to both inflected and ground forms
+7. **Automatic Navigation**: Opens the dictionary entry after completion
+
+### 📝 Context Entry Format:
+```
+- *[[SourceFile#^contextN|^]]* Context sentence containing the word...
 ```
 
 ## 🔗 Backlink System & Word Network
