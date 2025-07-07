@@ -1,6 +1,5 @@
 
 - [ ] Update documentation and diagrams
-- [ ] Use ! for contexts
 - [ ] Color markdown for genders
 - [ ] Consider moving context in the begining of entry
 - [ ] Switch immediately to normal form (possibly)
@@ -11,6 +10,7 @@
 	- [ ] for example "el"
 	- [ ] for example "como"
 - [ ] Make true multilingual support
+- [x] Use ! for contexts
 - [x] Add version control for dictionary (git)
 - [x] Remove all unnecessary code and commands
 - [x] Fix readme
