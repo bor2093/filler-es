@@ -1,11 +1,10 @@
 
-- [ ] Consider moving context in the beginning of entry
-- [ ] Tooltips for translated words
+- [ ] Consider moving context in the beginning of entry (and also translation)
 - [ ] Use Oxford dict API
 	- [ ] Add grammatic metainfo for non-ground forms
 	- [ ] Precise part of speech recognition (ser)
 	- [ ] Oronyms management (el, como, fuera) 
-- [ ] Fast return to source document (or even don't switch if tooltips works)
+- [ ] Disable switch to the dict entry by default (configurable) - check how it works with tooltips
 - [ ] Color markdown for genders
 - [ ] Switch immediately to normal form (possibly)
 - [ ] Add link immediately to normal form (possibly)
