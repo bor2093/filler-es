@@ -1,16 +1,18 @@
 
-- [ ] Update documentation and diagrams
+- [ ] Consider moving context in the beginning of entry
+- [ ] Tooltips for translated words
+- [ ] Use Oxford dict API
+	- [ ] Add grammatic metainfo for non-ground forms
+	- [ ] Precise part of speech recognition (ser)
+	- [ ] Oronyms management (el, como, fuera) 
+- [ ] Fast return to source document (or even don't switch if tooltips works)
 - [ ] Color markdown for genders
-- [ ] Consider moving context in the begining of entry
 - [ ] Switch immediately to normal form (possibly)
 - [ ] Add link immediately to normal form (possibly)
-- [ ] Fix bugs with parts of speech
-- [ ] Fix bugs with form 
-	- [ ] for example "el"
-	- [ ] for example "como"
 - [ ] Split big blocks into sentences (possibly)
 - [ ] Are "block" and "sentence" the same things in terms of context? 
 - [ ] Fix bug with identifyng context for tables (1000 palabras)
+- [ ] Update documentation and diagrams
 - [ ] Make true multilingual support
 - [x] Fix bugs when extra content is added to context
 - [x] Use ! for contexts
