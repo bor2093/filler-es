@@ -2,6 +2,7 @@
 - [ ] Consider moving context in the beginning of entry (and also translation)
 - [ ] Use Oxford dict API
 	- [ ] Add grammatic metainfo for non-ground forms
+	- [ ] Add translation for non-ground forms (possibly)
 	- [ ] Precise part of speech recognition (ser)
 	- [ ] Oronyms management (el, como, fuera) 
 - [ ] Disable switch to the dict entry by default (configurable) - check how it works with tooltips
