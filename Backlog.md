@@ -1,19 +1,54 @@
+---
 
-- [ ] Consider moving context in the beginning of entry (and also translation)
-- [ ] Use Oxford dict API
-	- [ ] Add grammatic metainfo for non-ground forms
-	- [ ] Add translation for non-ground forms (possibly)
-	- [ ] Precise part of speech recognition (ser)
-	- [ ] Oronyms management (el, como, fuera) 
+kanban-plugin: board
+
+---
+
+## Backlog
+
 - [ ] Disable switch to the dict entry by default (configurable) - check how it works with tooltips
+- [ ] Non-ground form entry:
+	- [ ] translation
+	- [ ] grammar attributes: tense, person, mood
+- [ ] Ground-form entry - reorder sections
+	- [ ] contextes
+	- [ ] grammar attributes 
+	- [ ] translation
+- [ ] Omonyms management
+	- [ ] fuera
+	- [ ] como
+- [ ] Fix bug with detection of speech part
+	- [ ] dignamente
+- [ ] Support idiomas
+- [ ] Support of reflexive verbs
 - [ ] Color markdown for genders
 - [ ] Switch immediately to normal form (possibly)
 - [ ] Add link immediately to normal form (possibly)
 - [ ] Split big blocks into sentences (possibly)
-- [ ] Are "block" and "sentence" the same things in terms of context? 
+- [ ] Are "block" and "sentence" the same things in terms of context?
 - [ ] Fix bug with identifyng context for tables (1000 palabras)
 - [ ] Update documentation and diagrams
 - [ ] Make true multilingual support
+- [ ] Use Oxford dict API
+	- [ ] Add grammatic metainfo for non-ground forms
+	- [ ] Add translation for non-ground forms (possibly)
+	- [ ] Precise part of speech recognition (ser)
+	- [ ] Oronyms management (el, como, fuera)
+
+
+## In progress
+
+
+
+## Done
+
+**Выполнено**
+
+
+***
+
+## Архивировать
+
 - [x] Fix bugs when extra content is added to context
 - [x] Use ! for contexts
 - [x] Add version control for dictionary (git)
@@ -45,4 +80,10 @@
 	- [x] Bug: sometimes link sends you to wrong place
 	- [x] Bug: pura
 	- [x] Switch to created dictionary entry
-	- [x] Bug: add links to ground forms 
+	- [x] Bug: add links to ground forms
+
+%% kanban:settings
+```
+{"kanban-plugin":"board","new-card-insertion-method":"prepend","show-checkboxes":true,"lane-width":350,"full-list-lane-width":true}
+```
+%%
