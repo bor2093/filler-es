@@ -1,6 +1,7 @@
 import { Editor, Notice, TFile } from 'obsidian';
 import TextEaterPlugin from '../main';
-import { extractSentenceContainingWord, createBlockReference, addContextToFile, DictionaryEntry } from '../contextUtils';
+import { extractSentenceContainingWord, createBlockReference, addContextToFile } from '../contextUtils';
+import { DictionaryEntry } from '../dictionaryEntry';
 import fillTemplate from './fillTemplate';
 
 /**
