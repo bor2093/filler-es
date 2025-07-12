@@ -6,14 +6,6 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] Disable switch to the dict entry by default (configurable) - check how it works with tooltips
-- [ ] Non-ground form entry:
-	- [ ] translation
-	- [ ] grammar attributes: tense, person, mood
-- [ ] Ground-form entry - reorder sections
-	- [ ] contextes
-	- [ ] grammar attributes 
-	- [ ] translation
 - [ ] Omonyms management
 	- [ ] fuera
 	- [ ] como
@@ -38,11 +30,19 @@ kanban-plugin: board
 
 ## In progress
 
+- [ ] Ground-form entry - reorder sections
+	- [ ] contextes
+	- [ ] grammar attributes 
+	- [ ] translation
+- [ ] Non-ground form entry:
+	- [ ] translation
+	- [ ] grammar attributes: tense, person, mood
 
 
 ## Done
 
 **Выполнено**
+- [x] Disable switch to the dict entry by default (configurable) - check how it works with tooltips
 
 
 ***

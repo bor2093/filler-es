@@ -113,15 +113,7 @@ export default async function addContext(
 		await addContextToFile(plugin, normalizedWord, file.basename, blockRef, isGroundForm);
 		
 		new Notice(`Context added for: ${shouldNormalize ? `${cleanWord} → ${normalizedWord}` : normalizedWord}`);
-		
-		// Step 9: Switch to the dictionary entry file
-		try {
-			const leaf = plugin.app.workspace.getLeaf();
-			await leaf.openFile(wordFile);
-		} catch (error) {
-			console.error('Error switching to dictionary entry:', error);
-			// Don't show error notice as context was still added successfully
-		}
+
 		
 	} catch (error) {
 		new Notice(`Error adding context: ${error.message}`);
