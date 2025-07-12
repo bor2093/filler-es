@@ -1,6 +1,6 @@
 import { Editor, Notice, TFile } from 'obsidian';
 import TextEaterPlugin from '../main';
-import { extractSentenceContainingWord, createBlockReference, addContextToFile, findOrCreateDictionaryEntry, isGroundFormWord } from '../contextUtils';
+import { extractSentenceContainingWord, createBlockReference, addContextToFile, DictionaryEntry } from '../contextUtils';
 import fillTemplate from './fillTemplate';
 
 /**
@@ -93,7 +93,8 @@ export default async function addContext(
 		editor.replaceSelection(linkedWord);
 		
 		// Step 5: Check if dictionary entry exists, create if needed (using normalized word)
-		const wordFile = await findOrCreateDictionaryEntry(plugin, normalizedWord);
+		const dictionaryEntry = await DictionaryEntry.create(plugin, normalizedWord);
+		const wordFile = dictionaryEntry.getFile();
 		if (!wordFile) {
 			new Notice(`Could not create dictionary entry for: ${normalizedWord}`);
 			return;
@@ -107,7 +108,8 @@ export default async function addContext(
 		}
         
 		// Step 7: Determine if selected word is ground form (using normalized word)
-		const isGroundForm = await isGroundFormWord(plugin, normalizedWord);
+		await dictionaryEntry.determineGroundForm();
+		const isGroundForm = dictionaryEntry.getIsGroundForm();
 		
 		// Step 8: Add context to appropriate dictionary entries (using normalized word)
 		await addContextToFile(plugin, normalizedWord, file.basename, blockRef, isGroundForm);
