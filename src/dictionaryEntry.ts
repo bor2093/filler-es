@@ -335,7 +335,7 @@ export class DictionaryEntry {
 	}
 
 	// Helper methods (extracted from the original generateDictionaryEntry function)
-	public cleanAITags(content: string): string {
+	private cleanAITags(content: string): string {
 		return content
 			.replace(/<agent_output>/g, '')
 			.replace(/<\/agent_output>/g, '')
@@ -344,12 +344,12 @@ export class DictionaryEntry {
 			.trim();
 	}
 
-	public extractFirstBracketedWord(text: string): string | null {
+	private extractFirstBracketedWord(text: string): string | null {
 		const match = text.match(/\[\[([^\]]+)\]\]/);
 		return match ? match[1] : null;
 	}
 
-	public determinePartOfSpeech(content: string): string {
+	private determinePartOfSpeech(content: string): string {
 		if (content.includes('→') && content.includes('haber') && content.includes('[[')) {
 			return 'verbo';
 		}
@@ -370,13 +370,13 @@ export class DictionaryEntry {
 		return 'desconocido';
 	}
 
-	public createTags(fileName: string, content: string, isGroundForm: boolean): string {
+	private createTags(fileName: string, content: string, isGroundForm: boolean): string {
 		const partOfSpeech = this.determinePartOfSpeech(content);
 		const groundFormStatus = isGroundForm ? 'forma-base' : 'forma-derivada';
 		return `#${groundFormStatus} #${partOfSpeech}`;
 	}
 
-	public isVerb(content: string): boolean {
+	private isVerb(content: string): boolean {
 		return (
 			content.includes('→') &&
 			content.includes('haber') &&
@@ -384,11 +384,11 @@ export class DictionaryEntry {
 		) || content.includes('Infinitivo') || content.includes('Participio');
 	}
 
-	public createConjugationLink(word: string): string {
+	private createConjugationLink(word: string): string {
 		return `**Conjugación**: [elconjugador.com](https://www.elconjugador.com/conjugacion/verbo/${word}.html)`;
 	}
 
-	public extractAdjectiveForms(text: string): string {
+	private extractAdjectiveForms(text: string): string {
 		const match = text.match(/Adjetivos:\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\]/);
 		if (!match) return longDash;
 
@@ -404,7 +404,7 @@ export class DictionaryEntry {
 		return result.join(', ');
 	}
 
-	public createDataviewQuery(word: string): string {
+	private createDataviewQuery(word: string): string {
 		return `\`\`\`dataview
 LIST FROM [[]]
 WHERE (file.name != this.file.name)
@@ -412,7 +412,7 @@ SORT file.ctime ASC
 \`\`\``;
 	}
 
-	public insertYouglishLinkInIpa(baseBlock: string): string {
+	private insertYouglishLinkInIpa(baseBlock: string): string {
 		const regex = /\[(?!\[)(.*?)(?<!\])\]/g;
 		const matches = [];
 		let match;
@@ -443,7 +443,7 @@ SORT file.ctime ASC
 		);
 	}
 
-	public joinBlocksWithProperSpacing(blocks: string[], separator: string): string {
+	private joinBlocksWithProperSpacing(blocks: string[], separator: string): string {
 		const cleanBlocks = blocks
 			.filter(Boolean)
 			.map(block => block.trim());
@@ -451,7 +451,7 @@ SORT file.ctime ASC
 		return cleanBlocks.join(`\n\n${separator}\n`);
 	}
 
-	public getIPAIndexes(str: string): [number, number] | null {
+	private getIPAIndexes(str: string): [number, number] | null {
 		const regex = /\[(?!\[)(.*?)(?<!\])\]/g;
 		const matches: [number, number][] = [];
 		let match;
@@ -465,7 +465,7 @@ SORT file.ctime ASC
 		return matches.length ? matches[0] : null;
 	}
 
-	public extractBaseForms(text: string): string[] | null {
+	private extractBaseForms(text: string): string[] | null {
 		const match = text.match(
 			/Adjetivos:\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\]/
 		);
