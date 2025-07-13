@@ -9,13 +9,9 @@ kanban-plugin: board
 - [ ] Omonyms management
 	- [ ] fuera
 	- [ ] como
-- [ ] Fix bug with detection of speech part
-	- [ ] dignamente
 - [ ] Support idiomas
 - [ ] Support of reflexive verbs
 - [ ] Color markdown for genders
-- [ ] Switch immediately to normal form (possibly)
-- [ ] Add link immediately to normal form (possibly)
 - [ ] Split big blocks into sentences (possibly)
 - [ ] Are "block" and "sentence" the same things in terms of context?
 - [ ] Fix bug with identifyng context for tables (1000 palabras)
@@ -26,6 +22,7 @@ kanban-plugin: board
 	- [ ] Add translation for non-ground forms (possibly)
 	- [ ] Precise part of speech recognition (ser)
 	- [ ] Oronyms management (el, como, fuera)
+- [ ] Introduce backend
 
 
 ## In progress
@@ -43,6 +40,9 @@ kanban-plugin: board
 ## Done
 
 **Выполнено**
+- [x] Fix bug with detection of speech part
+	- [x] dignamente
+- [x] Refactoring: word class
 - [x] Disable switch to the dict entry by default (configurable) - check how it works with tooltips
 
 
