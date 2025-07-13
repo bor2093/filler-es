@@ -1,6 +1,6 @@
 import { Editor, Notice, TFile } from 'obsidian';
 import TextEaterPlugin from '../main';
-import { extractSentenceContainingWord, createBlockReference, addContextToFile } from '../contextUtils';
+import { extractSentenceContainingWord, createBlockReference } from '../contextUtils';
 import { DictionaryEntry } from '../dictionaryEntry';
 import fillTemplate from './fillTemplate';
 
@@ -110,10 +110,10 @@ export default async function addContext(
         
 		// Step 7: Determine if selected word is ground form (using normalized word)
 		await dictionaryEntry.determineGroundForm();
-		const isGroundForm = dictionaryEntry.getIsGroundForm();
 		
 		// Step 8: Add context to appropriate dictionary entries (using normalized word)
-		await addContextToFile(plugin, normalizedWord, file.basename, blockRef, isGroundForm);
+		const contextEntry = `![[${file.basename}#^${blockRef}]]`;
+		await dictionaryEntry.addContext(contextEntry);
 		
 		new Notice(`Context added for: ${shouldNormalize ? `${cleanWord} → ${normalizedWord}` : normalizedWord}`);
 

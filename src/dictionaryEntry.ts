@@ -247,9 +247,29 @@ export class DictionaryEntry {
 	}
 
 	/**
-	 * Adds context entry to the dictionary file
+	 * Adds context entry to the dictionary file and optionally to the ground form file
 	 */
 	async addContext(contextEntry: string): Promise<void> {
+		try {
+			// Add context to the current word's dictionary entry
+			await this.addContextToCurrentEntry(contextEntry);
+			
+			// If this is not a ground form, also add context to the ground form entry
+			if (!this.isGroundForm && this.groundForm && this.groundForm !== this.word) {
+				const groundFormEntry = new DictionaryEntry(this.plugin, this.groundForm);
+				await groundFormEntry.findOrCreateFile();
+				await groundFormEntry.addContextToCurrentEntry(contextEntry);
+			}
+		} catch (error) {
+			new Notice(`[ERROR] Error in addContext: ${error.message}`);
+			console.error('Error adding context to dictionary entry:', error);
+		}
+	}
+
+	/**
+	 * Adds context entry to the current dictionary file only
+	 */
+	private async addContextToCurrentEntry(contextEntry: string): Promise<void> {
 		try {
 			// Ensure content is loaded
 			if (!this.content && this.file) {
@@ -309,8 +329,8 @@ export class DictionaryEntry {
 			// Write back to file
 			await this.writeToFile();
 		} catch (error) {
-			new Notice(`[ERROR] Error in addContext: ${error.message}`);
-			console.error('Error adding context to dictionary entry:', error);
+			console.error('Error adding context to current dictionary entry:', error);
+			throw error;
 		}
 	}
 

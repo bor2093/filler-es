@@ -194,48 +194,7 @@ export async function isGroundFormWord(plugin: TextEaterPlugin, word: string): P
 	return dictionaryEntry.getIsGroundForm();
 }
 
-/**
- * Adds context entry to the appropriate dictionary files
- */
-export async function addContextToFile(
-	plugin: TextEaterPlugin,
-	selectedWord: string,
-	sourceFileName: string,
-	blockRef: string,
-	isGroundForm: boolean
-): Promise<void> {
-	try {		
-		// Create context entry
-		const contextEntry = `![[${sourceFileName}#^${blockRef}]]`;
-		
-		// Add to the selected word's file
-		const selectedWordEntry = new DictionaryEntry(plugin, selectedWord);
-		await selectedWordEntry.findOrCreateFile();
-		await selectedWordEntry.addContext(contextEntry);
-		
-		// If not ground form, also add to ground form file
-		if (!isGroundForm) {
-			// Get ground form
-			const groundForm = selectedWordEntry.getGroundForm() || await getGroundForm(plugin, selectedWord);
-			if (groundForm && groundForm !== selectedWord) {
-				// Ensure ground form dictionary entry exists and add context
-				const groundFormEntry = new DictionaryEntry(plugin, groundForm);
-				await groundFormEntry.findOrCreateFile();
-				await groundFormEntry.addContext(contextEntry);
-			}
-		}
-	} catch (error) {
-		new Notice(`[ERROR] Error in addContextToFile: ${error.message}`);
-		console.error('Error adding context to file:', error);
-	}
-}
 
-/**
- * Gets the ground form of a word
- */
-async function getGroundForm(plugin: TextEaterPlugin, word: string): Promise<string | null> {
-	const dictionaryEntry = new DictionaryEntry(plugin, word);
-	await dictionaryEntry.determineGroundForm();
-	return dictionaryEntry.getGroundForm();
-}
+
+
 
