@@ -2,7 +2,7 @@ import { Editor, Notice, TFile } from 'obsidian';
 import TextEaterPlugin from '../main';
 import { extractSentenceContainingWord, createBlockReference } from '../contextUtils';
 import { DictionaryEntry } from '../dictionaryEntry';
-import fillTemplate from './fillTemplate';
+
 
 /**
  * Determines if a capitalized word should be normalized to lowercase
@@ -74,6 +74,7 @@ export default async function addContext(
 		}
 		
 		// Step 2: Extract context sentence BEFORE making any changes (using original text and cursor position)
+		// TODO: Consider to remove this step since we use it only to manage capitalization
 		const fullText = editor.getValue();
 		const cursorPos = editor.getCursor();
 		const cursorOffset = editor.posToOffset(cursorPos);
