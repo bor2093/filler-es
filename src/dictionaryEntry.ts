@@ -3,6 +3,7 @@ import TextEaterPlugin from './main';
 import { getExisingOrCreatedFileInWorterDir, longDash } from './utils';
 import { prompts } from './prompts';
 import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './sectionHeaders';
+import { PartOfSpeech, Word } from 'word';
 
 /**
  * Class representing a dictionary entry with methods for reading and writing
@@ -35,16 +36,13 @@ import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './sect
  */
 export class DictionaryEntry {
 	private plugin: TextEaterPlugin;
-	private word: string;
+	private word: Word;
 	private file: TFile | null = null;
 	private content: string = '';
-	private isGroundForm: boolean = false;
-	private groundForm: string | null = null;
-
-
+	
 	constructor(plugin: TextEaterPlugin, word: string, file: TFile | null = null) {
 		this.plugin = plugin;
-		this.word = word;
+		this.word = new Word(word, PartOfSpeech.DESCONOCIDO, word);
 		this.file = file;
 	}
 
@@ -56,7 +54,7 @@ export class DictionaryEntry {
 			// Try to find existing file
 			const existingFile = await getExisingOrCreatedFileInWorterDir(
 				this.plugin.app.vault,
-				{ name: this.word, path: null },
+				{ name: this.word.getWord(), path: null },
 				this.plugin.settings.useShardedFileStructure,
 				this.plugin.settings.dictionaryFolderPath
 			);
@@ -74,7 +72,7 @@ export class DictionaryEntry {
 			// Create new dictionary entry
 			const newFile = existingFile || await getExisingOrCreatedFileInWorterDir(
 				this.plugin.app.vault,
-				{ name: this.word, path: null },
+				{ name: this.word.getWord(), path: null },
 				this.plugin.settings.useShardedFileStructure,
 				this.plugin.settings.dictionaryFolderPath
 			);
@@ -138,25 +136,21 @@ export class DictionaryEntry {
 	 */
 	async determineGroundForm(): Promise<void> {
 		try {
-			const response = await this.plugin.apiService.determineInfinitiveAndEmoji(this.word);
+			const response = await this.plugin.apiService.determineInfinitiveAndEmoji(this.word.getWord());
 			if (!response) {
-				this.isGroundForm = false;
 				return;
 			}
 			
 			// Extract the canonical form from the response
 			const canonicalMatch = response.match(/\[\[([^\]]+)\]\]/);
 			if (!canonicalMatch) {
-				this.isGroundForm = false;
 				return;
 			}
 			
 			const canonicalForm = canonicalMatch[1];
-			this.groundForm = canonicalForm;
-			this.isGroundForm = this.word.toLowerCase() === canonicalForm.toLowerCase();
+			this.word.setGroundForm(canonicalForm);
 		} catch (error) {
 			console.error('Error determining ground form:', error);
-			this.isGroundForm = false;
 		}
 	}
 
@@ -170,10 +164,10 @@ export class DictionaryEntry {
 			
 			// Generate all content in parallel
 			const [dictionaryEntry, froms, morphems, valence] = await Promise.all([
-				this.plugin.apiService.generateContent(prompts.generate_dictionary_entry, this.word),
-				this.plugin.apiService.generateContent(prompts.generate_forms, this.word),
-				this.plugin.apiService.generateContent(prompts.morphems, this.word),
-				this.plugin.apiService.generateContent(prompts.generate_valence_block, this.word),
+				this.plugin.apiService.generateContent(prompts.generate_dictionary_entry, this.word.getWord()),
+				this.plugin.apiService.generateContent(prompts.generate_forms, this.word.getWord()),
+				this.plugin.apiService.generateContent(prompts.morphems, this.word.getWord()),
+				this.plugin.apiService.generateContent(prompts.generate_valence_block, this.word.getWord()),
 			]);
 
 			// Process and combine content
@@ -204,7 +198,7 @@ export class DictionaryEntry {
 		const restOfContent = lines.slice(1).join('\n');
 		
 		// Add tags right after header
-		const tags = this.createTags(this.word, trimmedBaseEntrie, this.isGroundForm);
+		const tags = this.createTags(trimmedBaseEntrie);
 		const contentWithTags = `${headerLine}\n\n${tags}\n\n${restOfContent}`;
 		
 		const baseBlock = this.insertYouglishLinkInIpa(contentWithTags);
@@ -214,12 +208,12 @@ export class DictionaryEntry {
 		// Add conjugation link to Formas Gramaticales for verbs
 		let formasContent = this.cleanAITags(froms);
 		if (this.isVerb(trimmedBaseEntrie) && formasContent !== longDash) {
-			formasContent += `\n\n${this.createConjugationLink(this.word)}`;
+			formasContent += `\n\n${this.createConjugationLink(this.word.getWord())}`;
 		}
 		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', formasContent, longDash);
 		
 		const adjFormsBlock = createSectionBlock('FORMAS_ADJETIVALES', this.cleanAITags(adjForms), longDash);
-		const enlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', this.createDataviewQuery(this.word), longDash);
+		const enlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', this.createDataviewQuery(this.word.getWord()), longDash);
 		// Always create Context section (even if empty) so that context can be added later
 		const contextoBlock = `${SECTION_HEADERS.CONTEXTO}\n`;
 
@@ -233,17 +227,17 @@ export class DictionaryEntry {
 			contextoBlock,
 		];
 
-		if (this.isGroundForm) {
+		if (this.word.isGroundForm()) {
 			// Ground form - return the full entry
 			return this.joinBlocksWithProperSpacing(blocks, getSectionSeparator());
 		} else {
 			// Non-ground form - create minimal entry with tags, link to ground form, incoming links, and context
-			const derivedTags = this.createTags(this.word, trimmedBaseEntrie, false);
-			const derivedEnlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', this.createDataviewQuery(this.word), longDash);
+			const derivedTags = this.createTags(trimmedBaseEntrie);
+			const derivedEnlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', this.createDataviewQuery(this.word.getWord()), longDash);
 			const derivedContextoBlock = `${SECTION_HEADERS.CONTEXTO}\n`;
 			
 			// Use the ground form if found, otherwise fallback to the word itself
-			const groundFormLink = this.groundForm ? `[[${this.groundForm}]]` : `*Ground form not found*`;
+			const groundFormLink = this.word.getGroundForm() ? `[[${this.word.getGroundForm()}]]` : `*Ground form not found*`;
 			return `${groundFormLink}\n\n${derivedTags}\n\n${getSectionSeparator()}\n\n${derivedEnlacesEntrantesBlock}\n\n${getSectionSeparator()}\n\n${derivedContextoBlock}`;
 		}
 	}
@@ -257,8 +251,8 @@ export class DictionaryEntry {
 			await this.addContextToCurrentEntry(contextEntry);
 			
 			// If this is not a ground form, also add context to the ground form entry
-			if (!this.isGroundForm && this.groundForm && this.groundForm !== this.word) {
-				const groundFormEntry = new DictionaryEntry(this.plugin, this.groundForm);
+			if (!this.word.isGroundForm() && this.word.getGroundForm() && this.word.getGroundForm() !== this.word.getWord()) {
+				const groundFormEntry = new DictionaryEntry(this.plugin, this.word.getGroundForm());
 				await groundFormEntry.findOrCreateFile();
 				await groundFormEntry.addContextToCurrentEntry(contextEntry);
 			}
@@ -346,36 +340,31 @@ export class DictionaryEntry {
 			.trim();
 	}
 
-	private extractFirstBracketedWord(text: string): string | null {
-		const match = text.match(/\[\[([^\]]+)\]\]/);
-		return match ? match[1] : null;
-	}
-
-	private determinePartOfSpeech(content: string): string {
+	private determinePartOfSpeech(content: string): PartOfSpeech {
 		if (content.includes('→') && content.includes('haber') && content.includes('[[')) {
-			return 'verbo';
+			return PartOfSpeech.VERBO;
 		}
 		if (content.includes('🔴') || content.includes('🔵') || 
 			content.includes('el [[') || content.includes('la [[') ||
 			content.includes('los [[') || content.includes('las [[')) {
-			return 'sustantivo';
+			return PartOfSpeech.SUSTANTIVO;
 		}
 		if (content.includes('más [[') || content.includes('menos [[') ||
 			content.includes('comparative') || content.includes('superlative') ||
 			(content.includes('≠') && !content.includes('→'))) {
-			return 'adjetivo';
+			return PartOfSpeech.ADJETIVO;
 		}
 		if (content.includes('mente]]') || content.includes('adverbio') || 
 			content.includes('aquí') || content.includes('allí')) {
-			return 'adverbio';
+			return PartOfSpeech.ADVERBIO;
 		}
-		return 'desconocido';
+		return PartOfSpeech.DESCONOCIDO;
 	}
 
-	private createTags(fileName: string, content: string, isGroundForm: boolean): string {
-		const partOfSpeech = this.determinePartOfSpeech(content);
-		const groundFormStatus = isGroundForm ? 'forma-base' : 'forma-derivada';
-		return `#${groundFormStatus} #${partOfSpeech}`;
+	private createTags(content: string): string {
+		this.word.setPartOfSpeech(this.determinePartOfSpeech(content));
+		const groundFormStatus = this.word.isGroundForm() ? 'forma-base' : 'forma-derivada';
+		return `#${groundFormStatus} #${this.word.getPartOfSpeech().toString()}`;
 	}
 
 	private isVerb(content: string): boolean {
@@ -453,35 +442,11 @@ SORT file.ctime ASC
 		return cleanBlocks.join(`\n\n${separator}\n`);
 	}
 
-	private getIPAIndexes(str: string): [number, number] | null {
-		const regex = /\[(?!\[)(.*?)(?<!\])\]/g;
-		const matches: [number, number][] = [];
-		let match;
 
-		while ((match = regex.exec(str)) !== null) {
-			if (match.index === 0 || str[match.index - 1] !== '[') {
-				matches.push([match.index, regex.lastIndex - 1]);
-			}
-		}
-
-		return matches.length ? matches[0] : null;
-	}
-
-	private extractBaseForms(text: string): string[] | null {
-		const match = text.match(
-			/Adjetivos:\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\],\s*\[\[(.*?)\]\]/
-		);
-		if (!match) {
-			return null;
-		}
-
-		const [_, base, comparative, superlative] = match;
-		return [base, comparative, superlative];
-	}
 
 	// Getters
 	getWord(): string {
-		return this.word;
+		return this.word.getWord();
 	}
 
 	getFile(): TFile | null {
@@ -493,11 +458,11 @@ SORT file.ctime ASC
 	}
 
 	getIsGroundForm(): boolean {
-		return this.isGroundForm;
+		return this.word.isGroundForm();
 	}
 
 	getGroundForm(): string | null {
-		return this.groundForm;
+		return this.word.getGroundForm();
 	}
 
 	/**
