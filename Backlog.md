@@ -30,6 +30,7 @@ kanban-plugin: board
 
 ## In progress
 
+- [ ] Refactoring: store structured data for entries
 - [ ] Ground-form entry - reorder sections
 	- [ ] contextes
 	- [ ] grammar attributes 
