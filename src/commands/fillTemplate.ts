@@ -12,8 +12,7 @@ export default async function fillTemplate(
 
 	try {
 		// Create dictionary entry instance and generate content
-		const entryInstance = new DictionaryEntry(plugin, word);
-		entryInstance.file = file;
+		const entryInstance = new DictionaryEntry(plugin, word, file);
 		await entryInstance.generateContent();
 	} catch (error) {
 		new Notice(`Error: ${error.message}`);

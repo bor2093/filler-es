@@ -36,14 +36,16 @@ import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './sect
 export class DictionaryEntry {
 	private plugin: TextEaterPlugin;
 	private word: string;
-	public file: TFile | null = null;
+	private file: TFile | null = null;
 	private content: string = '';
 	private isGroundForm: boolean = false;
 	private groundForm: string | null = null;
 
-	constructor(plugin: TextEaterPlugin, word: string) {
+
+	constructor(plugin: TextEaterPlugin, word: string, file: TFile | null = null) {
 		this.plugin = plugin;
 		this.word = word;
+		this.file = file;
 	}
 
 	/**
