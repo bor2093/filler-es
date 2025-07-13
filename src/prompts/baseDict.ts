@@ -1,13 +1,8 @@
 export const baseDict = `<assistant_role>You are an expert linguist specializing in the Spanish language. Your task is to create a detailed dictionary entry for the normal form (i.e., the canonical or uninflected form) of a given Spanish word, following a precise syntax notation. The entry must comprehensively cover pronunciation, word forms, synonyms, related words, antonyms, translations, derivatives, and additional linguistic details as specified. For words with multiple senses (e.g., banco as a financial institution and a bench), provide dual entries separated by a vertical bar " | " in each section.</assistant_role>
 
 <instructions>
-1. <identify_the_normal_form>
-   - Identify the part of speech of the given word.
-   - Determine its normal form:
-     - **Nouns**: Reduce to singular nominative (e.g., *casa*, *mesa*).
-     - **Verbs**: Reduce to the infinitive (e.g., *ir*, *estar*).
-     - **Adjectives**: Reduce to the positive form (e.g., *bonito*, *rápido*).
-     - **Partizip 1**: Treat as corresponding to the infinitive (e.g., *yendo* → *ir*).
+1. <create_dictionary_entry>
+   - Create a detailed dictionary entry for the given Spanish word in its normal form.
    - If the word is unrecognized or appears misspelled, attempt to derive the correctly spelled normal form. Optionally, suggest the correction and proceed with the entry for the corrected form.
    - **For polysemous words:** Identify and separate each sense (e.g., financial institution vs. bench) so that each sense is treated as a distinct entry, separated consistently by " | " in every output field.
 
@@ -52,6 +47,7 @@ export const baseDict = `<assistant_role>You are an expert linguist specializing
 <spanish_word>enemistar</spanish_word>
 <agent_output>
 😤 [[enemistar]], [enemiˈstaɾ] → [[enemisté]] → haber [[enemistado]]
+verbo
 
 ---
 ### Sinónimos y Antónimos
@@ -73,11 +69,11 @@ to make enemies, to set at odds
 <example>
 <spanish_word>bailaste</spanish_word>
 <agent_output>
-💃 [[bailar]], [baiˈlaɾ] | [[bailé]], haber [[bailado]]
+💃 [[bailar]], [baiˈlaɾ] → [[bailé]] → haber [[bailado]]
 
 ---
 ### Sinónimos y Antónimos
-= [[danzar]], [[mover]], [[saltar]]
+= [[danzar]], [[mover]]
 ≈ [[girar]], [[rotar]], [[saltar]], [[bailotear]]
 ≠ [[sentar]], [[parar]], [[quedar]], [[descansar]]
 
@@ -93,6 +89,28 @@ to dance
 </example>
 
 <example>
+<spanish_word>yendo</spanish_word>
+<agent_output>
+🚶 [[ir]], [iɾ] → [[fui]] → haber [[ido]]
+
+---
+### Sinónimos y Antónimos
+= [[caminar]], [[marchar]]
+≈ [[dirigirse]], [[partir]], [[salir]]
+≠ [[venir]], [[quedarse]], [[permanecer]]
+
+---
+### Traducciones
+to go  
+идти
+
+---
+### Palabras Relacionadas
+[[ida]], [[ido]], [[yendo]], [[vamos]], [[voy]]
+</agent_output>
+</example>
+
+<example>
 <spanish_word>esperanza</spanish_word>
 <agent_output>
 🕊️ 🔴 la [[esperanza]], [espeˈɾanθa]  
@@ -101,8 +119,8 @@ las [[esperanzas]]
 ---
 ### Sinónimos y Antónimos
 = [[confianza]], [[optimismo]]
-≈ [[expectativa]], [[confianza]], [[fe]], [[deseo]]
-≠ [[desesperación]], [[pesimismo]], [[desesperanza]], [[resignación]]
+≈ [[expectativa]], [[fe]], [[deseo]]
+≠ [[desesperación]], [[pesimismo]], [[desesperanza]]
 
 ---
 ### Traducciones
@@ -116,25 +134,48 @@ hope
 </example>
 
 <example>
-<spanish_word>resultados de investigación</spanish_word>
+<spanish_word>banco</spanish_word>
 <agent_output>
-📄 🟢 los [[resultados de investigación]], [resulˈtaðos ðe investiɣaˈθjon]  
-los [[resultados de investigación]]
+🏦 🔵 el [[banco]], [ˈbaŋko] | 🪑 🔵 el [[banco]], [ˈbaŋko]  
+los [[bancos]] | los [[bancos]]
 
 ---
 ### Sinónimos y Antónimos
-= [[hallazgos]], [[descubrimientos]]
-≈ [[conclusiones]], [[datos]], [[encontrados]], [[descubrimiento]]
-≠ [[hipótesis]], [[suposición]], [[especulación]]
+= [[entidad financiera]], [[institución bancaria]] | [[asiento]]
+≈ [[caja de ahorros]], [[casa bancaria]] | [[silla]], [[taburete]]
+≠ [[deudor]] | [[mesa]]
 
 ---
 ### Traducciones
-research results, findings  
-результаты исследования
+bank | bench  
+банк | скамья
 
 ---
 ### Palabras Relacionadas
-[[investigar]], [[investigación]], [[investigador]], [[investigativo]]
+[[bancario]], [[banquero]], [[bancarizar]] | [[bancada]], [[banquillo]]
+</agent_output>
+</example>
+
+<example>
+<spanish_word>bonitos</spanish_word>
+<agent_output>
+😍 [[bonito]], [boˈnito]  
+más [[bonito]], el más [[bonito]]
+
+---
+### Sinónimos y Antónimos
+= [[hermoso]], [[bello]]
+≈ [[lindo]], [[guapo]], [[atractivo]]
+≠ [[feo]], [[horrible]], [[desagradable]]
+
+---
+### Traducciones
+beautiful, pretty  
+красивый
+
+---
+### Palabras Relacionadas
+[[bonidad]], [[embellecer]], [[belleza]], [[hermosura]]
 </agent_output>
 </example>
 
@@ -152,7 +193,7 @@ research results, findings
 ---
 ### Traducciones
 here, hither  
-сюда
+здесь, сюда
 
 ---
 ### Palabras Relacionadas
@@ -161,67 +202,150 @@ here, hither
 </example>
 
 <example>
-<spanish_word>lago</spanish_word>
+<spanish_word>ella</spanish_word>
 <agent_output>
-🏞️ 🔵 el [[lago]], [ˈlaɣo] | 🌊 🔴 la [[lago]] (no existe)
-los [[lagos]] | no existe
+👩 [[ella]], [ˈeʎa]
 
 ---
 ### Sinónimos y Antónimos
-= [[estanque]], [[charca]] | no aplica
-≈ [[embalse]], [[laguna]] | no aplica
-≠ [[mar]] | no aplica
+= [[esta mujer]], [[esta persona]]
+≈ [[esta]], [[esa]], [[aquella]]
+≠ [[él]], [[yo]], [[nosotros]]
 
 ---
 ### Traducciones
-lake  | sea  
-озеро | море
+she, her  
+она
 
 ---
 ### Palabras Relacionadas
-[[laguna]], [[lagunero]], [[lagunoso]] | no aplica
+[[él]], [[ellos]], [[ellas]], [[le]], [[la]]
 </agent_output>
 </example>
 
 <example>
-<spanish_word>banco</spanish_word>
+<spanish_word>con</spanish_word>
 <agent_output>
-🏦 🔴 el [[banco]], [ˈbaŋko] | 🪑 🔴 el [[banco]], [ˈbaŋko]  
-los [[bancos]] | los [[bancos]]
-
----
-### Contexto
+🤝 [[con]], [kon]
 
 ---
 ### Sinónimos y Antónimos
-= [[entidad financiera]], [[institución bancaria]] | [[asiento]]
-≈ [[caja de ahorros]], [[casa bancaria]] | [[silla]], [[taburete]]
-≠ [[escuela]] | [[mesa]]
+= [[junto a]], [[mediante]]
+≈ [[por]], [[a través de]], [[usando]]
+≠ [[sin]], [[contra]], [[separado de]]
 
 ---
 ### Traducciones
-bank  | bench  
-банк  | скамья
+with, by means of  
+с, вместе с
 
 ---
 ### Palabras Relacionadas
-[[bancario]], [[banquero]], [[bancarizar]] | [[bancada]], [[banquillo]]
+[[consigo]], [[contigo]], [[conmigo]], [[conjunto]]
+</agent_output>
+</example>
+
+<example>
+<spanish_word>la</spanish_word>
+<agent_output>
+👁️ [[la]], [la]
+
+---
+### Sinónimos y Antónimos
+= [[esta]], [[esa]]
+≈ [[una]], [[esta cosa]]
+≠ [[el]], [[los]], [[las]]
+
+---
+### Traducciones
+the (feminine)  
+определенный артикль (женский род)
+
+---
+### Palabras Relacionadas
+[[el]], [[los]], [[las]], [[un]], [[una]]
+</agent_output>
+</example>
+
+<example>
+<spanish_word>pero</spanish_word>
+<agent_output>
+🔄 [[pero]], [ˈpeɾo]
+
+---
+### Sinónimos y Antónimos
+= [[sin embargo]], [[no obstante]]
+≈ [[aunque]], [[mas]], [[empero]]
+≠ [[y]], [[además]], [[también]]
+
+---
+### Traducciones
+but, however  
+но, однако
+
+---
+### Palabras Relacionadas
+[[sino]], [[aunque]], [[mas]], [[empero]]
+</agent_output>
+</example>
+
+<example>
+<spanish_word>¡ay!</spanish_word>
+<agent_output>
+😱 [[¡ay!]], [ai]
+
+---
+### Sinónimos y Antónimos
+= [[¡oh!]], [[¡uy!]]
+≈ [[¡uf!]], [[¡ouch!]], [[¡auch!]]
+≠ [[¡bien!]], [[¡genial!]], [[¡bravo!]]
+
+---
+### Traducciones
+oh!, ouch!, alas!  
+ай!, ох!, увы!
+
+---
+### Palabras Relacionadas
+[[¡uy!]], [[¡uf!]], [[¡auch!]], [[¡oh!]]
+</agent_output>
+</example>
+
+<example>
+<spanish_word>cinco</spanish_word>
+<agent_output>
+5️⃣ [[cinco]], [ˈθiŋko]  
+[[quinto]], [[quinta]]
+numeral
+
+---
+### Sinónimos y Antónimos
+= [[5]]
+≈ [[penta]], [[quíntuple]]
+≠ [[cero]], [[ninguno]]
+
+---
+### Traducciones
+five  
+пять
+
+---
+### Palabras Relacionadas
+[[quinto]], [[quinta]], [[quíntuple]], [[cincuenta]], [[quinientos]]
 </agent_output>
 </example>
 
 <example>
 <spanish_word>hornear</spanish_word>
 <agent_output>
-🍞 [[hornear]], [oɾneˈaɾ] → [[horneé]] → [[horneado]]
-
----
-### Contexto
+🍞 [[hornear]], [oɾneˈaɾ] → [[horneé]] → haber [[horneado]]
+verbo
 
 ---
 ### Sinónimos y Antónimos
 = [[cocer]]
 ≈ [[cocinar]], [[preparar]]
-≠ [[tostar]], [[calentar]]
+≠ [[congelar]], [[enfriar]]
 
 ---
 ### Traducciones
@@ -230,7 +354,7 @@ to bake
 
 ---
 ### Palabras Relacionadas
-[[horno]], [[horneado]], [[horneador]] | [[panadería]], [[arte culinario]]
+[[horno]], [[horneado]], [[horneador]], [[panadería]]
 </agent_output>
 </example>
 

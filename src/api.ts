@@ -2,13 +2,11 @@ import { z } from 'zod';
 
 import {
 	GoogleGenerativeAI,
-	GenerationConfig,
-	HarmCategory,
-	HarmBlockThreshold,
-	ResponseSchema,
+	GenerationConfig
+
 } from '@google/generative-ai';
 import { TextEaterSettings } from './types';
-import { TFile, Vault, Notice, TAbstractFile, requestUrl } from 'obsidian';
+import { Vault, Notice} from 'obsidian';
 import { prompts } from './prompts';
 
 export class ApiService {
@@ -100,9 +98,9 @@ export class ApiService {
 		return `${dictionaryEntry.replace('<agent_output>', '').replace('</agent_output>', '')}\n\n---\n${valenceBlock}`;
 	}
 
-	async determineInfinitiveAndEmoji(word: string): Promise<string> {
+	async getBaseWordInfo(word: string): Promise<string> {
 		return this.generateContent(
-			prompts.determine_infinitive_and_pick_emoji,
+			prompts.get_base_word_info,
 			word
 		);
 	}

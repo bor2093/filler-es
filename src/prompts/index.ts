@@ -1,5 +1,5 @@
 import { keymaker } from 'prompts/keymaker';
-import { determine_infinitive_and_pick_emoji } from 'prompts/determine-infinitive-and-pick-emoji';
+import { get_base_word_info } from 'prompts/baseWordInfo';
 import { normalize } from 'prompts/normalize';
 import { translate_es_to_eng } from './translate-es-to-eng';
 import { generate_valence_block } from './valence';
@@ -13,7 +13,7 @@ export const prompts = {
 	c1Richter: C1_RICHTER_PROMPT_V2,
 	generate_forms,
 	morphems,
-	determine_infinitive_and_pick_emoji,
+	get_base_word_info,
 	normalize,
 	translate_es_to_eng,
 	keymaker,

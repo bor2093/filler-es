@@ -132,35 +132,12 @@ export class DictionaryEntry {
 	}
 
 	/**
-	 * Determines if the word is in its ground form
-	 */
-	async determineGroundForm(): Promise<void> {
-		try {
-			const response = await this.plugin.apiService.determineInfinitiveAndEmoji(this.word.getWord());
-			if (!response) {
-				return;
-			}
-			
-			// Extract the canonical form from the response
-			const canonicalMatch = response.match(/\[\[([^\]]+)\]\]/);
-			if (!canonicalMatch) {
-				return;
-			}
-			
-			const canonicalForm = canonicalMatch[1];
-			this.word.setGroundForm(canonicalForm);
-		} catch (error) {
-			console.error('Error determining ground form:', error);
-		}
-	}
-
-	/**
 	 * Generates full dictionary entry content
 	 */
 	async generateContent(): Promise<void> {
 		try {
-			// Determine ground form first
-			await this.determineGroundForm();
+			// Determine base word info first
+			await this.word.initBaseWordInfo(this.plugin);
 			
 			// Generate all content in parallel
 			const [dictionaryEntry, froms, morphems, valence] = await Promise.all([
@@ -171,9 +148,9 @@ export class DictionaryEntry {
 			]);
 
 			// Process and combine content
-			const processedContent = this.processGeneratedContent(dictionaryEntry, froms, morphems, valence);
+			const processedContent = await this.processGeneratedContent(dictionaryEntry, froms, morphems, valence);
 			this.content = processedContent;
-			
+
 			// Write to file
 			await this.writeToFile();
 		} catch (error) {
@@ -187,7 +164,7 @@ export class DictionaryEntry {
 	/**
 	 * Processes generated content and formats it properly
 	 */
-	private processGeneratedContent(dictionaryEntry: string, froms: string, morphems: string, valence: string): string {
+	private async processGeneratedContent(dictionaryEntry: string, froms: string, morphems: string, valence: string): Promise<string> {
 		// Extract adjective forms
 		const adjForms = this.extractAdjectiveForms(froms);
 		const trimmedBaseEntrie = this.cleanAITags(dictionaryEntry);
@@ -198,7 +175,7 @@ export class DictionaryEntry {
 		const restOfContent = lines.slice(1).join('\n');
 		
 		// Add tags right after header
-		const tags = this.createTags(trimmedBaseEntrie);
+		const tags = this.createTags();
 		const contentWithTags = `${headerLine}\n\n${tags}\n\n${restOfContent}`;
 		
 		const baseBlock = this.insertYouglishLinkInIpa(contentWithTags);
@@ -232,7 +209,7 @@ export class DictionaryEntry {
 			return this.joinBlocksWithProperSpacing(blocks, getSectionSeparator());
 		} else {
 			// Non-ground form - create minimal entry with tags, link to ground form, incoming links, and context
-			const derivedTags = this.createTags(trimmedBaseEntrie);
+			const derivedTags = this.createTags();
 			const derivedEnlacesEntrantesBlock = createSectionBlock('ENLACES_ENTRANTES', this.createDataviewQuery(this.word.getWord()), longDash);
 			const derivedContextoBlock = `${SECTION_HEADERS.CONTEXTO}\n`;
 			
@@ -340,29 +317,8 @@ export class DictionaryEntry {
 			.trim();
 	}
 
-	private determinePartOfSpeech(content: string): PartOfSpeech {
-		if (content.includes('→') && content.includes('haber') && content.includes('[[')) {
-			return PartOfSpeech.VERBO;
-		}
-		if (content.includes('🔴') || content.includes('🔵') || 
-			content.includes('el [[') || content.includes('la [[') ||
-			content.includes('los [[') || content.includes('las [[')) {
-			return PartOfSpeech.SUSTANTIVO;
-		}
-		if (content.includes('más [[') || content.includes('menos [[') ||
-			content.includes('comparative') || content.includes('superlative') ||
-			(content.includes('≠') && !content.includes('→'))) {
-			return PartOfSpeech.ADJETIVO;
-		}
-		if (content.includes('mente]]') || content.includes('adverbio') || 
-			content.includes('aquí') || content.includes('allí')) {
-			return PartOfSpeech.ADVERBIO;
-		}
-		return PartOfSpeech.DESCONOCIDO;
-	}
 
-	private createTags(content: string): string {
-		this.word.setPartOfSpeech(this.determinePartOfSpeech(content));
+	private createTags(): string {
 		const groundFormStatus = this.word.isGroundForm() ? 'forma-base' : 'forma-derivada';
 		return `#${groundFormStatus} #${this.word.getPartOfSpeech().toString()}`;
 	}

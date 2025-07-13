@@ -1,10 +1,6 @@
 import { Editor, TFile, normalizePath, Notice } from 'obsidian';
 import { sentences } from 'sbd';
 import TextEaterPlugin from './main';
-import { getExisingOrCreatedFileInWorterDir, longDash } from './utils';
-import { prompts } from './prompts';
-import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './sectionHeaders';
-import { DictionaryEntry } from './dictionaryEntry';
 
 /**
  * Extracts the sentence containing the selected word from the full text near the cursor position
@@ -171,30 +167,4 @@ export async function createBlockReference(
 		return null;
 	}
 }
-
-
-
-/**
- * Finds or creates a dictionary entry for the given word (legacy function for backward compatibility)
- */
-export async function findOrCreateDictionaryEntry(
-	plugin: TextEaterPlugin,
-	word: string
-): Promise<TFile | null> {
-	const dictionaryEntry = new DictionaryEntry(plugin, word);
-	return await dictionaryEntry.findOrCreateFile();
-}
-
-/**
- * Determines if a word is in its ground form by checking with AI
- */
-export async function isGroundFormWord(plugin: TextEaterPlugin, word: string): Promise<boolean> {
-	const dictionaryEntry = new DictionaryEntry(plugin, word);
-	await dictionaryEntry.determineGroundForm();
-	return dictionaryEntry.getIsGroundForm();
-}
-
-
-
-
 

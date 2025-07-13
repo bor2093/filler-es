@@ -109,10 +109,8 @@ export default async function addContext(
 			return;
 		}
         
-		// Step 7: Determine if selected word is ground form (using normalized word)
-		await dictionaryEntry.determineGroundForm();
 		
-		// Step 8: Add context to appropriate dictionary entries (using normalized word)
+		// Step 7: Add context to appropriate dictionary entries (using normalized word)
 		const contextEntry = `![[${file.basename}#^${blockRef}]]`;
 		await dictionaryEntry.addContext(contextEntry);
 		
