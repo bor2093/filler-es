@@ -6,6 +6,7 @@ kanban-plugin: board
 
 ## Backlog
 
+- [ ] Bug with ground form Rescate
 - [ ] Omonyms management
 	- [ ] fuera
 	- [ ] como
