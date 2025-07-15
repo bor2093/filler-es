@@ -137,4 +137,247 @@ export abstract class DictionarySection {
 	getSectionName(): string {
 		return this.sectionName;
 	}
+}
+
+/**
+ * Context section for dictionary entries
+ */
+export class ContextoSection extends DictionarySection {
+	constructor() {
+		super('CONTEXTO');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
+}
+
+/**
+ * Synonyms and antonyms section for dictionary entries
+ */
+export class SinonimosYAntonimosSection extends DictionarySection {
+	constructor() {
+		super('SINONIMOS_Y_ANTONIMOS');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
+}
+
+/**
+ * Translations section for dictionary entries
+ */
+export class TraduccionesSection extends DictionarySection {
+	constructor() {
+		super('TRADUCCIONES');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
+}
+
+/**
+ * Morphemes section for dictionary entries
+ */
+export class MorfemasSection extends DictionarySection {
+	constructor() {
+		super('MORFEMAS');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
+}
+
+/**
+ * Grammatical forms section for dictionary entries
+ */
+export class FormasGramaticalesSection extends DictionarySection {
+	constructor() {
+		super('FORMAS_GRAMATICALES');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
+}
+
+/**
+ * Valence section for dictionary entries
+ */
+export class ValenciaSection extends DictionarySection {
+	constructor() {
+		super('VALENCIA');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
+}
+
+/**
+ * Adjectival forms section for dictionary entries
+ */
+export class FormasAdjetivalesSection extends DictionarySection {
+	constructor() {
+		super('FORMAS_ADJETIVALES');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
+}
+
+/**
+ * Related words section for dictionary entries
+ */
+export class PalabrasRelacionadasSection extends DictionarySection {
+	constructor() {
+		super('PALABRAS_RELACIONADAS');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
+}
+
+/**
+ * Incoming links section for dictionary entries
+ */
+export class EnlacesEntrantesSection extends DictionarySection {
+	constructor() {
+		super('ENLACES_ENTRANTES');
+	}
+
+	toString(): string {
+		// TODO: Implement logic
+		return '';
+	}
+
+	isApplicable(word: Word): boolean {
+		// TODO: Implement logic
+		return true;
+	}
+
+	initFromString(content: string): void {
+		// TODO: Implement logic
+	}
+
+	async initFromWord(word: Word): Promise<void> {
+		// TODO: Implement logic
+	}
 } 
