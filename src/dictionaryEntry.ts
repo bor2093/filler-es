@@ -2,7 +2,7 @@ import { Notice, TFile } from 'obsidian';
 import TextEaterPlugin from './main';
 import { getExisingOrCreatedFileInWorterDir, longDash } from './utils';
 import { prompts } from './prompts';
-import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './sectionHeaders';
+import { createSectionBlock, getSectionSeparator, SECTION_HEADERS } from './dictionarySection';
 import { PartOfSpeech, Word } from 'word';
 
 /**
