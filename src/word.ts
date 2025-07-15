@@ -23,6 +23,7 @@ export enum PartOfSpeech {
 export interface WordInterpretation {
 	part_of_speech: PartOfSpeech;
 	ground_form: string;
+	ipa: string;
 	emoji: string;
 	gender?: 'masculino' | 'femenino';
 	number?: 'singular' | 'plural';
@@ -45,6 +46,7 @@ export class Word {
 	private word: string;
 	private partOfSpeech: PartOfSpeech;
 	private groundForm: string;
+	private ipa: string;
 	private grammaticalAttributes: Map<string, string>;
 
 	/**
@@ -52,17 +54,20 @@ export class Word {
 	 * @param word - The word itself
 	 * @param partOfSpeech - The part of speech
 	 * @param groundForm - The base/canonical form of the word
+	 * @param ipa - The IPA transcription of the word
 	 * @param grammaticalAttributes - Map of grammatical attributes (e.g., "gender" -> "feminine", "number" -> "plural")
 	 */
 	constructor(
 		word: string,
 		partOfSpeech: PartOfSpeech,
 		groundForm: string,
+		ipa: string = '',
 		grammaticalAttributes: Map<string, string> = new Map()
 	) {
 		this.word = word;
 		this.partOfSpeech = partOfSpeech;
 		this.groundForm = groundForm;
+		this.ipa = ipa;
 		this.grammaticalAttributes = grammaticalAttributes;
 	}
 
@@ -87,6 +92,8 @@ export class Word {
 			this.setGroundForm(interpretation.ground_form);
 			// Set part of speech
 			this.setPartOfSpeech(interpretation.part_of_speech);
+			// Set IPA transcription
+			this.setIpa(interpretation.ipa);
 			// Set grammatical attributes
 			this.setGrammaticalAttributes(this.extractGrammaticalAttributes(interpretation));
         } 
@@ -153,6 +160,18 @@ export class Word {
 		return this.groundForm;
 	}
 
+	public getIpa(): string {
+		return this.ipa;
+	}
+
+	public setIpa(ipa: string): void {
+		this.ipa = ipa;
+	}
+
+	public getIpaWithLink(): string {
+		return `[${this.ipa}](${`https://youglish.com/pronounce/${this.word}/spanish`})`;
+	}
+
 	public getGrammaticalAttributes(): Map<string, string> {
 		return new Map(this.grammaticalAttributes);
 	}
@@ -194,5 +213,13 @@ export class Word {
 	// Utility methods
 	public isGroundForm(): boolean {
 		return this.word === this.groundForm;
+	}
+
+	/**
+	 * Gets the emoji for this word
+	 * @returns The emoji from grammatical attributes or empty string
+	 */
+	public getEmoji(): string {
+		return this.getGrammaticalAttribute('emoji') || '';
 	}
 } 
