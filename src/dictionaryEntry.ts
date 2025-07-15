@@ -184,7 +184,7 @@ export class DictionaryEntry {
 		
 		// Add conjugation link to Formas Gramaticales for verbs
 		let formasContent = this.cleanAITags(froms);
-		if (this.isVerb(trimmedBaseEntrie) && formasContent !== longDash) {
+		if (this.isVerb() && formasContent !== longDash) {
 			formasContent += `\n\n${this.createConjugationLink(this.word.getWord())}`;
 		}
 		const fromsBlock = createSectionBlock('FORMAS_GRAMATICALES', formasContent, longDash);
@@ -323,12 +323,8 @@ export class DictionaryEntry {
 		return `#${groundFormStatus} #${this.word.getPartOfSpeech().toString()}`;
 	}
 
-	private isVerb(content: string): boolean {
-		return (
-			content.includes('→') &&
-			content.includes('haber') &&
-			content.includes('[[')
-		) || content.includes('Infinitivo') || content.includes('Participio');
+	private isVerb(): boolean {
+		return this.word.getPartOfSpeech() === PartOfSpeech.VERBO;
 	}
 
 	private createConjugationLink(word: string): string {
