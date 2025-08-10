@@ -143,27 +143,37 @@ export abstract class DictionarySection {
  * Context section for dictionary entries
  */
 export class ContextoSection extends DictionarySection {
+	private contextes: string[];
+
 	constructor() {
 		super('CONTEXTO');
+		this.contextes = [];
 	}
 
 	toString(): string {
-		// TODO: Implement logic
-		return '';
+		return this.contextes.join('\n');
 	}
 
 	isApplicable(word: Word): boolean {
-		// TODO: Implement logic
 		return true;
 	}
 
 	initFromString(content: string): void {
-		// TODO: Implement logic
+		this.contextes = content.split('\n');
 	}
 
 	async initFromWord(word: Word): Promise<void> {
-		// TODO: Implement logic
+		this.contextes = [];
 	}
+
+	/**
+	 * Adds a context string to the collection
+	 * @param contexto - Context string to add
+	 */
+	addContexto(contexto: string): void {
+		this.contextes.push(contexto);
+	}
+
 }
 
 /**
